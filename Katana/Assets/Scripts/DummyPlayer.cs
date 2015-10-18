@@ -10,14 +10,6 @@ public class DummyPlayer : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        // left
-        if (Input.GetKey(KeyCode.LeftArrow)) {
-            this.transform.position += Vector3.left * Input.GetAxis("Horizontal");
-        }
-        // right
-        if (Input.GetKey(KeyCode.RightArrow))
-        {
-            this.transform.position += Vector3.right * Input.GetAxis("Horizontal");
-        }
+        this.transform.position += Vector3.right * Input.GetAxis("Horizontal");
     }
 }
