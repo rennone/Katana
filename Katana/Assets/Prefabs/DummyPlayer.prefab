@@ -12,6 +12,7 @@ GameObject:
   - 135: {fileID: 13574534}
   - 23: {fileID: 2364610}
   - 54: {fileID: 5479564}
+  - 114: {fileID: 11400218}
   m_Layer: 0
   m_Name: DummyPlayer
   m_TagString: Untagged
@@ -77,6 +78,17 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &11400218
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 149914}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5de424f9aef6ba94e960417ff551c5ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!135 &13574534
 SphereCollider:
   m_ObjectHideFlags: 1
