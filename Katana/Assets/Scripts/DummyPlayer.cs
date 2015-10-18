@@ -12,12 +12,12 @@ public class DummyPlayer : MonoBehaviour {
 	void Update () {
         // left
         if (Input.GetKey(KeyCode.LeftArrow)) {
-            this.transform.position += Vector3.left;
+            this.transform.position += Vector3.left * Input.GetAxis("Horizontal");
         }
         // right
         if (Input.GetKey(KeyCode.RightArrow))
         {
-            this.transform.position += Vector3.right;
+            this.transform.position += Vector3.right * Input.GetAxis("Horizontal");
         }
     }
 }
