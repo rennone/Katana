@@ -6,12 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-<<<<<<< HEAD
     path: Assets/Scenes/Title.unity
   - enabled: 1
     path: Assets/Scenes/TestPlayerScene.unity
-=======
-    path: Assets/Scenes/Stage01.unity
-  - enabled: 1
-    path: Assets/Scenes/Stage02.unity
->>>>>>> remotes/origin/master
