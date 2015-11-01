@@ -7,7 +7,7 @@ namespace Assets.Scripts
 
         IEnumerator Load()
         {
-            AsyncOperation ao = Application.LoadLevelAsync("stage02");
+            AsyncOperation ao = Application.LoadLevelAsync("Stage02");
             ao.allowSceneActivation = false;
             while (ao.progress < 0.9f)
             {
@@ -15,20 +15,20 @@ namespace Assets.Scripts
                 yield return new WaitForEndOfFrame();
             }
             //次のレベルに遷移
-            ao.allowSceneActivation = true;
+            //ao.allowSceneActivation = true;
             //ao.isDoneはfalseのまま
             yield return null;
         }
 
         // Use this for initialization
         void Start () {
-	
+            StartCoroutine("Load");
         }
 	
         // Update is called once per frame
         void Update ()
         {
-            Load();
+            //Load();
         }
     }
 }
