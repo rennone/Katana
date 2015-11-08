@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - LoadableScene
+  - StageRange
   layers:
   - Default
   - TransparentFX

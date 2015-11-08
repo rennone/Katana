@@ -16,6 +16,9 @@ namespace Assets.Scripts
         [SerializeField]
         public List<string> LoadLevelLists = new List<string>();
 
+        [SerializeField] 
+        public GameObject RangeOfStage;
+
         private Boolean callLoadCoRoutine = false;
 
         bool IsForcusedStage()
