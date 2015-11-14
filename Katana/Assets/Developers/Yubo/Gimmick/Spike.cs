@@ -5,6 +5,9 @@ public class Spike : MonoBehaviour {
 
 	void OnTriggerEnter(Collider col)
     {
-        //ここに主人公と当たったらライフ減らす処理を記述
+        if (col.gameObject.layer == LayerMask.NameToLayer("MainCharacter"))
+        {
+            //ここに主人公と当たったらライフ減らす処理を記述
+        }
     }
 }
