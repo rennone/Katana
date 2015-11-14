@@ -41,7 +41,7 @@ public class Cannon : MonoBehaviour {
                 return;
 
             canFire = false;
-            CannonBullet bullet = SetBullet();
+            CannonBullet bullet = GetBullet();
             bullet.transform.position = bulletPos.position;
             Vector3 targetDir = (target.position - this.transform.position).normalized;
             bullet.Fire(targetDir,bulletSpeed,explosionDistance);
@@ -54,7 +54,7 @@ public class Cannon : MonoBehaviour {
         canFire = true;
     }
 
-    CannonBullet SetBullet()
+    CannonBullet GetBullet()
     {
         nowBulletCount += 1;
         if (nowBulletCount >= cacheCount)
