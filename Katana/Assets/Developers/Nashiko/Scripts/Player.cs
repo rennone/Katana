@@ -26,10 +26,21 @@ public class Player : MonoBehaviour {
 	}
 
 	void OnCollisionEnter(Collision collision){
-//		if (collider.gameObject.name () == "Terrain") {
-		Debug.Log("test");
-   		isJumpping = false;
-//		}
+
+		Debug.Log ("OnCollisionEnter");
+		ContactPoint[] contacts = collision.contacts;
+
+		foreach(var contact in contacts)
+		{
+			Vector3 normal = contact.normal;
+
+			// 上向きな場合
+			if(normal.y > 0){
+				Debug.Log(normal.ToString());
+				isJumpping = false;
+			}
+		}
+
 	}
 
 	private void jump(){
