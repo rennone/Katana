@@ -3,12 +3,15 @@ using System.Collections;
 
 public class Player : Singleton<Player> {
 	
-	public float JumpInitialVelocity;
-	public float HorizontalInitialVelocity;
-    public float JumpHeight;
-    public float Gravity = 9.8f;
+	public float JumpInitialVelocity;   //ジャンプの速さ
+	public float HorizontalInitialVelocity; //左右移動の速さ
+    public float JumpHeight;    //ジャンプの高さ
+    public float Gravity = 9.8f;    //重力
+    public int MaxHP = 100;
 
-    private Rigidbody myRigidbody;
+    private int nowHP;    //HP
+    private bool isMuteki = false;  //無敵状態かどうかのフラグ
+    private Rigidbody myRigidbody;  //自分のRigidbody
     private float nowJumpVelocity = 0;
     private float jumpStartHeight = 0;
     private float nowGravity = 0;
@@ -16,6 +19,7 @@ public class Player : Singleton<Player> {
 
 	void Start () {
 		myRigidbody = GetComponent<Rigidbody>();
+        IncreaseHP(MaxHP);  //HPをセット
     }
 	
 	void Update () {
@@ -72,5 +76,31 @@ public class Player : Singleton<Player> {
         nowGravity += Time.deltaTime * Gravity;
         nowJumpVelocity -= nowGravity;
         return moveScale;
+    }
+
+    //HP減らす処理
+    public void DecreaseHP(int point)
+    {
+        if (isMuteki)
+            return;
+
+        nowHP -= point;
+        if(nowHP < 0)
+        {
+            nowHP = 0;
+        }
+
+        HPManager.I.ChangeDisplayHP(nowHP);
+    }
+
+    //HP増やす処理
+    public void IncreaseHP(int point)
+    {
+        nowHP += point;
+        if(nowHP > MaxHP)
+        {
+            nowHP = MaxHP;
+        }
+        HPManager.I.ChangeDisplayHP(nowHP);
     }
 }
