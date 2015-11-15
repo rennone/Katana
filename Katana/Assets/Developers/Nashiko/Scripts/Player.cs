@@ -5,23 +5,27 @@ public class Player : MonoBehaviour {
 	
 	public float JumpInitialVelocity;
 	public float HorizontalInitialVelocity;
+    public float JumpHeight;
+    public float Gravity = 9.8f;
 
-	private bool isJumpping = false;
-	
-	// Use this for initialization
+    private Rigidbody myRigidbody;
+    private float nowJumpVelocity = 0;
+    private float jumpStartHeight = 0;
+    private float nowGravity = 0;
+    private bool isGrounded = false;
+
 	void Start () {
-		
-	}
+		myRigidbody = GetComponent<Rigidbody>();
+    }
 	
-	// Update is called once per frame
 	void Update () {
-		//左右の移動
-		this.transform.position += (HorizontalInitialVelocity * Input.GetAxisRaw("Horizontal")) * Vector3.right;
+        //左右の移動
+        Vector3 newPos = this.transform.position + GetHorizontalMoveScale() + GetVerticalMoveScale();
+        myRigidbody.MovePosition(newPos);
 
-		//ジャンプ
-		if (Input.GetButtonDown ("Jump") && !isJumpping) {
-			isJumpping = true;
-			jump ();
+        //ジャンプ
+        if (Input.GetButtonDown ("Jump") && isGrounded) {
+            SetJump();
 		}
 	}
 
@@ -37,14 +41,36 @@ public class Player : MonoBehaviour {
 			// 上向きな場合
 			if(normal.y > 0){
 				Debug.Log(normal.ToString());
-				isJumpping = false;
-			}
+                nowGravity = 0;
+                nowJumpVelocity = 0;
+                isGrounded = true;
+            }
 		}
 
 	}
 
-	private void jump(){
-		var rigitbody = GetComponent<Rigidbody>();
-		rigitbody.AddForce (Vector3.up * JumpInitialVelocity);
-	}
+	private void SetJump(){
+        isGrounded = false;
+        nowJumpVelocity = JumpInitialVelocity;
+        jumpStartHeight = this.transform.position.y;
+    }
+
+    //左右の移動量
+    Vector3 GetHorizontalMoveScale()
+    {
+        Vector3 moveScale = (HorizontalInitialVelocity * Input.GetAxisRaw("Horizontal")) * Vector3.right * Time.deltaTime;
+        return moveScale;
+    }
+
+    //上下の移動量
+    Vector3 GetVerticalMoveScale()
+    {
+        if (isGrounded)
+            return Vector3.zero;
+
+        Vector3 moveScale = Vector3.up * nowJumpVelocity * Time.deltaTime;
+        nowGravity += Time.deltaTime * Gravity;
+        nowJumpVelocity -= nowGravity;
+        return moveScale;
+    }
 }
