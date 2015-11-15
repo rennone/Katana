@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Player : MonoBehaviour {
+public class Player : Singleton<Player> {
 	
 	public float JumpInitialVelocity;
 	public float HorizontalInitialVelocity;
