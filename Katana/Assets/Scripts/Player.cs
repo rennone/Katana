@@ -7,15 +7,13 @@ public class Player : Singleton<Player> {
     public float JumpInitialVelocity;   //ジャンプの速さ
 	public float HorizontalInitialVelocity; //左右移動の速さ
     public float JumpHeight;    //ジャンプの高さ
-    public float Gravity = 9.8f;    //重力
+    public float MaxFallSpeed = 10;
     public int MaxHP = 100;
 
     private int nowHP;    //HP
     private bool isMuteki = false;  //無敵状態かどうかのフラグ
     private Rigidbody myRigidbody;  //自分のRigidbody
-    private float nowJumpVelocity = 0;
-    private float jumpStartHeight = 0;
-    private float nowGravity = 0;
+    private float jumpStartHeight = -100;
     private bool isGrounded = false;
 
 	void Start () {
@@ -46,9 +44,8 @@ public class Player : Singleton<Player> {
 			// 上向きな場合
 			if(normal.y > 0){
 				Debug.Log(normal.ToString());
-                nowGravity = 0;
-                nowJumpVelocity = 0;
                 isGrounded = true;
+                JumpInitialVelocity = Mathf.Abs(JumpInitialVelocity);
             }
 		}
 
@@ -56,7 +53,6 @@ public class Player : Singleton<Player> {
 
 	private void SetJump(){
         isGrounded = false;
-        nowJumpVelocity = JumpInitialVelocity;
         jumpStartHeight = this.transform.position.y;
     }
 
@@ -73,9 +69,10 @@ public class Player : Singleton<Player> {
         if (isGrounded)
             return Vector3.zero;
 
-        Vector3 moveScale = Vector3.up * nowJumpVelocity * Time.deltaTime;
-        nowGravity += Time.deltaTime * Gravity;
-        nowJumpVelocity -= nowGravity;
+        if ((this.transform.position.y - jumpStartHeight) > JumpHeight)
+            JumpInitialVelocity = Mathf.Abs(JumpInitialVelocity) * -1;
+
+        Vector3 moveScale = Vector3.up * JumpInitialVelocity * Time.deltaTime;
         return moveScale;
     }
 
