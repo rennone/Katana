@@ -3,7 +3,8 @@ using System.Collections;
 
 public class Player : Singleton<Player> {
 	
-	public float JumpInitialVelocity;   //ジャンプの速さ
+    public Animator anim;
+    public float JumpInitialVelocity;   //ジャンプの速さ
 	public float HorizontalInitialVelocity; //左右移動の速さ
     public float JumpHeight;    //ジャンプの高さ
     public float Gravity = 9.8f;    //重力
@@ -85,9 +86,10 @@ public class Player : Singleton<Player> {
             return;
 
         nowHP -= point;
-        if(nowHP < 0)
+        if(nowHP <= 0)
         {
             nowHP = 0;
+            GameOver();
         }
 
         HPManager.I.ChangeDisplayHP(nowHP);
@@ -102,5 +104,10 @@ public class Player : Singleton<Player> {
             nowHP = MaxHP;
         }
         HPManager.I.ChangeDisplayHP(nowHP);
+    }
+
+    public void GameOver()
+    {
+        GameManager.I.GameRestart();
     }
 }
