@@ -24,6 +24,7 @@ public class Player : Singleton<Player> {
 	void Update () {
         //左右の移動
         Vector3 newPos = this.transform.position + GetHorizontalMoveScale() + GetVerticalMoveScale();
+        SetRotation(newPos);
         myRigidbody.MovePosition(newPos);
 
         //ジャンプ
@@ -33,8 +34,6 @@ public class Player : Singleton<Player> {
 	}
 
 	void OnCollisionEnter(Collision collision){
-
-		Debug.Log ("OnCollisionEnter");
 		ContactPoint[] contacts = collision.contacts;
 
 		foreach(var contact in contacts)
@@ -43,8 +42,8 @@ public class Player : Singleton<Player> {
 
 			// 上向きな場合
 			if(normal.y > 0){
-				Debug.Log(normal.ToString());
                 isGrounded = true;
+                anim.SetBool("IsJump", false);
                 JumpInitialVelocity = Mathf.Abs(JumpInitialVelocity);
             }
 		}
@@ -53,6 +52,7 @@ public class Player : Singleton<Player> {
 
 	private void SetJump(){
         isGrounded = false;
+        anim.SetBool("IsJump", true);
         jumpStartHeight = this.transform.position.y;
     }
 
@@ -60,6 +60,7 @@ public class Player : Singleton<Player> {
     Vector3 GetHorizontalMoveScale()
     {
         Vector3 moveScale = (HorizontalInitialVelocity * Input.GetAxisRaw("Horizontal")) * Vector3.right * Time.deltaTime;
+        anim.SetFloat("MoveSpeed", moveScale.magnitude);
         return moveScale;
     }
 
@@ -74,6 +75,16 @@ public class Player : Singleton<Player> {
 
         Vector3 moveScale = Vector3.up * JumpInitialVelocity * Time.deltaTime;
         return moveScale;
+    }
+
+    void SetRotation(Vector3 newPos)
+    {
+        if (Mathf.Abs(newPos.x) < 0f)
+            return;
+
+        newPos.y = this.transform.position.y;
+        Vector3 newForward = Vector3.Lerp(this.transform.forward,(newPos - this.transform.position).normalized,0.5f);
+        this.transform.forward = newForward;
     }
 
     //HP減らす処理
