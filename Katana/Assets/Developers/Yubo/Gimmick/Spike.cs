@@ -3,11 +3,14 @@ using System.Collections;
 
 public class Spike : MonoBehaviour {
 
+    [SerializeField]
+    private int damage = 30;
+
 	void OnTriggerEnter(Collider col)
     {
         if (col.gameObject.layer == LayerMask.NameToLayer("MainCharacter"))
         {
-            //ここに主人公と当たったらライフ減らす処理を記述
+            col.GetComponent<Player>().DecreaseHP(damage);
         }
     }
 }
