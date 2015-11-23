@@ -3,11 +3,22 @@ using System.Collections;
 
 public class Spike : MonoBehaviour {
 
-	void OnTriggerEnter(Collider col)
+    [SerializeField]
+    private int damage = 30;
+
+	//void OnTriggerEnter(Collider col)
+ //   {
+ //       if (col.gameObject.layer == LayerMask.NameToLayer("MainCharacter"))
+ //       {
+ //           col.GetComponent<Player>().DecreaseHP(damage);
+ //       }
+ //   }
+
+    void OnCollisionEnter(Collision col)
     {
         if (col.gameObject.layer == LayerMask.NameToLayer("MainCharacter"))
         {
-            //ここに主人公と当たったらライフ減らす処理を記述
+            col.gameObject.GetComponent<Player>().DecreaseHP(damage);
         }
     }
 }

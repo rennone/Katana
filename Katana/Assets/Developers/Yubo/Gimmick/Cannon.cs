@@ -12,7 +12,6 @@ public class Cannon : MonoBehaviour {
 
     int cacheCount = 10;
 
-    [SerializeField]
     private Transform target;
 
     private bool canFire = true;
@@ -28,6 +27,7 @@ public class Cannon : MonoBehaviour {
             bullets[i] = Instantiate(bulletPrefab) as CannonBullet;
             bullets[i].gameObject.SetActive(false);
         }
+        target = Player.I.transform;
     }
 
     void Update()

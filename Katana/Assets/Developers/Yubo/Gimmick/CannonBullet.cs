@@ -3,6 +3,8 @@ using System.Collections;
 
 public class CannonBullet : MonoBehaviour {
 
+    [SerializeField]
+    private int damage = 30;
     Vector3 direction = Vector3.zero;
     float speed = 0;
     Vector3 firstPos = Vector3.zero;
@@ -28,7 +30,12 @@ public class CannonBullet : MonoBehaviour {
 
     void OnTriggerEnter(Collider col)
     {
-        if(col.gameObject.layer == LayerMask.NameToLayer("MainCharacter"))
+        if (col.gameObject.layer == LayerMask.NameToLayer("MainCharacter"))
+        {
+            this.gameObject.SetActive(false);
+            col.GetComponent<Player>().DecreaseHP(damage);
+        }
+        else
         {
             this.gameObject.SetActive(false);
         }
