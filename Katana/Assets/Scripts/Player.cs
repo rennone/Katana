@@ -104,7 +104,7 @@ public class Player : Singleton<Player> {
             return;
         }
 
-        if(!Physics.Raycast(this.transform.position + Vector3.up, Vector3.down, 2f))
+        if(!Physics.Raycast(this.transform.position + Vector3.up*0.1f, Vector3.down, 0.2f))
         {
             isGrounded = false;
             jumpStartHeight = this.transform.position.y - JumpHeight;
