@@ -22,15 +22,15 @@ public class Player : Singleton<Player> {
     }
 	
 	void Update () {
+        //地面のチェック
+        UpdateIsGround();
+
         //左右の移動
         Vector3 newPos = this.transform.position + GetHorizontalMoveScale() + GetVerticalMoveScale();
         SetRotation(newPos);
         myRigidbody.MovePosition(newPos);
 
-        //ジャンプ
-        if (Input.GetButtonDown ("Jump") && isGrounded) {
-            SetJump();
-		}
+        myRigidbody.velocity = Vector3.zero;
 	}
 
 	void OnCollisionEnter(Collision collision){
@@ -45,6 +45,9 @@ public class Player : Singleton<Player> {
                 isGrounded = true;
                 anim.SetBool("IsJump", false);
                 JumpInitialVelocity = Mathf.Abs(JumpInitialVelocity);
+            }else if(normal.y < 0 && !isGrounded)
+            {
+                jumpStartHeight = this.transform.position.y - JumpHeight;
             }
 		}
 
@@ -52,7 +55,6 @@ public class Player : Singleton<Player> {
 
 	private void SetJump(){
         isGrounded = false;
-        anim.SetBool("IsJump", true);
         jumpStartHeight = this.transform.position.y;
     }
 
@@ -74,9 +76,12 @@ public class Player : Singleton<Player> {
             JumpInitialVelocity = Mathf.Abs(JumpInitialVelocity) * -1;
 
         Vector3 moveScale = Vector3.up * JumpInitialVelocity * Time.deltaTime;
+        if(Mathf.Abs(moveScale.y) > 0)
+            anim.SetBool("IsJump", true);
         return moveScale;
     }
 
+    //回転の操作
     void SetRotation(Vector3 newPos)
     {
         if (Mathf.Abs(newPos.x) < 0f)
@@ -85,6 +90,25 @@ public class Player : Singleton<Player> {
         newPos.y = this.transform.position.y;
         Vector3 newForward = Vector3.Lerp(this.transform.forward,(newPos - this.transform.position).normalized,0.5f);
         this.transform.forward = newForward;
+    }
+
+    void UpdateIsGround()
+    {
+        if (!isGrounded)
+            return;
+
+        //ジャンプ
+        if (Input.GetButtonDown("Jump"))
+        {
+            SetJump();
+            return;
+        }
+
+        if(!Physics.Raycast(this.transform.position + Vector3.up, Vector3.down, 2f))
+        {
+            isGrounded = false;
+            jumpStartHeight = this.transform.position.y - JumpHeight;
+        }
     }
 
     //HP減らす処理
