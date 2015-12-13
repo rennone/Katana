@@ -169,8 +169,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f3a8aeed55670b4b9929610cb727050, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  anim: {fileID: 0}
   JumpInitialVelocity: 500
   HorizontalInitialVelocity: .200000003
+  JumpHeight: 0
+  MaxFallSpeed: 10
+  MaxHP: 100
 --- !u!124 &12489418
 Behaviour:
   m_ObjectHideFlags: 1
