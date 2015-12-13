@@ -35,7 +35,9 @@ public class Cannon : MonoBehaviour {
         float dist = (target.position - this.transform.position).magnitude;
         if (dist < searchDistance)
         {
-            this.transform.LookAt(target.position);
+            Vector3 newForward = Vector3.Lerp(this.transform.forward,(target.position - this.transform.position),GameManager.I.NotPlayerDeltaTime);
+            this.transform.forward = newForward;
+            //this.transform.LookAt(target.position);
 
             if (!canFire)
                 return;
@@ -45,12 +47,18 @@ public class Cannon : MonoBehaviour {
             bullet.transform.position = bulletPos.position;
             Vector3 targetDir = (target.position - this.transform.position).normalized;
             bullet.Fire(targetDir,bulletSpeed,explosionDistance);
-            Invoke("SetCanFire", bulletMergin);
+            StartCoroutine(SetNextFire());
         }
     }
 
-    void SetCanFire()
+    IEnumerator SetNextFire()
     {
+        float nowTime = bulletMergin;
+        while(nowTime > 0)
+        {
+            nowTime -= GameManager.I.NotPlayerDeltaTime;
+            yield return null;
+        }
         canFire = true;
     }
 

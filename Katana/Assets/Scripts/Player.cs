@@ -30,6 +30,9 @@ public class Player : Singleton<Player> {
         SetRotation(newPos);
         myRigidbody.MovePosition(newPos);
 
+        //スキルなどのアクション
+        SkillActiion();
+
         myRigidbody.velocity = Vector3.zero;
 	}
 
@@ -61,7 +64,7 @@ public class Player : Singleton<Player> {
     //左右の移動量
     Vector3 GetHorizontalMoveScale()
     {
-        Vector3 moveScale = (HorizontalInitialVelocity * Input.GetAxisRaw("Horizontal")) * Vector3.right * Time.deltaTime;
+        Vector3 moveScale = (HorizontalInitialVelocity * Input.GetAxisRaw("Horizontal")) * Vector3.right * GameManager.I.PlayerDeltaTime;
         anim.SetFloat("MoveSpeed", moveScale.magnitude);
         return moveScale;
     }
@@ -75,7 +78,7 @@ public class Player : Singleton<Player> {
         if ((this.transform.position.y - jumpStartHeight) > JumpHeight)
             JumpInitialVelocity = Mathf.Abs(JumpInitialVelocity) * -1;
 
-        Vector3 moveScale = Vector3.up * JumpInitialVelocity * Time.deltaTime;
+        Vector3 moveScale = Vector3.up * JumpInitialVelocity * GameManager.I.PlayerDeltaTime;
         if(Mathf.Abs(moveScale.y) > 0)
             anim.SetBool("IsJump", true);
         return moveScale;
@@ -109,6 +112,28 @@ public class Player : Singleton<Player> {
             isGrounded = false;
             jumpStartHeight = this.transform.position.y - JumpHeight;
         }
+    }
+
+    void SkillActiion()
+    {
+        if (Input.GetButtonDown("Fire1"))
+        {
+            //TheWorldの発動（すでに発動してる場合は使えない）
+            if (GameManager.I.NotPlayerDeltaTime > 0)
+                StartCoroutine(TheWorld());
+        }
+    }
+
+    const float stopTime = 1f;
+    IEnumerator TheWorld()
+    {
+        GameManager.I.TheWorld(true);
+        float nowTime = stopTime;
+        while(nowTime > 0){
+            nowTime -= Time.unscaledDeltaTime;
+            yield return null;
+        }
+        GameManager.I.TheWorld(false);
     }
 
     //HP減らす処理

@@ -20,7 +20,7 @@ public class CannonBullet : MonoBehaviour {
 
     void Update()
     {
-        Vector3 newPos = this.transform.position + direction * speed * Time.deltaTime;
+        Vector3 newPos = this.transform.position + direction * speed * GameManager.I.NotPlayerDeltaTime;
         this.transform.position = newPos;
         if((newPos - firstPos).magnitude > expDist)
         {
