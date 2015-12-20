@@ -35,11 +35,14 @@ public class DebugViewer : MonoBehaviour
         InitPages();
     }
 
+
+    //----------------------------------------------------------------------------------------------------//
+    //-----------------------------------------デバッグ機能の編集-----------------------------------------//
+    //----------------------------------------------------------------------------------------------------//
     // 機能の追加はここに記述する
     void InitPages()
     {
         // 以下はすべてサンプル
-
         //「test menu」という名前で 「hello worldと表示する」デバッグ機能をトップ階層に追加
         root_.AddMenu("test menu", () => { Debug.Log("hello world!"); });
 
@@ -59,6 +62,8 @@ public class DebugViewer : MonoBehaviour
         AddPlayerPage();    //プレイヤー用のページを追加する
 
         AddEnemyPage();     //エネミー用ページの作成
+
+        AddSystemPage();
     }
 
     //! プレイヤー用のページを追加する
@@ -67,14 +72,11 @@ public class DebugViewer : MonoBehaviour
         // プレイヤー用のデバッグページを作成
         var page = root_.AddPage("Player");
 
-        // プレイヤーページに機能を追加していく
-        // 基本的にはラムダ式で書けるものにする.
-        // ラムダ式とか
-        page.AddMenu("recover hp",
-            () => { Debug.Log("recover players hp"); }
-            );
-        page.AddMenu("damaged", null);
-        page.AddMenu("immortal", null);
+        // HP回復
+        page.AddMenu("recover",() => { Player.I.IncreaseHP(10); });
+
+        // ダメージ
+        page.AddMenu("damaged", () => { Player.I.DecreaseHP(10); });
 
         for (int i = 0; i < 30; i++)
         {
@@ -89,6 +91,16 @@ public class DebugViewer : MonoBehaviour
         page.AddMenu("create enemy1", null);
         page.AddMenu("create enemy2", null);
     }
+
+    void AddSystemPage()
+    {
+        var page = root_.AddPage("System");
+        page.AddMenu("Stop Time", null);
+    }
+
+
+
+    //----------------------------------------------以下DebugMenuからの登録用------------------------------------------//
 
     //! pageを登録する
     public void RegisterPage(DebugMenu menu)
