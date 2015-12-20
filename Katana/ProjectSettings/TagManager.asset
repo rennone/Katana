@@ -6,6 +6,7 @@ TagManager:
   tags:
   - LoadableScene
   - StageRange
+  - Debug
   layers:
   - Default
   - TransparentFX
