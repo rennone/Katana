@@ -13,7 +13,7 @@ public class GameManager : Singleton<GameManager> {
     {
         nowSceneName = Application.loadedLevelName;
 
-        GameObject canvas = GameObject.Instantiate(Resources.Load("Prefab/DebugMenu/DebugCanvas")) as GameObject;
+        GameObject canvas = GameObject.Instantiate(Resources.Load("Prefabs/DebugMenu/DebugCanvas")) as GameObject;
         debugCanvas_ = canvas.GetComponent<DebugViewer>();
         debugCanvas_.gameObject.SetActive(false);
 
