@@ -14,7 +14,9 @@ public class GameManager : Singleton<GameManager> {
         nowSceneName = Application.loadedLevelName;
         
         // デバッグ機能の初期化
+#if _DEBUG
         InitDebugViewer();
+#endif
     }
 
 	public void GameRestart()
@@ -23,13 +25,16 @@ public class GameManager : Singleton<GameManager> {
     }
 
     //! 以下デバッグ用
+#if _DEBUG
     private DebugViewer debugCanvas_;
     void InitDebugViewer()
     {
+        Debug.Log("Init Debug Viewer");
         GameObject canvas = GameObject.Instantiate(Resources.Load("Prefabs/DebugMenu/DebugCanvas")) as GameObject;
         debugCanvas_ = canvas.GetComponent<DebugViewer>();
         debugCanvas_.gameObject.SetActive(false);
         StartCoroutine("CheckDebugViewer");
+
     }
     
     IEnumerator CheckDebugViewer()
@@ -59,4 +64,5 @@ public class GameManager : Singleton<GameManager> {
             yield return null;
         }
     }
+#endif
 }
