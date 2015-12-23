@@ -6,20 +6,6 @@ public class GameManager : Singleton<GameManager> {
     [HideInInspector]
     public string nowSceneName;
 
-    //プレイヤーまたはプレイヤーのスキルで時間停止しないもの用の時間
-    float playerDeltaTime;
-    public float PlayerDeltaTime
-    {
-        get { return playerDeltaTime; }
-    }
-
-    //プレイヤーのスキルで時間停止するもの用の時間
-    float notPlayerDeltaTime;
-    public float NotPlayerDeltaTime
-    {
-        get { return notPlayerDeltaTime; }
-    }
-
     bool isTheWorld = false;
     bool isPause = false;
 
@@ -28,17 +14,21 @@ public class GameManager : Singleton<GameManager> {
         nowSceneName = Application.loadedLevelName;
     }
 
-    void Update()
+    public float GetDeltaTime(string tag = "Default")
     {
-        playerDeltaTime = Time.deltaTime;
-        notPlayerDeltaTime = Time.deltaTime;
-        if (isTheWorld)
-            notPlayerDeltaTime = 0f;
-        if (isPause)
+        float deltaTime = Time.deltaTime;
+        switch (tag)
         {
-            playerDeltaTime = 0;
-            notPlayerDeltaTime = 0;
+            case "Player":
+                if (isPause)
+                    deltaTime = 0;
+                break;
+            default:
+                if (isTheWorld || isPause)
+                    deltaTime = 0;
+                break;
         }
+        return deltaTime;
     }
 
     public void TheWorld(bool isTimeStop)

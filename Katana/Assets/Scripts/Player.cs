@@ -64,7 +64,7 @@ public class Player : Singleton<Player> {
     //左右の移動量
     Vector3 GetHorizontalMoveScale()
     {
-        Vector3 moveScale = (HorizontalInitialVelocity * Input.GetAxisRaw("Horizontal")) * Vector3.right * GameManager.I.PlayerDeltaTime;
+        Vector3 moveScale = (HorizontalInitialVelocity * Input.GetAxisRaw("Horizontal")) * Vector3.right * GameManager.I.GetDeltaTime(this.tag);
         anim.SetFloat("MoveSpeed", moveScale.magnitude);
         return moveScale;
     }
@@ -78,7 +78,7 @@ public class Player : Singleton<Player> {
         if ((this.transform.position.y - jumpStartHeight) > JumpHeight)
             JumpInitialVelocity = Mathf.Abs(JumpInitialVelocity) * -1;
 
-        Vector3 moveScale = Vector3.up * JumpInitialVelocity * GameManager.I.PlayerDeltaTime;
+        Vector3 moveScale = Vector3.up * JumpInitialVelocity * GameManager.I.GetDeltaTime(this.tag);
         if(Mathf.Abs(moveScale.y) > 0)
             anim.SetBool("IsJump", true);
         return moveScale;
@@ -119,7 +119,7 @@ public class Player : Singleton<Player> {
         if (Input.GetButtonDown("Fire1"))
         {
             //TheWorldの発動（すでに発動してる場合は使えない）
-            if (GameManager.I.NotPlayerDeltaTime > 0)
+            if (GameManager.I.GetDeltaTime() > 0)
                 StartCoroutine(TheWorld());
         }
     }
