@@ -42,7 +42,7 @@ public class GlobalDefinesWizard : ScriptableWizard
     public List<GlobalDefine> _globalDefines = new List<GlobalDefine>();
 
 
-    [MenuItem("Tools/Edit Global Defines")]
+    //[MenuItem("Tools/Edit Global Defines")]
     static void CreateWizardFromMenu()
     {
         var helper = ScriptableWizard.DisplayWizard<GlobalDefinesWizard>("Global Defines Manager", "SaveAndReBuild", "Cancel");
