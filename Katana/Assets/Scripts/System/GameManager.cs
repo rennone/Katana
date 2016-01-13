@@ -1,13 +1,22 @@
 ﻿using System;
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
+[RequireComponent(typeof(ActorHolder))]
 public class GameManager : Singleton<GameManager> {
 
     [HideInInspector]
     public string nowSceneName;
 
-  
+    private ActorHolder holder_;
+
+    public PlayerController Player { get; private set; }
+
+    void Awake()
+    {
+        holder_ = GetComponent<ActorHolder>();
+    }
 
     void Start()
     {
@@ -22,6 +31,30 @@ public class GameManager : Singleton<GameManager> {
 	public void GameRestart()
     {
         Application.LoadLevel(nowSceneName);
+    }
+
+    public void SetPlayer(PlayerController player)
+    {
+        if (Player != null)
+            Destroy(Player);
+        Player = player;    //入れ替える
+    }
+
+    // Actorを登録する
+    public void RegisterActor(IActor actor)
+    {
+        // プレイヤーだけはすぐにアクセスできるように参照を保存しておく
+        if (actor.tag == TagName.Player)
+        {
+            SetPlayer((PlayerController)actor);
+        }
+        
+        GetComponent<ActorHolder>().RegisterActor(actor);
+    }
+
+    public void RemoveActor(IActor actor)
+    {
+        GetComponent<ActorHolder>().RemoveActor(actor);
     }
 
     //! 以下デバッグ用

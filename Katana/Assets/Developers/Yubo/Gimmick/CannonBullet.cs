@@ -30,10 +30,10 @@ public class CannonBullet : MonoBehaviour {
 
     void OnTriggerEnter(Collider col)
     {
-        if (col.gameObject.layer == LayerMask.NameToLayer("MainCharacter"))
+        if (col.gameObject.layer == LayerName.Player)
         {
             this.gameObject.SetActive(false);
-            col.GetComponent<Player>().DecreaseHP(damage);
+            col.GetComponent<PlayerController>().Damage(damage);
         }
         else
         {

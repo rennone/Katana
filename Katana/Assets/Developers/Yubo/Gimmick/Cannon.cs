@@ -12,8 +12,6 @@ public class Cannon : MonoBehaviour {
 
     int cacheCount = 10;
 
-    private Transform target;
-
     private bool canFire = true;
     private CannonBullet[] bullets;
 
@@ -27,11 +25,11 @@ public class Cannon : MonoBehaviour {
             bullets[i] = Instantiate(bulletPrefab) as CannonBullet;
             bullets[i].gameObject.SetActive(false);
         }
-        target = Player.I.transform;
     }
 
     void Update()
     {
+        var target = GameManager.I.Player.transform;
         float dist = (target.position - this.transform.position).magnitude;
         if (dist < searchDistance)
         {

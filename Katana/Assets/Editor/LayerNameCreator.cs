@@ -14,7 +14,7 @@ using UnityEngine;
 /// <summary>
 /// タグ名を定数で管理するクラスを作成するスクリプト
 /// </summary>
-public static class LayerNameCreator
+public static class TagNameCreator
 {
     // 変数名に使えない文字を管理する配列
     private static readonly string[] INVALUD_CHARS =
@@ -28,10 +28,10 @@ public static class LayerNameCreator
         ",", "<"
     };
 
-    private const string HotKey = "%#t";    //ショートカットキー Ctrl + Shift + t
-    private const string CommandName = "Tools/Create/Tag Name";  // コマンド名
+    private const string HotKey = "%#l";    //ショートカットキー Ctrl + Shift + t
+    private const string CommandName = "Tools/Create/Layer Name";  // コマンド名
     private const string CommandNameWithHotkey = CommandName + " " + HotKey;
-    private const string OutputFilePath = "Assets/Scripts/System/TagName.cs";      // ファイルパス
+    private const string OutputFilePath = "Assets/Scripts/System/LayerName.cs";      // ファイルパス
 
     private static readonly string OutputFileName = Path.GetFileName(OutputFilePath);                   // ファイル名(拡張子あり)
     private static readonly string OutputFileNameWithoutExtension = Path.GetFileNameWithoutExtension(OutputFilePath);   // ファイル名(拡張子なし)
@@ -53,16 +53,18 @@ public static class LayerNameCreator
     {
         var builder = new StringBuilder();
 
+        builder.AppendLine("using UnityEngine;");
         builder.AppendLine("/// <summary>");
         builder.AppendLine("/// レイヤ番号を定数で管理するクラス");
         builder.AppendLine("/// </summary>");
         builder.AppendFormat("public static class {0}", OutputFileNameWithoutExtension).AppendLine();
         builder.AppendLine("{");
 
-        foreach (var n in InternalEditorUtility.tags.
+        foreach (var n in InternalEditorUtility.layers.
             Select(c => new { var = RemoveInvalidChars(c), val = c }))
         {
-            builder.Append("\t").AppendFormat(@"public const string {0} = ""{1}"";", n.var, n.val).AppendLine();
+            //builder.Append("\t").AppendFormat(@"public static string {0} = { get{ return LayerMask.NameToLayer(  );}}", n.var).AppendLine();
+            builder.Append("\t").AppendFormat(@"public static int {0} {{ get{{ return LayerMask.NameToLayer(""{1}""); }} }}", n.var, n.val).AppendLine();
         }
 
         builder.AppendLine("}");

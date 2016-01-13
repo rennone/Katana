@@ -2256,10 +2256,16 @@ GameObject:
   - 4: {fileID: 408036}
   - 114: {fileID: 11489804}
   - 136: {fileID: 13612554}
-  - 54: {fileID: 5489610}
+  - 54: {fileID: 5470380}
+  - 143: {fileID: 14341034}
+  - 114: {fileID: 11489956}
+  - 114: {fileID: 11474300}
+  - 114: {fileID: 11497248}
+  - 114: {fileID: 11452358}
+  - 114: {fileID: 11493684}
   m_Layer: 8
   m_Name: MainCharacter
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2801,7 +2807,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 182774}
   m_LocalRotation: {x: 0, y: .707106829, z: 0, w: .707106709}
-  m_LocalPosition: {x: 0, y: 2, z: 0}
+  m_LocalPosition: {x: 0, y: .629999995, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 417584}
@@ -3007,7 +3013,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 121812}
-  m_LocalRotation: {x: -.0937465355, y: .697855115, z: .707468987, w: .0608067028}
+  m_LocalRotation: {x: -.0937465429, y: .697855175, z: .707469046, w: .0608066991}
   m_LocalPosition: {x: -.0554340295, y: .00173068431, z: .0986537337}
   m_LocalScale: {x: 1.00000036, y: 1.0000006, z: 1.00000048}
   m_Children:
@@ -4858,7 +4864,7 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 150694}
   m_Mesh: {fileID: 4300002, guid: 8f0565f23a2b58541a475bd3c1393052, type: 3}
---- !u!54 &5489610
+--- !u!54 &5470380
 Rigidbody:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -4867,11 +4873,11 @@ Rigidbody:
   serializedVersion: 2
   m_Mass: 1
   m_Drag: 0
-  m_AngularDrag: 0
+  m_AngularDrag: .0500000007
   m_UseGravity: 0
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
-  m_Constraints: 120
+  m_Constraints: 8
   m_CollisionDetection: 0
 --- !u!95 &9547852
 Animator:
@@ -4890,6 +4896,32 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &11452358
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 182774}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcf56e1f8d538834e8878608f39dd471, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHp_: 10000
+  strong_: 10
+  defense_: 10
+--- !u!114 &11474300
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 182774}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5912969ca884cf94d87963d80227c208, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator_: {fileID: 9547852}
 --- !u!114 &11489804
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4901,12 +4933,86 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f3a8aeed55670b4b9929610cb727050, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  anim: {fileID: 9547852}
-  JumpInitialVelocity: 10
-  HorizontalInitialVelocity: 10
-  JumpHeight: 3.5
-  MaxFallSpeed: 10
-  MaxHP: 100
+--- !u!114 &11489956
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 182774}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f99e6aefd86a67469a69c9bd122e64a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movement:
+    MaxForwardSpeed: 500
+    MaxSidewaysSpeed: 500
+    MaxBackwardsSpeed: 500
+    SlopeSpeedMultiplier:
+      serializedVersion: 2
+      m_Curve:
+      - time: -90
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 90
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+    MaxGroundAcceleration: 1000
+    MaxAirAcceleration: 500
+    Gravity: 50
+    MaxFallSpeed: 500
+    FreezePosition:
+      X: 0
+      Y: 0
+      Z: 1
+    ConstraintPosition: {x: 0, y: 0, z: 0}
+  jumping:
+    enabled: 1
+    baseHeight: 4.5
+    extraHeight: 3
+    perpAmount: 0
+    steepPerpAmount: .5
+  movingPlatform:
+    enabled: 0
+    movementTransfer: 2
+  sliding:
+    enabled: 0
+    slidingSpeed: 15
+    sidewaysControl: 1
+    speedControl: .400000006
+--- !u!114 &11493684
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 182774}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0769da4bb8f45a4ebde5893bda9aa0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &11497248
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 182774}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77434314b493c8f43840d7b072598725, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!136 &13612554
 CapsuleCollider:
   m_ObjectHideFlags: 1
@@ -4914,12 +5020,12 @@ CapsuleCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 182774}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: .200000003
+  m_Radius: .209999993
   m_Height: 1.60000002
   m_Direction: 1
-  m_Center: {x: 0, y: .800000012, z: 0}
+  m_Center: {x: 0, y: .75, z: 0}
 --- !u!137 &13702772
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
@@ -6117,6 +6223,23 @@ SkinnedMeshRenderer:
     m_Center: {x: -.252910227, y: -.00465996563, z: -.00120544434}
     m_Extent: {x: .132489011, y: .116088353, z: .548160791}
   m_DirtyAABB: 0
+--- !u!143 &14341034
+CharacterController:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 182774}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Height: 1.25
+  m_Radius: .200000003
+  m_SlopeLimit: 40
+  m_StepOffset: .300000012
+  m_SkinWidth: .0799999982
+  m_MinMoveDistance: .00100000005
+  m_Center: {x: 0, y: .699999988, z: 0}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

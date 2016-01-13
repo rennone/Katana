@@ -23,6 +23,10 @@ public class Enemy : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        collision.other.SendMessage("DecreaseHP" , 100);
+        if (collision.gameObject.tag == TagName.Player)
+        {
+            var player = collision.gameObject.transform.GetComponent<PlayerController>();
+            player.Damage(100);
+        }
     }
 }
