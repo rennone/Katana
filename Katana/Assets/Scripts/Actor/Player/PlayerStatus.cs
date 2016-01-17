@@ -12,7 +12,7 @@ public class PlayerStatus : ActorStatus
         controller_ = GetComponent<PlayerController>();
     }
 
-    void Update()
+    override protected void Update()
     {
         base.Update();
         HPManager.I.ChangeDisplayHP(Hp);

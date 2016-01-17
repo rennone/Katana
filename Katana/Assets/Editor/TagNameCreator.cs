@@ -54,7 +54,7 @@ public static class LayerNameCreator
         var builder = new StringBuilder();
 
         builder.AppendLine("/// <summary>");
-        builder.AppendLine("/// レイヤ番号を定数で管理するクラス");
+        builder.AppendLine("/// タグ名を定数で管理するクラス");
         builder.AppendLine("/// </summary>");
         builder.AppendFormat("public static class {0}", OutputFileNameWithoutExtension).AppendLine();
         builder.AppendLine("{");
@@ -72,7 +72,8 @@ public static class LayerNameCreator
         {
             Directory.CreateDirectory(directoryName);
         }
-
+       
+        
         File.WriteAllText(OutputFilePath, builder.ToString(), Encoding.UTF8);
         AssetDatabase.Refresh(ImportAssetOptions.ImportRecursive);
     }
