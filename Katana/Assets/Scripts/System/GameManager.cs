@@ -11,12 +11,21 @@ public class GameManager : Singleton<GameManager> {
 
     private ActorHolder holder_;
 
+    ActorHolder Holder
+    {
+        get
+        {
+            if(holder_ == null)
+                holder_ = GetComponent<ActorHolder>();
+            return holder_;
+        }
+    }
+
     public PlayerController Player { get { return holder_.Player; } }
 
     new void Awake()
     {
         base.Awake();
-        holder_ = GetComponent<ActorHolder>();
     }
 
     void Start()
@@ -37,7 +46,7 @@ public class GameManager : Singleton<GameManager> {
     // Actorを登録する
     public void RegisterActor(ActorController actor)
     {
-        holder_.RegisterActor(actor);
+        Holder.RegisterActor(actor);
     }
 
     public void RemoveActor(ActorController actor)

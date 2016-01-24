@@ -33,7 +33,7 @@ public class PlayerController : ActorController
         var capsuleColider = GetComponent<CapsuleCollider>();
         capsuleColider.isTrigger = true;
         capsuleColider.center = new Vector3(0, 0.75f, 0);
-        capsuleColider.radius = 2.1f;
+        capsuleColider.radius = 0.2f;
         capsuleColider.height = 1.6f;
     }
 

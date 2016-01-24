@@ -6,6 +6,7 @@ TagManager:
   tags:
   - LoadableScene
   - StageRange
+  - Debug
   layers:
   - Default
   - TransparentFX
@@ -15,9 +16,9 @@ TagManager:
   - UI
   - 
   - 
-  - MainCharacter
-  - 
-  - 
+  - Player
+  - PlayerDamaged
+  - Enemy
   - 
   - 
   - 
