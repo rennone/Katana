@@ -5,21 +5,41 @@ using System.Collections.Generic;
 
 [RequireComponent(typeof(PlayerAnimator))]
 [RequireComponent(typeof(ActorMotor))]
-[RequireComponent(typeof(PlayerStatus))]
+[RequireComponent(typeof(ActorStatus))]
 [RequireComponent(typeof(PlayerInput))]
-public class PlayerController : IActor
+public class PlayerController : ActorController
 {
-    private bool isMuteki = false;  //無敵状態かどうかのフラグ
-    private PlayerStatus status_ = null;
-
     void Awake()
     {
-        status_ = GetComponent<PlayerStatus>();
+        GetComponent<ActorStatus>().OnDead = OnDead;
+
+        var characterController = GetComponent<CharacterController>();
+        characterController.center = new Vector3(0, 0.7f, 0);
+        characterController.radius = 0.2f;
+        characterController.height = 1.25f;
+
+        var motor = GetComponent<ActorMotor>();
+        motor.movement.MaxForwardSpeed = 500;
+        motor.movement.MaxSidewaysSpeed = 500;
+        motor.movement.MaxBackwardsSpeed = 500;
+        motor.movement.MaxGroundAcceleration = 1000;
+        motor.movement.MaxAirAcceleration = 500;
+        motor.movement.Gravity = 50;
+        motor.movement.MaxFallSpeed = 500;
+        motor.movement.FreezePosition.Z = true;
+        motor.jumping.baseHeight = 4.5f;
+        motor.jumping.extraHeight = 3.0f;
+
+        var capsuleColider = GetComponent<CapsuleCollider>();
+        capsuleColider.isTrigger = true;
+        capsuleColider.center = new Vector3(0, 0.75f, 0);
+        capsuleColider.radius = 2.1f;
+        capsuleColider.height = 1.6f;
     }
 
     void Update()
     {
-       // Debug.Log(transform.position);
+
     }
 
 
@@ -30,14 +50,8 @@ public class PlayerController : IActor
 
     override public void Damage(int val)
     {
-        status_.DecreaseHP(val);
+        base.Damage(val);
         StartCoroutine("AfterDamaged");
-        
-    }
-
-    override public void Recover(int val)
-    {
-        status_.IncreaseHP(val);
     }
 
     void SetLayerRecursively(GameObject actor, int layer)

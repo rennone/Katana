@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
 
 // CharacterのHPなどのステータスを表す親クラス
@@ -6,24 +7,6 @@ using System.Collections;
 
 public class ActorStatus : MonoBehaviour
 {
-    // 最大HP
-    [SerializeField] 
-    private int maxHp_ = 10000;
-    public int MaxHp { get { return maxHp_; } }
-
-    // HP
-    private int hp_;
-    public int Hp { get { return hp_; } }
-
-    // 攻撃力
-    [SerializeField]
-    private int strong_ = 10;
-    public int Strong { get { return strong_; } }
-
-    // 防御力
-    [SerializeField]
-    private int defense_ = 10;
-    public int Defense { get { return defense_; } }
 
     
     virtual protected void Awake()
@@ -56,7 +39,9 @@ public class ActorStatus : MonoBehaviour
         if ( alive && hp_ <= 0)
         {
             hp_ = 0;
-            OnDead();
+
+            if(OnDead != null)
+                OnDead();
         }
     }
 
@@ -70,11 +55,40 @@ public class ActorStatus : MonoBehaviour
         if (!full &&  hp_ >= MaxHp)
         {
             hp_ = MaxHp;
-            OnFullRecovered();
+
+            if(OnFullRecovered != null)
+                OnFullRecovered();
         }
     }
 
-    protected virtual void OnDead() { }
+    //protected virtual void OnDead() { }
 
-    protected virtual void OnFullRecovered() { }
+    //protected virtual void OnFullRecovered() { }
+
+
+
+
+
+    // 最大HP
+    [SerializeField]
+    private int maxHp_ = 10000;
+    public int MaxHp { get { return maxHp_; } }
+
+    // HP
+    private int hp_;
+    public int Hp { get { return hp_; } }
+
+    // 攻撃力
+    [SerializeField]
+    private int strong_ = 10;
+    public int Strong { get { return strong_; } }
+
+    // 防御力
+    [SerializeField]
+    private int defense_ = 10;
+    public int Defense { get { return defense_; } }
+
+    public Action OnDead{ private get; set; }
+    public Action OnFullRecovered { private get; set; }
+
 }

@@ -11,10 +11,11 @@ public class GameManager : Singleton<GameManager> {
 
     private ActorHolder holder_;
 
-    public PlayerController Player { get; private set; }
+    public PlayerController Player { get { return holder_.Player; } }
 
-    void Awake()
+    new void Awake()
     {
+        base.Awake();
         holder_ = GetComponent<ActorHolder>();
     }
 
@@ -33,28 +34,20 @@ public class GameManager : Singleton<GameManager> {
         Application.LoadLevel(nowSceneName);
     }
 
-    public void SetPlayer(PlayerController player)
-    {
-        if (Player != null)
-            Destroy(Player);
-        Player = player;    //入れ替える
-    }
-
     // Actorを登録する
-    public void RegisterActor(IActor actor)
+    public void RegisterActor(ActorController actor)
     {
-        // プレイヤーだけはすぐにアクセスできるように参照を保存しておく
-        if (actor.tag == TagName.Player)
-        {
-            SetPlayer((PlayerController)actor);
-        }
-        
-        GetComponent<ActorHolder>().RegisterActor(actor);
+        holder_.RegisterActor(actor);
     }
 
-    public void RemoveActor(IActor actor)
+    public void RemoveActor(ActorController actor)
     {
         GetComponent<ActorHolder>().RemoveActor(actor);
+    }
+
+    public void Pause()
+    {
+
     }
 
     //! 以下デバッグ用

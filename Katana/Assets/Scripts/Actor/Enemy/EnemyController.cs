@@ -20,18 +20,4 @@ public class EnemyController : MonoBehaviour
             player.Damage(status.Strong);               //プレイヤーに攻撃
         }
     }
-
-    public virtual void Damage(int val)
-    {
-        var status = GetComponent<ActorStatus>();
-        status.DecreaseHP(val);
-    }
-
-    public virtual void Recover(int val)
-    {
-        var status = GetComponent<ActorStatus>();
-        status.IncreaseHP(val);
-    }
-
-
 }

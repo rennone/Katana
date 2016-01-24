@@ -9,13 +9,13 @@ public class ActorInitializeFinalize : MonoBehaviour {
 	void Awake () 
     {
         // ゲームマネージャーに登録
-        GameManager.I.RegisterActor(GetComponent<IActor>());
+        GameManager.I.RegisterActor(GetComponent<ActorController>());
 	}
 
     void OnDestory()
     {
         // ゲームマネージャーから削除
-        GameManager.I.RegisterActor(GetComponent<IActor>());
+        GameManager.I.RegisterActor(GetComponent<ActorController>());
     }
 
 }

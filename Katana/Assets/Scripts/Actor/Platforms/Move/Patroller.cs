@@ -9,26 +9,32 @@ namespace Platforms
     public class Patroller : MonoBehaviour
     {
         // 巡回する頂点群
-        [SerializeField] private Transform[] _vertices;
+        [SerializeField] 
+        private Transform[] _vertices;
 
         // 上記の配列を順方向に回るか逆方向に回るか
-        [SerializeField] private Boolean _forwardDirection = true;
+        [SerializeField] 
+        private Boolean _forwardDirection = true;
 
-        [SerializeField] private float _speed = 10.0f;
+        [SerializeField] 
+        private float _speed = 10.0f;
 
         // 上記で設定されたTransformがこのオブジェクトの子だったりすると一緒に移動してしまうので最初に初期位置を保存しておく
         
         List<Vector3> _verticesWorldPosition = new List<Vector3>(); 
 
-        private int _destinationIndex = 0;
+        private int _nextIndex = 0;
 
 
-        Vector3 Destination { get { return _verticesWorldPosition[_destinationIndex]; } }
+        // 目的地
+        Vector3 Destination { get { return _verticesWorldPosition[_nextIndex]; } }
 
+        // 次の頂点を目指す
         void Next()
         {
-            _destinationIndex = (_forwardDirection ? _destinationIndex + 1 : _destinationIndex + _vertices.Count() - 1) % _vertices.Count();
+            _nextIndex = (_forwardDirection ? _nextIndex + 1 : _nextIndex + _vertices.Count() - 1) % _vertices.Count();
         }
+
         // Use this for initialization
         void Start ()
         {
@@ -47,7 +53,6 @@ namespace Platforms
             // 移動量
             var offset = _speed*Time.deltaTime; //TODO : Timeを書き換え
 
-          //  Debug.Log(_vertices[0].position.ToString() + " - " + transform.position.ToString() + " - " + _vertices[1].position.ToString());
             // 次に進む
             if (distance.sqrMagnitude <= offset*offset)
             {
