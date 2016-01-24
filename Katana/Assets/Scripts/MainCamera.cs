@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Katana;
 
 public class MainCamera : Singleton<MainCamera> {
 

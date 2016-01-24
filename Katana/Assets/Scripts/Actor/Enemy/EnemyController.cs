@@ -1,23 +1,26 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Katana;
 
+namespace Katana
+{
 // Controller (Baseクラスなのでこれを継承して他のクラスを定義してもよい)
 // 他のオブジェクトとのインターフェースとしての役割をする.
-// 衝突時のダメージ関数などはここに書いておいて
-// 入力(AI)やステータスは他のスクリプトに書く
+// 敵の共通処理を書く
 
-[RequireComponent(typeof(ActorStatus))]
-public class EnemyController : MonoBehaviour 
-{
-    void OnTriggerEnter(Collider collider)
+    [RequireComponent(typeof (ActorStatus))]
+    public class Enemy : Actor
     {
-        Debug.Log("Collide");
-        // プレイヤーとぶつかった処理
-        if (collider.gameObject.layer == LayerName.Player)
-        {
-            var player = collider.gameObject.transform.GetComponent<PlayerController>();
-            var status = GetComponent<ActorStatus>();   //ステータスを取得
-            player.Damage(status.Strong);               //プレイヤーに攻撃
-        }
+        //private void OnTriggerEnter(Collider collider)
+        //{
+        //    Debug.Log("Collide");
+        //    // プレイヤーとぶつかった処理
+        //    if (collider.gameObject.layer == LayerName.Player)
+        //    {
+        //        var player = collider.gameObject.transform.GetComponent<Player>();
+        //        var status = GetComponent<ActorStatus>(); //ステータスを取得
+        //        player.Damage(status.Strong); //プレイヤーに攻撃
+        //    }
+        //}
     }
 }

@@ -33,7 +33,7 @@ public class CannonBullet : MonoBehaviour {
         if (col.gameObject.layer == LayerName.Player)
         {
             this.gameObject.SetActive(false);
-            col.GetComponent<PlayerController>().Damage(damage);
+            col.GetComponent<Katana.Player>().Damage(damage);
         }
         else
         {

@@ -3,63 +3,69 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-[RequireComponent(typeof(ActorHolder))]
-public class GameManager : Singleton<GameManager> {
+namespace Katana
+{
 
-    [HideInInspector]
-    public string nowSceneName;
-
-    private ActorHolder holder_;
-
-    ActorHolder Holder
+    [RequireComponent(typeof (ActorHolder))]
+    public class GameManager : Singleton<GameManager>
     {
-        get
+
+        [HideInInspector] public string nowSceneName;
+
+        private ActorHolder holder_;
+
+        private ActorHolder Holder
         {
-            if(holder_ == null)
-                holder_ = GetComponent<ActorHolder>();
-            return holder_;
+            get
+            {
+                if (holder_ == null)
+                    holder_ = GetComponent<ActorHolder>();
+                return holder_;
+            }
         }
-    }
 
-    public PlayerController Player { get { return holder_.Player; } }
+        public Player Player
+        {
+            get { return holder_.Player; }
+        }
 
-    new void Awake()
-    {
-        base.Awake();
-    }
+        private new void Awake()
+        {
+            base.Awake();
+        }
 
-    void Start()
-    {
-        nowSceneName = Application.loadedLevelName;
-        
-        // デバッグ機能の初期化
+        private void Start()
+        {
+            nowSceneName = Application.loadedLevelName;
+
+            // デバッグ機能の初期化
 #if _DEBUG
         InitDebugViewer();
 #endif
-    }
+        }
 
-	public void GameRestart()
-    {
-        Application.LoadLevel(nowSceneName);
-    }
+        public void GameRestart()
+        {
+            Application.LoadLevel(nowSceneName);
+        }
 
-    // Actorを登録する
-    public void RegisterActor(ActorController actor)
-    {
-        Holder.RegisterActor(actor);
-    }
+        // Actorを登録する
+        public void RegisterActor(Actor actor)
+        {
+            Holder.RegisterActor(actor);
+        }
 
-    public void RemoveActor(ActorController actor)
-    {
-        GetComponent<ActorHolder>().RemoveActor(actor);
-    }
+        public void RemoveActor(Actor actor)
+        {
+            GetComponent<ActorHolder>().RemoveActor(actor);
+        }
 
-    public void Pause()
-    {
+        public void Pause()
+        {
 
-    }
+        }
 
-    //! 以下デバッグ用
+        //! 以下デバッグ用
 #if _DEBUG
     private DebugViewer debugCanvas_;
     void InitDebugViewer()
@@ -100,4 +106,5 @@ public class GameManager : Singleton<GameManager> {
         }
     }
 #endif
+    }
 }

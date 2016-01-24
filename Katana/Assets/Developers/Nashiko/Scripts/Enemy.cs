@@ -25,7 +25,7 @@ public class Enemy : MonoBehaviour
     {
         if (collision.gameObject.tag == TagName.Player)
         {
-            var player = collision.gameObject.transform.GetComponent<PlayerController>();
+            var player = collision.gameObject.transform.GetComponent<Katana.Player>();
             player.Damage(100);
         }
     }
