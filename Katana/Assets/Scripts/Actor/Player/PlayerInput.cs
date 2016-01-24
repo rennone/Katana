@@ -8,8 +8,6 @@ namespace Katana
     [RequireComponent(typeof (ActorMotor))]
     public class PlayerInput : MonoBehaviour
     {
-
-
         private ActorMotor motor_ = null;
         // Use this for initialization
         private void Start()
@@ -22,11 +20,6 @@ namespace Katana
         {
             motor_.InputMoveDirection = (Input.GetAxisRaw("Horizontal")*Time.deltaTime)*Vector3.right;
             motor_.InputJump = Input.GetButtonDown("Jump");
-
-            if (Input.GetKeyDown(KeyCode.A))
-            {
-                var player = GetComponent<Player>();
-            }
         }
     }
 }
