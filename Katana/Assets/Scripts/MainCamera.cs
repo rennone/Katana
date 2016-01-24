@@ -1,15 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Katana;
 
 public class MainCamera : Singleton<MainCamera> {
 
     Vector3 relativePos;
 
 	void Start () {
-        relativePos = this.transform.position - Player.I.transform.position;
+        relativePos = this.transform.position - GameManager.I.Player.transform.position;
 	}
 	
 	void Update () {
-        this.transform.position = Player.I.transform.position + relativePos;
+        this.transform.position = GameManager.I.Player.transform.position + relativePos;
 	}
 }

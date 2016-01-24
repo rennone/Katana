@@ -14,7 +14,7 @@ using UnityEngine;
 /// <summary>
 /// タグ名を定数で管理するクラスを作成するスクリプト
 /// </summary>
-public static class TagNameCreator
+public static class LayerNameCreator
 {
     // 変数名に使えない文字を管理する配列
     private static readonly string[] INVALUD_CHARS =
@@ -72,7 +72,8 @@ public static class TagNameCreator
         {
             Directory.CreateDirectory(directoryName);
         }
-
+       
+        
         File.WriteAllText(OutputFilePath, builder.ToString(), Encoding.UTF8);
         AssetDatabase.Refresh(ImportAssetOptions.ImportRecursive);
     }

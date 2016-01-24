@@ -18,7 +18,7 @@ public class Spike : MonoBehaviour {
     {
         if (col.gameObject.layer == LayerMask.NameToLayer("MainCharacter"))
         {
-            col.gameObject.GetComponent<Player>().DecreaseHP(damage);
+            //col.gameObject.GetComponent<Player>().DecreaseHP(damage);
         }
     }
 }

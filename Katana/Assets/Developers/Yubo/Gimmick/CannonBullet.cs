@@ -20,7 +20,7 @@ public class CannonBullet : MonoBehaviour {
 
     void Update()
     {
-        Vector3 newPos = this.transform.position + direction * speed * Time.deltaTime;
+        Vector3 newPos = this.transform.position + direction*speed*Time.deltaTime;//GameManager.I.GetDeltaTime(this.tag);
         this.transform.position = newPos;
         if((newPos - firstPos).magnitude > expDist)
         {
@@ -30,10 +30,10 @@ public class CannonBullet : MonoBehaviour {
 
     void OnTriggerEnter(Collider col)
     {
-        if (col.gameObject.layer == LayerMask.NameToLayer("MainCharacter"))
+        if (col.gameObject.layer == LayerName.Player)
         {
             this.gameObject.SetActive(false);
-            col.GetComponent<Player>().DecreaseHP(damage);
+            col.GetComponent<Katana.Player>().Damage(damage);
         }
         else
         {
