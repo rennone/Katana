@@ -8,10 +8,10 @@ namespace UnityEditor
     [InitializeOnLoad]
     public class SceneViewEditor : Editor
     {
-        private static Vector2 _mousePosition = new Vector2(-1, -1);
+        private static Vector2 _sceneViewMouse = new Vector2(-1, -1);
 
         private const string HotKey = "%#c";    //ショートカットキー Ctrl + Shift + t
-        private const string CommandName = "Tools/Create/Move Player";  // コマンド名
+        private const string CommandName = "Tools/Move/Player(shortcut only)";  // コマンド名
         private const string CommandNameWithHotkey = CommandName + " " + HotKey;
 
         static SceneViewEditor()
@@ -22,10 +22,21 @@ namespace UnityEditor
         }
 
         [MenuItem(CommandNameWithHotkey)]
-        public static void Create()
+        public static bool EnableMovePlayer()
+        {
+            var sCamera = SceneView.GetAllSceneCameras().First();
+            
+            if (sCamera == null)
+                return false;
+
+            return _sceneViewMouse.x >= 0 && _sceneViewMouse.y >= 0 && _sceneViewMouse.x < sCamera.pixelWidth && _sceneViewMouse.y < sCamera.pixelHeight;
+        }
+
+        [MenuItem(CommandNameWithHotkey)]
+        public static void MovePlayerPosition()
         {
             // スクリーン上の座標は必ず正なので, 負の数だった場合は初期化できていない
-            if(_mousePosition.x < 0 || _mousePosition.y < 0)
+            if(_sceneViewMouse.x < 0 || _sceneViewMouse.y < 0)
                 return;
 
             var player = (GameObject)FindObjectsOfType(typeof(GameObject)).First(o => o.name == "Player");
@@ -47,7 +58,7 @@ namespace UnityEditor
             var sCamera = SceneView.GetAllSceneCameras().First();
 
             // マウスの位置をカメラ座標に変換
-            var pos = new Vector2(_mousePosition.x, _mousePosition.y);
+            var pos = new Vector2(_sceneViewMouse.x, _sceneViewMouse.y);
             var position = sCamera.ScreenToWorldPoint(pos);
             position.y = 2*sCamera.transform.position.y - position.y;   //y座標が逆になっているの酒精
 
@@ -63,8 +74,7 @@ namespace UnityEditor
         // マウスの位置を保存する
         static void OnSceneGUI(SceneView sceneView)
         {
-            Debug.Log(Event.current.mousePosition);
-            _mousePosition = Event.current.mousePosition;
+            _sceneViewMouse = Event.current.mousePosition;
         }
     }
 }
