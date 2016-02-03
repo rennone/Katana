@@ -1,38 +1,51 @@
-ï»¿using UnityEngine;
-using System.Collections;
+using UnityEngine;
 
-public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
+public class Singleton<T> : MonoBehaviour where T : Singleton<T>
 {
-    private static T instance;
-    public static T I
+    private static T mInstance = null;
+    [SerializeField]
+    protected bool persistance = false;
+
+    public static T Instance
     {
-        get
-        {
-            if(instance == null)
-            {
-                instance = (T)FindObjectOfType(typeof(T));
-            }
-            return instance;
-        }
+        get { return mInstance; }
+        private set { mInstance = value; }
     }
 
-    void OnDestroy()
+    public static T I
     {
-        if(instance == this)
-        {
-            instance = null;
-        }
+        get { return mInstance; }
     }
 
     protected virtual void Awake()
     {
-        CheckInstance();
+        if (mInstance == null)
+        {
+            mInstance = this as T;
+            mInstance.Init();
+            //‰i‘±«‚ğ—LŒø‚É‚·‚é‚Æ‚«‚Íe‚ğ‚½‚È‚¢transform‚Æ‚·‚éB
+            if (persistance)
+            {
+                this.gameObject.transform.parent = null;
+                DontDestroyOnLoad(gameObject);
+            }
+        }
+        else
+        {
+            //‰i‘±«‚ğ—LŒø‚Ìƒtƒ‰ƒO‚ğ‚ÂSingleton‚ª‚·‚Å‚É‚ ‚éê‡AŒã‚©‚ç¶¬‚µ‚æ‚¤‚Æ‚µ‚½
+            //‚n‚‚‚Š‚…‚ƒ‚”‚Í©g‚ğ”jŠü‚µ‚Ü‚·B
+            if (persistance)
+            {
+                DestroyImmediate(this.gameObject);
+                //DestroyObject( gameObject );
+            }
+        }
     }
 
-    protected virtual bool CheckInstance()
+    protected virtual void Init() { }
+
+    protected virtual void OnApplicationQuit()
     {
-        if (this == I) { return true; }
-        Destroy(this);
-        return false;
+        mInstance = null;
     }
 }
