@@ -42,6 +42,7 @@ namespace Katana
 #if _DEBUG
         InitDebugViewer();
 #endif
+            SoundManager.I.PlayBGM(SoundKey.BGM_COMBAT);
         }
 
         public void GameRestart()

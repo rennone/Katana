@@ -349,6 +349,13 @@ public class SoundManager : Singleton<SoundManager> {
             DOTween.Kill(BGMPoints[index] );
         }
 
+        //BGMの発信源をPlayerに設定
+        if (Katana.PlayerInput.I != null)
+        {
+            BGMPoints[bgmSourceIndex].transform.parent = Katana.PlayerInput.I.transform;
+            BGMPoints[bgmSourceIndex].transform.localPosition = Vector3.zero;
+        }
+
         BGMPoints[bgmSourceIndex].clip = soundData.Sound;
         BGMPoints[bgmSourceIndex].volume = 0.0f;
         BGMPoints[bgmSourceIndex].Play ();
