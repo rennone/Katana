@@ -1,7 +1,5 @@
 ﻿using UnityEngine;
-/// <summary>
-/// タグ名を定数で管理するクラス
-/// </summary>
+//レイヤ番号を定数で管理するクラス
 public static class LayerName
 {
 	public static int Default { get{ return LayerMask.NameToLayer("Default"); } }
