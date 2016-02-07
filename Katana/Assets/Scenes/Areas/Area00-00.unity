@@ -89,7 +89,7 @@ NavMeshSettings:
 GameObject:
   m_PrefabParentObject: {fileID: 167118, guid: d73da7475939ade48b49c28c9b1827e9, type: 2}
   m_PrefabInternal: {fileID: 248787323}
---- !u!114 &73391923
+--- !u!114 &73391914
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
@@ -97,12 +97,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 73391913}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8304bc2d0823a149953035085812f81, type: 3}
+  m_Script: {fileID: 11500000, guid: 7f3a8aeed55670b4b9929610cb727050, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHp_: 10000
-  strong_: 10
-  defense_: 10
+  _status:
+    MaxHp: 10000
+    Hp: 10000
+    Strong: 10
+    Defense: 10
 --- !u!1 &85658336
 GameObject:
   m_ObjectHideFlags: 0
@@ -360,10 +362,52 @@ Prefab:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 11405094, guid: d73da7475939ade48b49c28c9b1827e9, type: 2}
+      propertyPath: movement.MaxGroundAcceleration
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 11405094, guid: d73da7475939ade48b49c28c9b1827e9, type: 2}
+      propertyPath: movement.MaxAirAcceleration
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 11405094, guid: d73da7475939ade48b49c28c9b1827e9, type: 2}
+      propertyPath: movement.Gravity
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 11405094, guid: d73da7475939ade48b49c28c9b1827e9, type: 2}
+      propertyPath: movement.FreezePosition.Z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11405094, guid: d73da7475939ade48b49c28c9b1827e9, type: 2}
+      propertyPath: jumping.baseHeight
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 11405094, guid: d73da7475939ade48b49c28c9b1827e9, type: 2}
+      propertyPath: jumping.extraHeight
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 11405094, guid: d73da7475939ade48b49c28c9b1827e9, type: 2}
+      propertyPath: sliding.enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11405094, guid: d73da7475939ade48b49c28c9b1827e9, type: 2}
+      propertyPath: movement._maxSpeed
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 11405094, guid: d73da7475939ade48b49c28c9b1827e9, type: 2}
+      propertyPath: movement._maxGroundAcceleration
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 11405094, guid: d73da7475939ade48b49c28c9b1827e9, type: 2}
+      propertyPath: movement._maxAirAcceleration
+      value: 500
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 11429168, guid: d73da7475939ade48b49c28c9b1827e9, type: 2}
     - {fileID: 11439422, guid: d73da7475939ade48b49c28c9b1827e9, type: 2}
-    - {fileID: 11451612, guid: d73da7475939ade48b49c28c9b1827e9, type: 2}
+    - {fileID: 0}
+    - {fileID: 11471854, guid: d73da7475939ade48b49c28c9b1827e9, type: 2}
+    - {fileID: 11434370, guid: d73da7475939ade48b49c28c9b1827e9, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: d73da7475939ade48b49c28c9b1827e9, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &338308780
@@ -434,7 +478,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: .300000012
+  near clip plane: 1
   far clip plane: 1000
   field of view: 60
   orthographic: 1

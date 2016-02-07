@@ -11,20 +11,18 @@ namespace Katana
 
     public partial class ActorMotor : MonoBehaviour
     {
+        // : public
+        
+        // 移動方向
+        public Vector3 InputMoveDirection { get; set; }
+
+        // ジャンプ入力
+        public bool InputJump { get; set; }
+
+
         private const float Epsilon = 1.0e-6f;
         // このスクリプトを入力に応答させるかどうかのフラグ
         private bool canControl = true;
-        private bool useFixedUpdate = false; //fixedUpdateでinput入力を受け取るのはよくないので切る
-
-        // For the next variables, [System.NonSerialized] tells Unity to not serialize the variable or show it in the inspector view.
-        // Very handy for organization!
-
-        // The current global direction we want the character to move in.
-        public Vector3 InputMoveDirection { get; set; }
-
-        // Is the jump button held down? We use this interface instead of checking
-        // for the jump button directly so this script can also be used by AIs.
-        public bool InputJump { get; set; }
 
         public CharacterMotorMovement movement = new CharacterMotorMovement();
         public CharacterMotorJumping jumping = new CharacterMotorJumping();
@@ -238,7 +236,7 @@ namespace Katana
                     movement.velocity += movingPlatform.platformVelocity;
                 }
 
-                SendMessage("OnFall", SendMessageOptions.DontRequireReceiver);
+                //SendMessage("OnFall", SendMessageOptions.DontRequireReceiver);
                 // We pushed the character down to ensure it would stay on the ground ifthere was any.
                 // But there wasn't so now we cancel the downwards offset to make the fall smoother.
                 transform.position += pushDownOffset*Vector3.up;
@@ -250,8 +248,8 @@ namespace Katana
                 jumping.isJumping = false;
                 SubtractNewPlatformVelocity();
 
-                Debug.Log("OnLand in Charactor Motor");
-                SendMessage("OnLand", SendMessageOptions.DontRequireReceiver);
+                //Debug.Log("OnLand in Charactor Motor");
+                //SendMessage("OnLand", SendMessageOptions.DontRequireReceiver);
             }
 
             // Moving platforms support
@@ -274,6 +272,7 @@ namespace Katana
 
         //----------------------------------------------------------------------------
 
+        // 物理演算処理は固定時間毎に行われる.
         private void FixedUpdate()
         {
             if (movingPlatform.enabled)
@@ -296,16 +295,12 @@ namespace Katana
                     movingPlatform.platformVelocity = Vector3.zero;
                 }
             }
-
-            if (useFixedUpdate)
-                UpdateFunction();
         }
 
         //----------------------------------------------------------------------------
         private void Update()
         {
-            if (!useFixedUpdate)
-                UpdateFunction();
+            UpdateFunction();
         }
 
         //----------------------------------------------------------------------------
@@ -384,11 +379,6 @@ namespace Katana
             if (InputJump && jumping.lastButtonDownTime < 0 && canControl)
                 jumping.lastButtonDownTime = Time.time;
 
-            if (InputJump)
-            {
-                Debug.Log("Jump on " + (_grounded ? "ground" : "not ground"));
-            }
-
             if (_grounded)
             {
                 velocity.y = Mathf.Min(0, velocity.y) - movement.Gravity*Time.deltaTime;
@@ -421,7 +411,7 @@ namespace Katana
                         velocity += movingPlatform.platformVelocity;
                     }
 
-                    SendMessage("OnJump", SendMessageOptions.DontRequireReceiver);
+                    //SendMessage("OnJump", SendMessageOptions.DontRequireReceiver);
                 }
                 else
                 {

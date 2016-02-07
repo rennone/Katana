@@ -3,11 +3,14 @@ using System.Collections;
 
 namespace Katana
 {
+    public class AMonoBehaviour : MonoBehaviour
+    {
+        protected virtual void Update() { }
+        protected virtual void Awake() { }
+    }
 // すべてのキャラクターに共通な機能群を持たせる
     [RequireComponent(typeof (Pausable))] //ポーズ機能
-    [RequireComponent(typeof (ActorStatus))] //ステータス
-    [RequireComponent(typeof (ActorInitializeFinalize))] //コンストラクタ, デストラクタ
-    public class Actor : MonoBehaviour
+    public class Actor : AMonoBehaviour
     {
         private Pausable _pause = null;
 
@@ -15,6 +18,7 @@ namespace Katana
         {
             get
             {
+                
                 if (_pause == null)
                     _pause = GetComponent<Pausable>();
 
@@ -22,31 +26,12 @@ namespace Katana
             }
         }
 
-        private ActorStatus _status = null;
+        protected virtual void AwakeSelf() { }
+        protected virtual void UpdateSelf() { }
+        protected virtual void StartSelf() { }
+        protected virtual void OnDestroySelf() { }
 
-        public ActorStatus AStatus
-        {
-            get
-            {
-                if (_status == null)
-                    _status = GetComponent<ActorStatus>();
-
-                return _status;
-            }
-        }
-
-        // ダメージ
-        public virtual void Damage(int val)
-        {
-            AStatus.DecreaseHP(val);
-        }
-
-        // 回復
-        public virtual void Recover(int val)
-        {
-            AStatus.IncreaseHP(val);
-        }
-
+       
         // ポーズ
         public virtual void Pause()
         {
@@ -58,5 +43,29 @@ namespace Katana
         {
             APause.State = Pausable.PauseState.Active;
         }
+
+        protected override void Awake()
+        {
+            // ゲームマネージャーに登録
+            GameManager.I.RegisterActor(this);
+            AwakeSelf();
+        }
+
+        protected override void Update()
+        {
+            UpdateSelf();
+        }
+
+        void Start()
+        {
+            StartSelf();
+        }
+
+        void OnDestroy()
+        {
+            OnDestroySelf();
+            GameManager.I.RemoveActor(this);
+        }
+
     }
 }

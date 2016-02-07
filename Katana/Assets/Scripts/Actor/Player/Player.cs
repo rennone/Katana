@@ -6,28 +6,28 @@ using System.Collections.Generic;
 namespace Katana
 {
     [RequireComponent(typeof (PlayerAnimator))]
-    [RequireComponent(typeof (ActorMotor))]
-    [RequireComponent(typeof (ActorStatus))]
     [RequireComponent(typeof (PlayerInput))]
-    public class Player : Actor
+    public class Player : Character
     {
-        private void Awake()
+        protected override void AwakeSelf()
         {
-            GetComponent<ActorStatus>().OnDead = OnDead;
+            int a = 0;
+            AStatus.OnDead = OnDead;
 
+            // TODO : プレハブに書いておくので必要ないようにする.
             var characterController = GetComponent<CharacterController>();
             characterController.center = new Vector3(0, 0.7f, 0);
             characterController.radius = 0.2f;
             characterController.height = 1.25f;
 
             var motor = GetComponent<ActorMotor>();
-            motor.movement.MaxForwardSpeed = 500;
-            motor.movement.MaxSidewaysSpeed = 500;
-            motor.movement.MaxBackwardsSpeed = 500;
-            motor.movement.MaxGroundAcceleration = 1000;
-            motor.movement.MaxAirAcceleration = 500;
-            motor.movement.Gravity = 50;
-            motor.movement.MaxFallSpeed = 500;
+            //motor.movement.MaxForwardSpeed = 500;
+            //motor.movement.MaxSidewaysSpeed = 500;
+            ////motor.movement.MaxBackwardsSpeed = 500;
+            //motor.movement.MaxGroundAcceleration = 1000;
+            //motor.movement.MaxAirAcceleration = 500;
+            //motor.movement.Gravity = 50;
+            //motor.movement.MaxFallSpeed = 500;
             motor.movement.FreezePosition.Z = true;
             motor.jumping.baseHeight = 4.5f;
             motor.jumping.extraHeight = 3.0f;
@@ -39,20 +39,13 @@ namespace Katana
             capsuleColider.height = 1.6f;
         }
 
-        private void Update()
-        {
-
-        }
-
-
-        public void OnDead()
+        protected override void OnDead()
         {
             GameManager.I.GameRestart();
         }
 
-        public override void Damage(int val)
+        protected override void OnDamaged(DamageInfo damage)
         {
-            base.Damage(val);
             StartCoroutine("AfterDamaged");
         }
 
