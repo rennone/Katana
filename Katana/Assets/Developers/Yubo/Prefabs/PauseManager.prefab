@@ -96,6 +96,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 224: {fileID: 22406616}
+  - 114: {fileID: 11436004}
   m_Layer: 5
   m_Name: Title
   m_TagString: Untagged
@@ -179,6 +180,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 224: {fileID: 22481986}
+  - 114: {fileID: 11470324}
   m_Layer: 5
   m_Name: Option
   m_TagString: Untagged
@@ -194,6 +196,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 224: {fileID: 22497756}
+  - 114: {fileID: 11409446}
   m_Layer: 5
   m_Name: Save
   m_TagString: Untagged
@@ -235,6 +238,19 @@ MonoBehaviour:
   m_Text: 'TITLE
 
 '
+--- !u!114 &11409446
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 194674}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 822529a010b25d04f9ccbc26498ccec3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pauseNumber: 0
+  image: {fileID: 11476930}
 --- !u!114 &11409596
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -292,6 +308,19 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &11436004
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 157914}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 822529a010b25d04f9ccbc26498ccec3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pauseNumber: 2
+  image: {fileID: 11453748}
 --- !u!114 &11445692
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -383,6 +412,19 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: SAVE
+--- !u!114 &11470324
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 190330}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 822529a010b25d04f9ccbc26498ccec3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pauseNumber: 1
+  image: {fileID: 11474320}
 --- !u!114 &11472638
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -480,6 +522,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49c5fb9dbf9b3774d96a9f3f1dfea5a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nowMenuNum: 0
+  menu_Normal: {fileID: 21300000, guid: 2bc832df321149e4c9182ad19a665527, type: 3}
+  menu_Active: {fileID: 21300000, guid: 205338b4fb6446144a49e5ef46452271, type: 3}
   background: {fileID: 11409596}
 --- !u!114 &11490978
 MonoBehaviour:

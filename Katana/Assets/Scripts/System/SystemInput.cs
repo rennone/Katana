@@ -19,6 +19,18 @@ namespace Katana
                 if (PauseManager.I != null)
                     PauseManager.I.PushPauseButton();
             }
+
+            if (PauseManager.I.IsPause())
+            {
+                float inputScale = Input.GetAxisRaw("Vertical");
+                if (inputScale > 0)
+                {
+                    PauseManager.I.PushUpDownButton(true);
+                }else if(inputScale < 0)
+                {
+                    PauseManager.I.PushUpDownButton(false);
+                }
+            }
         }
     }
 }
