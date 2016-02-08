@@ -5,13 +5,13 @@ public class Sounder : MonoBehaviour {
 
     void Start()
     {
-        SoundManager.I.PlayBGM(SoundKey.BGM_COMBAT);
+        SoundManager.Instance.PlayBgm(SoundKey.BGM_COMBAT);
     }
 
 	void Update () {
         if (Input.GetKeyDown(KeyCode.A))
         {
-            SoundManager.I.PlaySound(this.transform, SoundKey.SE_JUMP01);
+            SoundManager.Instance.PlaySound(this.transform, SoundKey.SE_JUMP01);
         }
 
         if (Input.GetKeyDown(KeyCode.B))

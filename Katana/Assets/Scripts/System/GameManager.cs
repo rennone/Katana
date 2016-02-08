@@ -29,11 +29,6 @@ namespace Katana
             get { return holder_.Player; }
         }
 
-        private new void Awake()
-        {
-            base.Awake();
-        }
-
         private void Start()
         {
             nowSceneName = Application.loadedLevelName;
@@ -42,7 +37,7 @@ namespace Katana
 #if _DEBUG
         InitDebugViewer();
 #endif
-            SoundManager.I.PlayBGM(SoundKey.BGM_COMBAT);
+            SoundManager.Instance.PlayBgm(SoundKey.BGM_COMBAT);
         }
 
         public void GameRestart()

@@ -52,7 +52,7 @@ public class OSPSourceWrapper : MonoBehaviour {
 	public bool isPlayingClip(SoundKey soundKey) {
 		if (_audioSource.isPlaying)
 		{
-			if (_audioSource.clip == SoundManager.I.GetClip(soundKey)) {
+			if (_audioSource.clip == SoundManager.Instance.GetClip(soundKey)) {
 				return true;
 			}
 		}

@@ -6,7 +6,7 @@ namespace Katana
 {
 
     [RequireComponent(typeof (ActorMotor))]
-    public class PlayerInput : Singleton<PlayerInput>
+    public class PlayerInput : Katana.Singleton<PlayerInput>
     {
         private ActorMotor motor_ = null;
         // Use this for initialization

@@ -4,10 +4,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
+
 /// <summary>
 /// OSP wrapper.
 /// </summary>
-public class SoundManager : Singleton<SoundManager> {
+public class SoundManager : Katana.Singleton<SoundManager>
+{
 
 	private static readonly int MAX_TRACK = 20;
 
@@ -25,48 +27,47 @@ public class SoundManager : Singleton<SoundManager> {
 	private static readonly string SNAPSHOT_PAUSING = "Snapshot_Pausing";
 	private static readonly float  SNAPSHOT_TRANSITION_TIME = 0.5f;
 
-	private AudioMixer audioMixer;
-	private Dictionary<SoundType, AudioMixerGroup> AudioMixerGroupSet = new Dictionary<SoundType, AudioMixerGroup> ();
-	private Dictionary<string, AudioMixerSnapshot> AudioMixerSnapShotSet = new Dictionary<string, AudioMixerSnapshot> ();
+	private AudioMixer _audioMixer;
+	private readonly Dictionary<SoundType, AudioMixerGroup> _audioMixerGroupSet = new Dictionary<SoundType, AudioMixerGroup> ();
+	private readonly Dictionary<string, AudioMixerSnapshot> _audioMixerSnapShotSet = new Dictionary<string, AudioMixerSnapshot> ();
 
-    public bool isStopAll = false;
+    public bool IsStopAll;
     [SerializeField]
-	private GameObject AudioSourcePrefab;
+	private GameObject _audioSourcePrefab;
 	[SerializeField]
-	private AudioSource[] BGMPoints;    //フェードを行うため、二つ用意する必要がある
+	private AudioSource[] _bgmPoints;    //フェードを行うため、二つ用意する必要がある
     [SerializeField]
-    private bool useDoppler;
+    private bool _useDoppler;
 
     private List<SoundData> SoundDataList;
-    private List<OSPSourceWrapper> AudioTracks = new List<OSPSourceWrapper>();
+    private readonly List<OSPSourceWrapper> _audioTracks = new List<OSPSourceWrapper>();
 
-    private Dictionary<SoundKey, AudioClip> audioClipSets = new Dictionary<SoundKey, AudioClip>();
-	private Dictionary<SoundKey, SoundData> soundDataSets = new Dictionary<SoundKey, SoundData>();
+    private readonly Dictionary<SoundKey, AudioClip> _audioClipSets = new Dictionary<SoundKey, AudioClip>();
+	private readonly Dictionary<SoundKey, SoundData> _soundDataSets = new Dictionary<SoundKey, SoundData>();
 
 	private static readonly string DATASET_PATH = "Data/SoundList";
 
-	private bool isPause = false;
+	private bool _isPause = false;
 
-    private int bgmSourceIndex = 0;
+    private int _bgmSourceIndex = 0;
 
-    protected override void Awake()
+    protected override void OnInitialize()
     {
-        base.Awake();
-        audioMixer = Resources.Load("Sounds/MainAudioMixer") as AudioMixer;
-        AudioMixerGroup[] audioMixerGroups = audioMixer.FindMatchingGroups("/" + MIXER_GROUP_MASTER);
-        AudioMixerGroupSet[SoundType.JINGLE] = audioMixerGroups.First(c => c.name == MIXER_GROUP_JINGLE);
-        AudioMixerGroupSet[SoundType.SE] = audioMixerGroups.First(c => c.name == MIXER_GROUP_SE);
-        AudioMixerGroupSet[SoundType.BGM] = audioMixerGroups.First(c => c.name == MIXER_GROUP_BGM);
-        AudioMixerGroupSet[SoundType.VOICE] = audioMixerGroups.First(c => c.name == MIXER_GROUP_VOICE);
-        AudioMixerGroupSet[SoundType.SYSTEM] = audioMixerGroups.First(c => c.name == MIXER_GROUP_SYSTEM);
+        _audioMixer = Resources.Load("Sounds/MainAudioMixer") as AudioMixer;
+        AudioMixerGroup[] audioMixerGroups = _audioMixer.FindMatchingGroups("/" + MIXER_GROUP_MASTER);
+        _audioMixerGroupSet[SoundType.JINGLE] = audioMixerGroups.First(c => c.name == MIXER_GROUP_JINGLE);
+        _audioMixerGroupSet[SoundType.SE] = audioMixerGroups.First(c => c.name == MIXER_GROUP_SE);
+        _audioMixerGroupSet[SoundType.BGM] = audioMixerGroups.First(c => c.name == MIXER_GROUP_BGM);
+        _audioMixerGroupSet[SoundType.VOICE] = audioMixerGroups.First(c => c.name == MIXER_GROUP_VOICE);
+        _audioMixerGroupSet[SoundType.SYSTEM] = audioMixerGroups.First(c => c.name == MIXER_GROUP_SYSTEM);
 
-        AudioMixerSnapShotSet[SNAPSHOT_MASTER] = audioMixer.FindSnapshot(SNAPSHOT_MASTER);
-        AudioMixerSnapShotSet[SNAPSHOT_PLAYING_JINGLE] = audioMixer.FindSnapshot(SNAPSHOT_PLAYING_JINGLE);
-        AudioMixerSnapShotSet[SNAPSHOT_PAUSING] = audioMixer.FindSnapshot(SNAPSHOT_PAUSING);
+        _audioMixerSnapShotSet[SNAPSHOT_MASTER] = _audioMixer.FindSnapshot(SNAPSHOT_MASTER);
+        _audioMixerSnapShotSet[SNAPSHOT_PLAYING_JINGLE] = _audioMixer.FindSnapshot(SNAPSHOT_PLAYING_JINGLE);
+        _audioMixerSnapShotSet[SNAPSHOT_PAUSING] = _audioMixer.FindSnapshot(SNAPSHOT_PAUSING);
 
-        for (int index = 0; index < BGMPoints.Length; index++)
+        for (int index = 0; index < _bgmPoints.Length; index++)
         {
-            BGMPoints[index].outputAudioMixerGroup = AudioMixerGroupSet[SoundType.BGM];
+            _bgmPoints[index].outputAudioMixerGroup = _audioMixerGroupSet[SoundType.BGM];
         }
 
         SoundDataList = Resources.Load<SoundList>(DATASET_PATH).SoundDatas;
@@ -78,25 +79,25 @@ public class SoundManager : Singleton<SoundManager> {
             }
 
             SoundKey key = (SoundKey)System.Enum.Parse(typeof(SoundKey), s.SoundDataKey);
-            soundDataSets.Add(key, s);
-            audioClipSets.Add(key, s.Sound);
+            _soundDataSets.Add(key, s);
+            _audioClipSets.Add(key, s.Sound);
         }
 
         for (int index = 0; index < MAX_TRACK; index++)
         {
-            GameObject audioInstance = Instantiate(AudioSourcePrefab, this.transform.position, Quaternion.identity) as GameObject;
+            GameObject audioInstance = Instantiate(_audioSourcePrefab, this.transform.position, Quaternion.identity) as GameObject;
             audioInstance.transform.parent = this.transform;
-            AudioTracks.Add(audioInstance.GetComponent<OSPSourceWrapper>());
+            _audioTracks.Add(audioInstance.GetComponent<OSPSourceWrapper>());
         }
 
         Mute(false);
     }
 
     void OnLevelWasLoaded(int index) {
-        isStopAll = false;
+        IsStopAll = false;
         ResetMixerSnapShot();
 
-        foreach (var bgm in BGMPoints)
+        foreach (var bgm in _bgmPoints)
         {
             bgm.Stop();
         }
@@ -107,15 +108,15 @@ public class SoundManager : Singleton<SoundManager> {
 		debugInfo();
 #endif
 
-		if (isPause) {
+		if (_isPause) {
 			if (Time.timeScale != 0.0f) {
 				PausingSound (false);
-				isPause = false;
+				_isPause = false;
 			}
 		} else {
 			if( Time.timeScale == 0.0f ) {
 				PausingSound (true);
-				isPause = true;
+				_isPause = true;
 			}
 		}
 	}
@@ -131,7 +132,7 @@ public class SoundManager : Singleton<SoundManager> {
 	}
 
 	public AudioClip GetClip( SoundKey soundKey ) {
-		return audioClipSets[soundKey];
+		return _audioClipSets[soundKey];
 	}
 
 	public OSPSourceWrapper PlaySound(Transform target , string key , float delay = 0, bool loop = false){
@@ -159,20 +160,20 @@ public class SoundManager : Singleton<SoundManager> {
 
 	private OSPSourceWrapper PlaySound_impl(System.Object target , SoundKey soundKey , float delay = 0, bool loop = false , bool force = false ){
         //Debug.Log(soundDataSets.Count);
-        if (isStopAll) {
+        if (IsStopAll) {
             return null;
         }
 
-		SoundData soundData = soundDataSets[soundKey];
+		SoundData soundData = _soundDataSets[soundKey];
 		if (soundData == null) {
 			Debug.LogError (soundKey + " file not found.");
 			return null;
 		}
 
         int playing = 0;
-        for ( int index =0; index < AudioTracks.Count; index++)
+        for ( int index =0; index < _audioTracks.Count; index++)
         {
-            if (AudioTracks[index].isPlaying)
+            if (_audioTracks[index].isPlaying)
             {
                 playing++;
             }
@@ -184,12 +185,12 @@ public class SoundManager : Singleton<SoundManager> {
 		}
 
 		// 直前に同じ音が鳴っていたら終了(エコー防止)
-		if(inSuppressingTime(soundData)){
+		if(InSuppressingTime(soundData)){
 			Debug.LogWarning( "Suppressing Time exceed.");
 			return null;
 		}
 
-		int playingCount = AudioTracks.Count (c => c.clip == soundData.Sound && c.isPlaying);
+		int playingCount = _audioTracks.Count (c => c.clip == soundData.Sound && c.isPlaying);
 
 		if (playingCount >= soundData.SyncCount) 
 		{
@@ -206,12 +207,12 @@ public class SoundManager : Singleton<SoundManager> {
 			targetTransform = target as Transform;
 		}
 
-		OSPSourceWrapper osps = AudioTracks.First( c=> !c.isPlaying );
+		OSPSourceWrapper osps = _audioTracks.First( c=> !c.isPlaying );
 
 		AudioSource audio = osps.audioSource;
 		osps.volume = soundData.Volume;
 		audio.rolloffMode = soundData.RollOff;
-		audio.dopplerLevel =  useDoppler ? soundData.DopplerLevel : 0;
+		audio.dopplerLevel =  _useDoppler ? soundData.DopplerLevel : 0;
 
 		audio.maxDistance = soundData.Distance;
 		audio.clip = soundData.Sound;
@@ -243,7 +244,7 @@ public class SoundManager : Singleton<SoundManager> {
 		}
 		osps.isTrace = isTransform;
 		
-		AudioMixerGroup amg = AudioMixerGroupSet[soundData.Type];
+		AudioMixerGroup amg = _audioMixerGroupSet[soundData.Type];
 		audio.outputAudioMixerGroup = amg;
 		
 		if(audio.loop){
@@ -253,34 +254,34 @@ public class SoundManager : Singleton<SoundManager> {
 		return osps;
 	}
 
-	private bool mixerReset = false;
+	private bool _mixerReset = false;
     /// <summary>
     /// ジングル再生中には、SnapShot切り替えによるダッキングを行う。
     /// </summary>
     /// <returns>The check playing jingle.</returns>
-    /// <param name="audio">Audio.</param>
+    /// <param name="source">Audio.</param>
 
-    void _CheckPlayingJingle(OSPSourceWrapper audio)
+    void _CheckPlayingJingle(OSPSourceWrapper source)
     {
 
-        audioMixer.TransitionToSnapshots(
-            new AudioMixerSnapshot[] { AudioMixerSnapShotSet[SNAPSHOT_MASTER], AudioMixerSnapShotSet[SNAPSHOT_PLAYING_JINGLE] },
+        _audioMixer.TransitionToSnapshots(
+            new AudioMixerSnapshot[] { _audioMixerSnapShotSet[SNAPSHOT_MASTER], _audioMixerSnapShotSet[SNAPSHOT_PLAYING_JINGLE] },
             new float[] { 0, 1 },
             SNAPSHOT_TRANSITION_TIME
         );
 
-        Wait.InvokeAfterSeconds(audio.clip.length, () =>
+        Wait.InvokeAfterSeconds(source.clip.length, () =>
         {
 
-            if (mixerReset)
+            if (_mixerReset)
             {
-                mixerReset = false;
+                _mixerReset = false;
                 return;
             }
             else
             {
-                audioMixer.TransitionToSnapshots(
-                    new AudioMixerSnapshot[] { AudioMixerSnapShotSet[SNAPSHOT_MASTER], AudioMixerSnapShotSet[SNAPSHOT_PLAYING_JINGLE] },
+                _audioMixer.TransitionToSnapshots(
+                    new AudioMixerSnapshot[] { _audioMixerSnapShotSet[SNAPSHOT_MASTER], _audioMixerSnapShotSet[SNAPSHOT_PLAYING_JINGLE] },
                     new float[] { 1, 0 },
                     SNAPSHOT_TRANSITION_TIME
                 );
@@ -293,20 +294,20 @@ public class SoundManager : Singleton<SoundManager> {
 	/// MASTERのMIXERSNAPSHOTにResetをかける
 	/// </summary>
 	public void ResetMixerSnapShot(){
-		audioMixer.TransitionToSnapshots (
-			new AudioMixerSnapshot[]{AudioMixerSnapShotSet[SNAPSHOT_MASTER] , AudioMixerSnapShotSet[SNAPSHOT_PLAYING_JINGLE] },
+		_audioMixer.TransitionToSnapshots (
+			new AudioMixerSnapshot[]{_audioMixerSnapShotSet[SNAPSHOT_MASTER] , _audioMixerSnapShotSet[SNAPSHOT_PLAYING_JINGLE] },
 			new float[]{ 1,0},
 			SNAPSHOT_TRANSITION_TIME
 		);
-		mixerReset = true;
+		_mixerReset = true;
 	}
 
 	public void PausingSound(bool pause) {
 		Debug.Log ("PausingSound:" + pause);
 		if (pause) {
-			AudioMixerSnapShotSet[SNAPSHOT_PAUSING].TransitionTo( 0.0f );
+			_audioMixerSnapShotSet[SNAPSHOT_PAUSING].TransitionTo( 0.0f );
 		} else {
-			AudioMixerSnapShotSet[SNAPSHOT_MASTER].TransitionTo( 0.0f );
+			_audioMixerSnapShotSet[SNAPSHOT_MASTER].TransitionTo( 0.0f );
 		}
 	}
 
@@ -324,18 +325,16 @@ public class SoundManager : Singleton<SoundManager> {
 
 		Debug.Log ("Stop Sound : " + osps.clip.name);
 		
-		osps.GetComponent<AudioSource>().DOFade(0.0f, fade).OnComplete(()=>{
-			osps.Stop();
-		});
+		osps.GetComponent<AudioSource>().DOFade(0.0f, fade).OnComplete(osps.Stop);
 	}
 
-	public void PlayBGM( SoundKey soundKey , float fadeTime = 0.5f)
+	public void PlayBgm( SoundKey soundKey , float fadeTime = 0.5f)
 	{
-        SoundData soundData = soundDataSets[soundKey];
+        SoundData soundData = _soundDataSets[soundKey];
 
-        foreach (SoundData sd in SoundDataList) {
+        //foreach (SoundData sd in SoundDataList) {
 		//	Debug.Log(soundKey.ToString() + ":" + sd.SoundDataKey);
-		}
+		//}
 
 		if (soundData == null)
 		{
@@ -344,89 +343,82 @@ public class SoundManager : Singleton<SoundManager> {
 		}
 
 		float targetVolume = soundData.Volume;
-        for (int index = 0; index < BGMPoints.Length; index++)
+        for (int index = 0; index < _bgmPoints.Length; index++)
         {
-            DOTween.Kill(BGMPoints[index] );
+            DOTween.Kill(_bgmPoints[index] );
         }
 
-        //BGMの発信源をPlayerに設定
-        if (Katana.PlayerInput.I != null)
-        {
-            BGMPoints[bgmSourceIndex].transform.parent = Katana.PlayerInput.I.transform;
-            BGMPoints[bgmSourceIndex].transform.localPosition = Vector3.zero;
-        }
-
-        BGMPoints[bgmSourceIndex].clip = soundData.Sound;
-        BGMPoints[bgmSourceIndex].volume = 0.0f;
-        BGMPoints[bgmSourceIndex].Play ();
-        BGMPoints[bgmSourceIndex].DOFade (targetVolume, fadeTime);
-        BGMPoints[bgmSourceIndex].loop = true;
+	    _bgmPoints[_bgmSourceIndex].spatialBlend = 0.0f;  // bgmは2D音源(発信源に依存しない)
+        _bgmPoints[_bgmSourceIndex].clip = soundData.Sound;
+        _bgmPoints[_bgmSourceIndex].volume = 0.0f;
+        _bgmPoints[_bgmSourceIndex].Play ();
+        _bgmPoints[_bgmSourceIndex].DOFade (targetVolume, fadeTime);
+        _bgmPoints[_bgmSourceIndex].loop = true;
 	}
 
     public void StopAll(float fade = 1.0f) {
-        isStopAll = true;
-        for (int index = 0; index < AudioTracks.Count; index++) {
-            if (AudioTracks[index].isPlaying)
+        IsStopAll = true;
+        for (int index = 0; index < _audioTracks.Count; index++) {
+            if (_audioTracks[index].isPlaying)
             {
-                AudioTracks[index].Stop(fade);
+                _audioTracks[index].Stop(fade);
             }
         }
     }
 
-	public void SetBGMPosition( Vector3 leftPosition , Vector3 rightPosition )
-	{
-        for (int index = 0; index < BGMPoints.Length; index++)
-        {
-            BGMPoints[index].transform.position = leftPosition;
-        }
+    //public void SetBGMPosition( Vector3 leftPosition , Vector3 rightPosition )
+    //{
+    //    for (int index = 0; index < BGMPoints.Length; index++)
+    //    {
+    //        BGMPoints[index].transform.position = leftPosition;
+    //    }
+    //}
 
-	}
-
-    public void CrossFadeBGM(SoundKey soundKey, float fadeTime = 0.5f)
+    public void CrossFadeBgm(SoundKey soundKey, float fadeTime = 0.5f)
     {
-        SoundData soundData = soundDataSets[soundKey];
+        SoundData soundData = _soundDataSets[soundKey];
 
         float targetVolume = soundData.Volume;
-        int oldBgmSourceIndex = bgmSourceIndex;
+        int oldBgmSourceIndex = _bgmSourceIndex;
 
-        bgmSourceIndex++;
-        bgmSourceIndex = bgmSourceIndex % 2;
+        _bgmSourceIndex++;
+        _bgmSourceIndex = _bgmSourceIndex % 2;
 
-        BGMPoints[bgmSourceIndex].clip = soundData.Sound;
-        BGMPoints[bgmSourceIndex].volume = 0.0f;
+        _bgmPoints[_bgmSourceIndex].clip = soundData.Sound;
+        _bgmPoints[_bgmSourceIndex].volume = 0.0f;
 
-        BGMPoints[bgmSourceIndex].transform.parent = this.transform;
+        _bgmPoints[_bgmSourceIndex].transform.parent = this.transform;
 
-        BGMPoints[bgmSourceIndex].Play();
+        _bgmPoints[_bgmSourceIndex].Play();
 
-        DOTween.Kill(BGMPoints[bgmSourceIndex]);
+        DOTween.Kill(_bgmPoints[_bgmSourceIndex]);
 
-        DOTween.Kill(BGMPoints[oldBgmSourceIndex]);
+        DOTween.Kill(_bgmPoints[oldBgmSourceIndex]);
 
-        BGMPoints[bgmSourceIndex].DOFade(targetVolume, fadeTime);
+        _bgmPoints[_bgmSourceIndex].DOFade(targetVolume, fadeTime);
 
-        BGMPoints[oldBgmSourceIndex].DOFade(0.0f, fadeTime).OnComplete(() => { BGMPoints[oldBgmSourceIndex].Stop(); });
+        _bgmPoints[oldBgmSourceIndex].DOFade(0.0f, fadeTime).OnComplete(() => { _bgmPoints[oldBgmSourceIndex].Stop(); });
     }
 
-    private bool isStopping = false;
-	public void StopBGM(float fadeTime = 1.0f)
+    private bool _isStopping;
+	public void StopBgm(float fadeTime = 1.0f)
 	{
-        isStopping = true;
+        _isStopping = true;
         for (int index = 0; index <2; index++)
         {
-            BGMPoints[index].DOFade(0.0f, fadeTime).OnComplete(() => { BGMPoints[index].Pause(); });
+            _bgmPoints[index].DOFade(0.0f, fadeTime).OnComplete(() => { _bgmPoints[index].Pause(); });
         }
 	}
 
 	// エコーを起こすような音が鳴っていないかチェックします 
-	private bool inSuppressingTime(SoundData data){
+	private bool InSuppressingTime(SoundData data){
 		if (data.Sound == null) {
 			return true;
 		}
 
 		// OSPSourceWrapperで見ている値と合わせる 
 		float nowTime = Time.realtimeSinceStartup;
-		foreach (OSPSourceWrapper osps in AudioTracks) {
+		foreach (OSPSourceWrapper osps in _audioTracks) {
 			if(data.Sound.name.Equals( osps.name) ){
 				if(nowTime-osps.time < SUPPRESSING_TIME){
 					//Debug.Log("nowTime-osps.time="+(nowTime-osps.time).ToString());
@@ -438,8 +430,8 @@ public class SoundManager : Singleton<SoundManager> {
 	}
 
 	//--- for debug 
-	private void debugInfo(){
-		foreach (OSPSourceWrapper osp in AudioTracks) {
+	private void DebugInfo(){
+		foreach (OSPSourceWrapper osp in _audioTracks) {
 			if(osp.clip!=null){
 				if(osp.isPlaying){
 					osp.name = osp.clip.name;

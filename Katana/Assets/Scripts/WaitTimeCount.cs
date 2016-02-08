@@ -3,7 +3,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
 
-public class WaitTimeCount : Singleton<WaitTimeCount>
+public class WaitTimeCount : Katana.Singleton<WaitTimeCount>
 {
 	public Action Action;
 
@@ -15,7 +15,7 @@ public class WaitTimeCount : Singleton<WaitTimeCount>
         public bool ignoreTimeScale;
         public bool active;
 
-		public InvokeWaitSet(float _time , InvokeAction _invoke,bool _ignoreTimeScale) {
+		public InvokeWaitSet(float _time , InvokeAction _invoke, bool _ignoreTimeScale) {
 			time = _time;
 			invoke = _invoke;
             ignoreTimeScale = _ignoreTimeScale;
@@ -29,7 +29,6 @@ public class WaitTimeCount : Singleton<WaitTimeCount>
             ignoreTimeScale = false;
             active = false;
         }
-
     }
 
     //[SerializeField]
@@ -78,7 +77,6 @@ public class WaitTimeCount : Singleton<WaitTimeCount>
         }
 
         Debug.LogError("Invoke Buffer Over : Look WaitActionController And Please Modify Invoke buffer count.");
-
     }
 
 }
@@ -89,12 +87,12 @@ public static class Wait
 {
 	public static void InvokeAfterSeconds(float duration, InvokeAction action)
 	{
-		WaitTimeCount.I.AddCommand(duration,action , false);
+		WaitTimeCount.Instance.AddCommand(duration,action , false);
     }
 
 	public static void InvokeAfterSecondsIgnoreTimeScale(float duration, InvokeAction action)
     {
-        WaitTimeCount.I.AddCommand(duration, action,true);
+        WaitTimeCount.Instance.AddCommand(duration, action,true);
     }
 }
 

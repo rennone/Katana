@@ -47,7 +47,7 @@ namespace Katana
 
         public void OnDead()
         {
-            GameManager.I.GameRestart();
+            GameManager.Instance.GameRestart();
         }
 
         public override void Damage(int val)
