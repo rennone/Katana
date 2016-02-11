@@ -30,7 +30,7 @@ public class Cannon : MonoBehaviour {
 
     void Update()
     {
-        var target = GameManager.I.Player.transform;
+        var target = GameManager.Instance.Player.transform;
         float dist = (target.position - this.transform.position).magnitude;
         if (dist < searchDistance)
         {

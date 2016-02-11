@@ -376,8 +376,11 @@ namespace Katana
                 jumping.lastButtonDownTime = -100;
             }
 
-            if (InputJump && jumping.lastButtonDownTime < 0 && canControl)
+            if (InputJump && _grounded && jumping.lastButtonDownTime < 0 && canControl)
+            {
+                SoundManager.Instance.PlaySound(this.transform, SoundKey.SE_JUMP01);
                 jumping.lastButtonDownTime = Time.time;
+            }
 
             if (_grounded)
             {

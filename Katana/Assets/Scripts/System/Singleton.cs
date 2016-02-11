@@ -1,38 +1,132 @@
-ï»¿using UnityEngine;
-using System.Collections;
+using UnityEngine;
+using UnityEngine.Assertions;
 
-public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
+// http://caitsithware.com/wordpress/archives/118
+
+// Note : Œp³ƒNƒ‰ƒX‚Å‚ÍAwake‚ğéŒ¾‚µ‚È‚¢‚±‚Æ.‘ã‚í‚è‚ÉInit‚ğg‚¤
+//      : Init‚Ì’†‚Å‘¼‚ÌSingleton‚ÉƒAƒNƒZƒX‚µ‚½‚Æ‚«, ‚»‚ÌSingleton‚ÌInit‚ÍŠ®—¹‚µ‚Ä‚¢‚é‚©‚Í‚í‚©‚ç‚È‚¢!
+//      : 
+namespace Katana
 {
-    private static T instance;
-    public static T I
+
+    public class Singleton<T> : MonoBehaviour where T : Singleton<T>
     {
-        get
+        private static T _mInstance;
+
+        public static T Instance
         {
-            if(instance == null)
+            get
             {
-                instance = (T)FindObjectOfType(typeof(T));
+                if (_mInstance != null)
+                    return _mInstance;
+
+                // ƒV[ƒ“‚©‚ç’T‚µ‚Ä‚­‚é
+                _mInstance = FindObjectOfType<T>();
+
+                if (_mInstance == null)
+                {
+                    // ƒV[ƒ“‚É‚È‚©‚Á‚½‚çŒ^–¼‚Æ“¯‚¶ƒvƒŒƒnƒu‚ª‚È‚¢‚©’T‚µ‚Ä‚­‚éB
+                    System.Type type = typeof(T);
+                    var prefabPath = "Prefabs/Singletons/" + type.Name.ToString();
+                    var prefab = Resources.Load(prefabPath);
+
+                    if (prefab == null)
+                    {
+                        Debug.LogError("prefab " + prefabPath + " not exist");
+                    }
+                    else
+                    {
+                        var gameObject = Instantiate(prefab) as GameObject;
+                        _mInstance = gameObject.GetComponent<T>();
+                        if (_mInstance == null)
+                        {
+                            Debug.LogError("Problem during the creation of " + type.ToString(), gameObject);
+                        }
+                    }
+
+                }
+                return _mInstance;
             }
-            return instance;
         }
-    }
 
-    void OnDestroy()
-    {
-        if(instance == this)
+        protected static string PrefabName()
         {
-            instance = null;
+            return "Test";
         }
-    }
 
-    protected virtual void Awake()
-    {
-        CheckInstance();
-    }
+        // ƒV[ƒ“‚ğ‚Ü‚½‚¢‚Å‚à‘¶İ‚µ‘±‚¯‚é‚©‚Ç‚¤‚©
+        protected virtual bool IsPersistent()
+        {
+            return false;
+        }
 
-    protected virtual bool CheckInstance()
-    {
-        if (this == I) { return true; }
-        Destroy(this);
-        return false;
+        // ‰Šú‰»ŠÖ”
+        protected virtual void OnInitialize()
+        {
+        }
+
+        // I—¹ŠÖ”
+        protected virtual void OnFinalize()
+        {
+        }
+
+
+
+        static void Initialize(T instance)
+        {
+            if (_mInstance == null)
+            {
+                // ‘ã“ü‚Æ‰Šú‰»
+                _mInstance = instance;
+                _mInstance.OnInitialize();
+                //‰i‘±«‚ğ—LŒø‚É‚·‚é‚Æ‚«‚Íe‚ğ‚½‚È‚¢transform‚Æ‚·‚éB
+                if (instance.IsPersistent())
+                {
+                    instance.gameObject.transform.parent = null;
+                    DontDestroyOnLoad(instance.gameObject);
+                }
+            }
+            else if (_mInstance != instance)
+            {
+                //‰i‘±«‚ğ—LŒø‚Ìƒtƒ‰ƒO‚ğ‚ÂSingleton‚ª‚·‚Å‚É‚ ‚éê‡AŒã‚©‚ç¶¬‚µ‚æ‚¤‚Æ‚µ‚½
+                //‚n‚‚‚Š‚…‚ƒ‚”‚Í©g‚ğ”jŠü‚µ‚Ü‚·B
+                if (instance.IsPersistent())
+                {
+                    DestroyImmediate(instance.gameObject);
+                }
+            }
+        }
+
+        static void Finalize(T instance)
+        {
+            if (_mInstance == instance)
+            {
+                _mInstance.OnFinalize();
+
+                _mInstance = null;
+            }
+        }
+
+        // Instance‚É“o˜^
+        // 
+        private void Awake()
+        {
+           Initialize(this as T);
+        }
+
+        private void OnDestroyed()
+        {
+            Finalize(this as T);
+        }
+
+
+        // ƒQ[ƒ€‚ªI—¹‚µ‚½‚Æ‚«‚ÉSingleton‚ªíœ‚³‚ê‚Ä‚¢‚È‚©‚Á‚½‚çíœ‚·‚é
+        private void OnApplicationQuit()
+        {
+            if (_mInstance != null)
+            {
+                DestroyImmediate(_mInstance.gameObject);
+            }
+        }
     }
 }
