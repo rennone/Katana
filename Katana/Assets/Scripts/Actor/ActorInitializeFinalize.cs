@@ -13,13 +13,13 @@ namespace Katana
         private void Awake()
         {
             // ゲームマネージャーに登録
-            GameManager.I.RegisterActor(GetComponent<Actor>());
+            GameManager.Instance.RegisterActor(GetComponent<Actor>());
         }
 
         private void OnDestory()
         {
             // ゲームマネージャーから削除
-            GameManager.I.RegisterActor(GetComponent<Actor>());
+            GameManager.Instance.RegisterActor(GetComponent<Actor>());
         }
 
     }
