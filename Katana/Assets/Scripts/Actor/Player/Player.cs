@@ -16,7 +16,7 @@ namespace Katana
         // 移動可能か
         public bool CanMove()
         {
-            return Animator.IsAttack() == false;
+            return Animator.IsKick() == false;
         }
 
         public bool CanAttack()

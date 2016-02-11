@@ -1724,10 +1724,10 @@ GameObject:
   - 136: {fileID: 13699396}
   - 54: {fileID: 5460992}
   - 143: {fileID: 14311492}
-  - 114: {fileID: 11405094}
   - 114: {fileID: 11407318}
   - 114: {fileID: 11468972}
   - 114: {fileID: 11420058}
+  - 114: {fileID: 11408194}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -2600,7 +2600,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 167118}
   m_LocalRotation: {x: 0, y: .707106829, z: 0, w: .707106709}
-  m_LocalPosition: {x: 91.9166107, y: .540000021, z: 0}
+  m_LocalPosition: {x: 92.0786057, y: 21.6303978, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 458860}
@@ -4894,7 +4894,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &11405094
+--- !u!114 &11407318
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -4902,14 +4902,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 167118}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f99e6aefd86a67469a69c9bd122e64a, type: 3}
+  m_Script: {fileID: 11500000, guid: 5912969ca884cf94d87963d80227c208, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 9549762}
+--- !u!114 &11408194
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 167118}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35f4617b75b31ed4cbcb7e44ad45e2a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   movement:
     _maxSpeed: 500
-    _maxGroundAcceleration: 1000
+    _maxGroundAcceleration: 500
     _maxAirAcceleration: 500
-    _gravity: 50
+    _gravity: 30
     SlopeSpeedMultiplier:
       serializedVersion: 2
       m_Curve:
@@ -4937,8 +4949,8 @@ MonoBehaviour:
     ConstraintPosition: {x: 0, y: 0, z: 0}
   jumping:
     enabled: 1
-    baseHeight: 8
-    extraHeight: 2
+    baseHeight: 4
+    extraHeight: 3
     perpAmount: 0
     steepPerpAmount: .5
   movingPlatform:
@@ -4949,18 +4961,6 @@ MonoBehaviour:
     slidingSpeed: 15
     sidewaysControl: 1
     speedControl: .400000006
---- !u!114 &11407318
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 167118}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5912969ca884cf94d87963d80227c208, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _animator: {fileID: 0}
 --- !u!114 &11420058
 MonoBehaviour:
   m_ObjectHideFlags: 1

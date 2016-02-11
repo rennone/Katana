@@ -1,0 +1,12 @@
+using System;
+using UnityEngine;
+namespace AnimatorAccess
+{{
+	[System.Serializable]
+	public class {0} : MonoBehaviour
+	{{
+		public Animator _animator;
+
+{1}
+	}}
+}}
