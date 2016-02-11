@@ -5,13 +5,12 @@ using System.Collections.Generic;
 
 namespace Katana
 {
-    [RequireComponent(typeof (PlayerAnimator))]
-    [RequireComponent(typeof (PlayerInput))]
     public class Player : Character
     {
+        private PlayerInput _input;
+
         protected override void AwakeSelf()
         {
-            int a = 0;
             AStatus.OnDead = OnDead;
 
             // TODO : プレハブに書いておくので必要ないようにする.
@@ -21,15 +20,8 @@ namespace Katana
             characterController.height = 1.25f;
 
             var motor = GetComponent<ActorMotor>();
-            //motor.movement.MaxForwardSpeed = 500;
-            //motor.movement.MaxSidewaysSpeed = 500;
-            ////motor.movement.MaxBackwardsSpeed = 500;
-            //motor.movement.MaxGroundAcceleration = 1000;
-            //motor.movement.MaxAirAcceleration = 500;
-            //motor.movement.Gravity = 50;
-            //motor.movement.MaxFallSpeed = 500;
             motor.movement.FreezePosition.Z = true;
-            motor.jumping.baseHeight = 4.5f;
+            motor.jumping.baseHeight  = 4.0f;
             motor.jumping.extraHeight = 3.0f;
 
             var capsuleColider = GetComponent<CapsuleCollider>();
@@ -37,6 +29,14 @@ namespace Katana
             capsuleColider.center = new Vector3(0, 0.75f, 0);
             capsuleColider.radius = 0.2f;
             capsuleColider.height = 1.6f;
+
+            _input = new PlayerInput(GetComponent<PlayerMotor>(), GetComponent<PlayerAnimator>());
+        }
+
+        protected override void UpdateSelf()
+        {
+            base.UpdateSelf();
+            _input.Update();
         }
 
         protected override void OnDead()

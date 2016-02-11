@@ -3,25 +3,29 @@ using System.Collections;
 
 namespace Katana
 {
-    [RequireComponent(typeof (ActorMotor))]
     public class PlayerAnimator : MonoBehaviour
     {
+        [SerializeField] 
+        private Animator _animator = null;
 
-        [SerializeField] private Animator animator_ = null;
+        private PlayerMotor _motor = null;
 
-        private ActorMotor motor_ = null;
-
-        private void Awake()
+        public void Awake()
         {
-            motor_ = GetComponent<ActorMotor>();
+            _motor = GetComponent<PlayerMotor>();
         }
 
-        // Update is called once per frame
-        private void Update()
+        public bool SetIsAttack(bool enable)
         {
-            animator_.SetBool("IsJump", motor_.IsJumping()); //ジャンプフラグのセット
-            animator_.SetFloat("MoveSpeed",
-                motor_.movement.velocity.magnitude + motor_.InputMoveDirection.magnitude*motor_.movement.MaxForwardSpeed);
+            _animator.SetBool("IsAttack", enable);
+            return true;
+        }
+        // Update is called once per frame
+        public void Update()
+        {
+            _animator.SetBool("IsJump", _motor.IsJumping()); //ジャンプフラグのセット
+            _animator.SetFloat("MoveSpeed", _motor.movement.velocity.magnitude + _motor.InputMoveDirection.magnitude*_motor.movement.MaxForwardSpeed);
+           
         }
     }
 }

@@ -44,14 +44,14 @@ namespace Katana
             APause.State = Pausable.PauseState.Active;
         }
 
-        protected override void Awake()
+        protected sealed override void Awake()
         {
             // ゲームマネージャーに登録
-            GameManager.I.RegisterActor(this);
+            GameManager.Instance.RegisterActor(this);
             AwakeSelf();
         }
 
-        protected override void Update()
+        protected sealed override void Update()
         {
             UpdateSelf();
         }
@@ -64,7 +64,7 @@ namespace Katana
         void OnDestroy()
         {
             OnDestroySelf();
-            GameManager.I.RemoveActor(this);
+            GameManager.Instance.RemoveActor(this);
         }
 
     }

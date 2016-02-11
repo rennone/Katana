@@ -1727,9 +1727,8 @@ GameObject:
   - 114: {fileID: 11405094}
   - 114: {fileID: 11407318}
   - 114: {fileID: 11421344}
-  - 114: {fileID: 11434370}
-  - 114: {fileID: 11471854}
   - 114: {fileID: 11468972}
+  - 114: {fileID: 11420058}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -2602,7 +2601,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 167118}
   m_LocalRotation: {x: 0, y: .707106829, z: 0, w: .707106709}
-  m_LocalPosition: {x: 2.79999995, y: .550000012, z: -0}
+  m_LocalPosition: {x: 91.9166107, y: .540000021, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 458860}
@@ -4908,9 +4907,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movement:
-    MaxForwardSpeed: 500
-    MaxSidewaysSpeed: 500
-    MaxBackwardsSpeed: 500
+    _maxSpeed: 500
+    _maxGroundAcceleration: 1000
+    _maxAirAcceleration: 500
+    _gravity: 50
     SlopeSpeedMultiplier:
       serializedVersion: 2
       m_Curve:
@@ -4931,10 +4931,6 @@ MonoBehaviour:
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
-    MaxGroundAcceleration: 1000
-    MaxAirAcceleration: 500
-    Gravity: 50
-    MaxFallSpeed: 500
     FreezePosition:
       X: 0
       Y: 0
@@ -4942,15 +4938,15 @@ MonoBehaviour:
     ConstraintPosition: {x: 0, y: 0, z: 0}
   jumping:
     enabled: 1
-    baseHeight: 4.5
-    extraHeight: 3
+    baseHeight: 8
+    extraHeight: 2
     perpAmount: 0
     steepPerpAmount: .5
   movingPlatform:
     enabled: 1
     movementTransfer: 2
   sliding:
-    enabled: 0
+    enabled: 1
     slidingSpeed: 15
     sidewaysControl: 1
     speedControl: .400000006
@@ -4966,6 +4962,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator_: {fileID: 9549762}
+--- !u!114 &11420058
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 167118}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f3a8aeed55670b4b9929610cb727050, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _status:
+    MaxHp: 10000
+    Hp: 10000
+    Strong: 10
+    Defense: 10
 --- !u!114 &11421344
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4975,17 +4987,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 77434314b493c8f43840d7b072598725, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &11434370
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 167118}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f0769da4bb8f45a4ebde5893bda9aa0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &11468972
@@ -5000,17 +5001,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   State: 0
---- !u!114 &11471854
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 167118}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7f3a8aeed55670b4b9929610cb727050, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!136 &13699396
 CapsuleCollider:
   m_ObjectHideFlags: 1

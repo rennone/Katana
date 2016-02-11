@@ -64,6 +64,7 @@ namespace Katana
             }
 
             // 重力
+            [SerializeField]
             private float _gravity = 30.0f;
 
             public float Gravity

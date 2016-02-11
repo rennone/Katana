@@ -4,22 +4,22 @@ using System;
 
 namespace Katana
 {
-
-    [RequireComponent(typeof (ActorMotor))]
-    public class PlayerInput : Katana.Singleton<PlayerInput>
+    public class PlayerInput
     {
-        private ActorMotor motor_ = null;
-        // Use this for initialization
-        private void Start()
+        private ActorMotor _motor;
+        private PlayerAnimator _animator;
+
+        public PlayerInput(ActorMotor motor, PlayerAnimator animator)
         {
-            motor_ = GetComponent<ActorMotor>();
+            _motor = motor;
+            _animator = animator;
         }
 
         // Update is called once per frame
-        private void Update()
+        public void Update()
         {
-            motor_.InputMoveDirection = (Input.GetAxisRaw("Horizontal")*Time.deltaTime)*Vector3.right;
-            motor_.InputJump = Input.GetButtonDown("Jump");
+            _motor.InputMoveDirection = (Input.GetAxisRaw("Horizontal")*Time.deltaTime)*Vector3.right;
+            _motor.InputJump = Input.GetButtonDown("Jump");
         }
     }
 }

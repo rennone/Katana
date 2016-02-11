@@ -8,7 +8,6 @@ using UnityEngine.Assertions;
 //      : 
 namespace Katana
 {
-
     public class Singleton<T> : MonoBehaviour where T : Singleton<T>
     {
         private static T _mInstance;
@@ -21,7 +20,7 @@ namespace Katana
                     return _mInstance;
 
                 // ÉVÅ[ÉìÇ©ÇÁíTÇµÇƒÇ≠ÇÈ
-                _mInstance = FindObjectOfType<T>();
+                _mInstance = (T)FindObjectOfType(typeof(T));
 
                 if (_mInstance == null)
                 {
