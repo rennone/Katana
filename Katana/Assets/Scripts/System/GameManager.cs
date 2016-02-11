@@ -61,6 +61,10 @@ namespace Katana
 
         }
 
+        void OnDestroy()
+        {
+            
+        }
         //! 以下デバッグ用
 #if _DEBUG
     private DebugViewer debugCanvas_;

@@ -20,6 +20,11 @@ namespace Katana
             _animator.SetBool("IsAttack", enable);
             return true;
         }
+
+        public bool IsAttack()
+        {
+            return _animator.GetCurrentAnimatorStateInfo(0).IsName("Kick");
+        }
         // Update is called once per frame
         public void Update()
         {

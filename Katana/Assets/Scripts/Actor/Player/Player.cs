@@ -9,28 +9,33 @@ namespace Katana
     {
         private PlayerInput _input;
 
+        public PlayerMotor Motor { get; private set; }
+        public PlayerAnimator Animator { get; private set; }
+
+
+        // 移動可能か
+        public bool CanMove()
+        {
+            return Animator.IsAttack() == false;
+        }
+
+        public bool CanAttack()
+        {
+            return true;
+        }
+
+        public bool CanJump()
+        {
+            return true;
+        }
+
+
         protected override void AwakeSelf()
         {
             AStatus.OnDead = OnDead;
-
-            // TODO : プレハブに書いておくので必要ないようにする.
-            var characterController = GetComponent<CharacterController>();
-            characterController.center = new Vector3(0, 0.7f, 0);
-            characterController.radius = 0.2f;
-            characterController.height = 1.25f;
-
-            var motor = GetComponent<ActorMotor>();
-            motor.movement.FreezePosition.Z = true;
-            motor.jumping.baseHeight  = 4.0f;
-            motor.jumping.extraHeight = 3.0f;
-
-            var capsuleColider = GetComponent<CapsuleCollider>();
-            capsuleColider.isTrigger = true;
-            capsuleColider.center = new Vector3(0, 0.75f, 0);
-            capsuleColider.radius = 0.2f;
-            capsuleColider.height = 1.6f;
-
-            _input = new PlayerInput(GetComponent<PlayerMotor>(), GetComponent<PlayerAnimator>());
+            Motor = GetComponent<PlayerMotor>();
+            Animator = GetComponent<PlayerAnimator>();
+            _input = new PlayerInput(this);
         }
 
         protected override void UpdateSelf()

@@ -13,7 +13,6 @@ namespace Katana
         
     }
 
-
     [System.Serializable]
     public class ActorStatus
     {
@@ -21,19 +20,13 @@ namespace Katana
         public int MaxHp = 10000;
 
         // HP
-        public int Hp;
+        public int Hp = 10000;
 
         // 攻撃力
         public int Strong = 10;
 
         // 防御力
         public int Defense = 10;
-
-        ActorStatus()
-        {
-            Hp = MaxHp;
-            Debug.Log("Constructor");
-        }
 
         //HP減らす処理
         public virtual void DecreaseHP(int val)
@@ -71,21 +64,12 @@ namespace Katana
                     OnFullRecovered();
             }
         }
-
-        //protected virtual void OnDead() { }
-
-        //protected virtual void OnFullRecovered() { }
-
-
-
-
-
-     
+        
 
         public Action OnDead { private get; set; }
+
         public Action OnFullRecovered { private get; set; }
 
         public Action<DamageInfo> OnDamaged { private get; set; } 
-
     }
 }

@@ -63,12 +63,10 @@ namespace UnityEditor
             position.y = 2*sCamera.transform.position.y - position.y;   //y座標が逆になっているの酒精
 
             // プレイヤーの位置を変更
-            var pPosition = player.transform.position;
             player.transform.position = new Vector3(position.x, position.y, player.transform.position.z);
 
             // カメラの位置を変更
-            var cPosition = camera.transform.position;
-            camera.transform.position = new Vector3(position.x, position.y, cPosition.z);
+            camera.transform.position = new Vector3(position.x, position.y, camera.transform.position.z);
         }
 
         // マウスの位置を保存する

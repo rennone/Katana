@@ -1726,7 +1726,6 @@ GameObject:
   - 143: {fileID: 14311492}
   - 114: {fileID: 11405094}
   - 114: {fileID: 11407318}
-  - 114: {fileID: 11421344}
   - 114: {fileID: 11468972}
   - 114: {fileID: 11420058}
   m_Layer: 8
@@ -4961,7 +4960,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5912969ca884cf94d87963d80227c208, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator_: {fileID: 9549762}
+  _animator: {fileID: 0}
 --- !u!114 &11420058
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4978,17 +4977,6 @@ MonoBehaviour:
     Hp: 10000
     Strong: 10
     Defense: 10
---- !u!114 &11421344
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 167118}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77434314b493c8f43840d7b072598725, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &11468972
 MonoBehaviour:
   m_ObjectHideFlags: 1

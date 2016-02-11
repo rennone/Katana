@@ -42,8 +42,8 @@ namespace Katana
                             Debug.LogError("Problem during the creation of " + type.ToString(), gameObject);
                         }
                     }
-
                 }
+
                 return _mInstance;
             }
         }
