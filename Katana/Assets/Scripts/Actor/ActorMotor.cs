@@ -6,7 +6,6 @@ namespace Katana
 {
 
 // Require a character controller to be attached to the same game object
-    [RequireComponent(typeof (CharacterController))] //Component->phisicsにある.地面とのあたり判定なんかを勝手にやってくれる
     [AddComponentMenu("Character/Character Motor")]
 
     public partial class ActorMotor : MonoBehaviour
@@ -36,7 +35,7 @@ namespace Katana
         private Vector3 lastGroundNormal = Vector3.zero;
 
         //  private Transform tr;
-        private CharacterController controller;
+        private CharacterController _controller;
 
 
 
@@ -61,7 +60,7 @@ namespace Katana
                 move.z = (movement.ConstraintPosition.z - transform.position.z)*coef;
             }
 
-            var collisionFlag = controller.Move(move);
+            var collisionFlag = _controller.Move(move);
 
             return collisionFlag;
         }
@@ -99,7 +98,7 @@ namespace Katana
         //最初に絶対呼び出される関数
         private void Awake()
         {
-            controller = GetComponent<CharacterController>();
+            _controller = GetComponent<CharacterController>();
         }
 
         //----------------------------------------------------------------------------
@@ -157,7 +156,7 @@ namespace Katana
             Vector3 currentMovementOffset = velocity*Time.deltaTime;
 
             // ステップを歩いたりスロープの急激な変化を介したとき、地面の喪失を避けるために地面からどれくらい上げる必要があるか調べる
-            float pushDownOffset = Mathf.Max(controller.stepOffset,
+            float pushDownOffset = Mathf.Max(_controller.stepOffset,
                 new Vector3(currentMovementOffset.x, 0, currentMovementOffset.z).magnitude);
             if (_grounded)
                 currentMovementOffset -= pushDownOffset*Vector3.up;
@@ -259,7 +258,7 @@ namespace Katana
                 // This works best when the character is standing on moving tilting platforms. 
                 movingPlatform.activeGlobalPoint = transform.position +
                                                    Vector3.up*
-                                                   (controller.center.y - controller.height*0.5f + controller.radius);
+                                                   (_controller.center.y - _controller.height*0.5f + _controller.radius);
                 movingPlatform.activeLocalPoint =
                     movingPlatform.activePlatform.InverseTransformPoint(movingPlatform.activeGlobalPoint);
 
@@ -580,7 +579,7 @@ namespace Katana
         //傾斜が急かどうか
         private bool TooSteep()
         {
-            return (groundNormal.y <= Mathf.Cos(controller.slopeLimit*Mathf.Deg2Rad));
+            return (groundNormal.y <= Mathf.Cos(_controller.slopeLimit*Mathf.Deg2Rad));
         }
 
         //----------------------------------------------------------------------------

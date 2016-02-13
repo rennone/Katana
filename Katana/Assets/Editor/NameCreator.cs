@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -14,7 +13,7 @@ using UnityEngine;
 public static class NameCreator
 {
     // 変数名に使えない文字を管理する配列
-    private static readonly string[] INVALUD_CHARS =
+    private static readonly string[] InvaludChars =
     {
         " ", "!", "\"", "#", "$",
         "%", "&", "\'", "(", ")",
@@ -131,7 +130,7 @@ public static class NameCreator
     /// 無効な文字を削除
     public static string RemoveInvalidChars(string str)
     {
-        Array.ForEach(INVALUD_CHARS, c => str = str.Replace(c, string.Empty));
+        Array.ForEach(InvaludChars, c => str = str.Replace(c, string.Empty));
         return str;
     }
 }

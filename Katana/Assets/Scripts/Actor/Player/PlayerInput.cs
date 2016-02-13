@@ -6,10 +6,8 @@ namespace Katana
 {
     public class PlayerInput
     {
-        private readonly ActorMotor _motor = null;
-        private readonly PlayerAnimator _animator = null;
-
         private readonly Player _player;
+
         public PlayerInput(Player player)
         {
             _player = player;

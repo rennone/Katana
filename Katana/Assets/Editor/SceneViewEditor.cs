@@ -2,6 +2,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace UnityEditor
 {
@@ -39,7 +40,7 @@ namespace UnityEditor
             if(_sceneViewMouse.x < 0 || _sceneViewMouse.y < 0)
                 return;
 
-            var player = (GameObject)FindObjectsOfType(typeof(GameObject)).First(o => o.name == "Player");
+            var player = (GameObject)FindObjectsOfType(typeof(GameObject)).First(o => Regex.IsMatch(o.name ,"^Player"));
             var camera = (GameObject)FindObjectsOfType(typeof(GameObject)).First(o => o.name == "Main Camera");
 
             if (player == null)

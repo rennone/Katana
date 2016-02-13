@@ -18,5 +18,16 @@ namespace Katana
             SetIsJump(_motor.IsJumping());//ジャンプフラグのセット
             SetMoveSpeed(_motor.movement.velocity.magnitude + _motor.InputMoveDirection.magnitude*_motor.movement.MaxForwardSpeed);
         }
+
+        public void AnimationCallbackWeaponActive()
+        {
+            GetComponentInChildren<SimpleWeapon>().SetActive(true);
+        }
+
+        public void AnimationCallbackWaponInActive()
+        {
+            GetComponentInChildren<SimpleWeapon>().SetActive(false);
+        }
+
     }
 }
