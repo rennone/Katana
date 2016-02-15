@@ -7,6 +7,9 @@ TagManager:
   - LoadableScene
   - StageRange
   - Debug
+  - rootOfArea
+  - Gimmick
+  - Enemy
   layers:
   - Default
   - TransparentFX

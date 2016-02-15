@@ -97,18 +97,16 @@ public class CreateAnimatorParameterSettings : AssetPostprocessor
         string intent = "\t\t";
         string prefix = intent + "protected readonly static int {0}Hash = {1};";
 
-        Func<string, string> makePropertyTemplate = (typeName) =>
+        Func<string, string, string> makePropertyTemplate = (typeName, ltype) =>
         {
-            string ltype = typeName.Substring(0, 1).ToUpper() + typeName.Substring(1);
-            string getter = intent + "public " + typeName + " Get{0}(){{ return _animator.Get" + ltype + "({0}Hash); }}";
+            string getter = intent + "public " + typeName + " Get{0}(){{ return _animator.Get" + ltype +"({0}Hash); }}";
             string setter = intent + "public " + "void" + " Set{0}(" + typeName + " value){{ _animator.Set" + ltype + "({0}Hash, value);}}";
             return prefix + "\n" + getter + "\n" + setter;
-            //  return prefix + "\n" + intent + "public " + typeName + " {0}{{ get{{ return _animator.Get" + Ltype + "({0}Hash); }} set{{ _animator.Set" + Ltype + "({0}Hash, value); }}}}";
         };
 
-        string floatPropertyTemplate = makePropertyTemplate("float");
-        string intPropertyTemplate   = makePropertyTemplate("int");
-        string boolPropertyTemplate  = makePropertyTemplate("bool");
+        string floatPropertyTemplate = makePropertyTemplate("float", "Float");
+        string intPropertyTemplate   = makePropertyTemplate("int", "Integer");
+        string boolPropertyTemplate  = makePropertyTemplate("bool", "Bool");
         
         string triggerTemplate = prefix + "\n" + intent + "public void {0}(){{ _animator.SetTrigger ({0}Hash); }} public void Reset{0}() {{ _animator.ResetTrigger ({0}Hash); }}";
 
@@ -148,7 +146,7 @@ public class CreateAnimatorParameterSettings : AssetPostprocessor
 
         string stateTemplate = intent + "public static readonly int {0} = {1};";
         string isStateTemplate = intent +
-                                 "public bool Is{0}(){{ return {1} == _animator.GetCurrentAnimatorStateInfo(0).fullPathHash; }}";
+                                 "public bool Is{0}State(){{ return {1} == _animator.GetCurrentAnimatorStateInfo(0).fullPathHash; }}";
         foreach (var states in hashState)
         {
             // 先頭のBaseLayerの部分を削除

@@ -11,11 +11,19 @@ namespace Katana
 
         public ActorStatus AStatus { get { return _status; } }
 
-        protected override void AwakeSelf()
+        protected override void OnInitialize()
         {
-            base.AwakeSelf();
+            base.OnInitialize();
             AStatus.OnDead = OnDead;
             AStatus.OnDamaged = OnDamaged;
+        }
+
+        // 攻撃する
+        public virtual Messages.DamageResult Attack(IDamage target, Messages.Damage damage)
+        {
+            damage.Strong += AStatus.Strong;
+            damage.Direction = transform.forward;
+            return target.Damage(damage);
         }
 
         // ダメージ

@@ -2,46 +2,26 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using Katana.Messages;
 
 namespace Katana
 {
-    public class Player : Character
+    public partial class Player : Character
     {
-        private PlayerInput _input;
-
         public PlayerMotor Motor { get; private set; }
         public PlayerAnimator Animator { get; private set; }
 
-
-        // 移動可能か
-        public bool CanMove()
-        {
-            return Animator.IsKick() == false;
-        }
-
-        public bool CanAttack()
-        {
-            return true;
-        }
-
-        public bool CanJump()
-        {
-            return true;
-        }
-
-
-        protected override void AwakeSelf()
+        protected override void OnInitialize()
         {
             AStatus.OnDead = OnDead;
             Motor = GetComponent<PlayerMotor>();
             Animator = GetComponent<PlayerAnimator>();
-            _input = new PlayerInput(this);
         }
 
-        protected override void UpdateSelf()
+        protected override void OnUpdate()
         {
-            base.UpdateSelf();
-            _input.Update();
+            base.OnUpdate();
+            InputUpdate();
         }
 
         protected override void OnDead()
@@ -54,6 +34,7 @@ namespace Katana
             StartCoroutine("AfterDamaged");
         }
 
+        // ダメージを受けた時の処理
         private void SetLayerRecursively(GameObject actor, int layer)
         {
             actor.layer = layer;
@@ -65,7 +46,6 @@ namespace Katana
 
         private IEnumerator AfterDamaged()
         {
-            // gameObject.layer = LayerName.PlayerDamaged;
             Dictionary<string, Shader> backups = new Dictionary<string, Shader>();
             var renderers = GetComponentsInChildren<SkinnedMeshRenderer>();
             foreach (SkinnedMeshRenderer renderer in renderers)

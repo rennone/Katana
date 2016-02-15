@@ -4,22 +4,17 @@ using System;
 
 namespace Katana
 {
-    public class PlayerInput
+    public partial class Player
     {
-        private readonly Player _player;
-
-        public PlayerInput(Player player)
-        {
-            _player = player;
-        }
 
         // Update is called once per frame
-        public void Update()
+        public void InputUpdate()
         {
-            _player.Motor.InputMoveDirection = _player.CanMove() ? (Input.GetAxisRaw("Horizontal") * Time.deltaTime) * Vector3.right : Vector3.zero;
+            Motor.InputMoveDirection = CanMove() ? (Input.GetAxisRaw("Horizontal") * Time.deltaTime) * Vector3.right : Vector3.zero;
 
-            _player.Motor.InputJump = Input.GetButtonDown("Jump");
-            _player.Animator.SetIsAttack(Input.GetButtonDown("Fire1"));
+            Motor.InputJump = Input.GetButtonDown("Jump");
+
+            Animator.SetIsAttack(Input.GetButtonDown("Fire1") && CanAttack());
         }
     }
 }

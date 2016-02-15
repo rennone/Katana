@@ -13,4 +13,6 @@ public static class TagName
 	public const string StageRange = "StageRange";
 	public const string Debug = "Debug";
 	public const string rootOfArea = "rootOfArea";
+	public const string Gimmick = "Gimmick";
+	public const string Enemy = "Enemy";
 }

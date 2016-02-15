@@ -22,13 +22,13 @@ namespace AnimatorAccess
 
 // State
 		public static readonly int StateIdIdle = 1432961145;
-		public bool IsIdle(){ return StateIdIdle == _animator.GetCurrentAnimatorStateInfo(0).fullPathHash; }
+		public bool IsIdleState(){ return StateIdIdle == _animator.GetCurrentAnimatorStateInfo(0).fullPathHash; }
 		public static readonly int StateIdRUN00_F = 195871495;
-		public bool IsRUN00_F(){ return StateIdRUN00_F == _animator.GetCurrentAnimatorStateInfo(0).fullPathHash; }
+		public bool IsRUN00_FState(){ return StateIdRUN00_F == _animator.GetCurrentAnimatorStateInfo(0).fullPathHash; }
 		public static readonly int StateIdJump = 788460410;
-		public bool IsJump(){ return StateIdJump == _animator.GetCurrentAnimatorStateInfo(0).fullPathHash; }
+		public bool IsJumpState(){ return StateIdJump == _animator.GetCurrentAnimatorStateInfo(0).fullPathHash; }
 		public static readonly int StateIdKick = -1751635351;
-		public bool IsKick(){ return StateIdKick == _animator.GetCurrentAnimatorStateInfo(0).fullPathHash; }
+		public bool IsKickState(){ return StateIdKick == _animator.GetCurrentAnimatorStateInfo(0).fullPathHash; }
 
 	}
 }
