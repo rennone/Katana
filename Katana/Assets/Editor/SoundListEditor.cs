@@ -8,7 +8,9 @@ public class SoundListEditor
 {
     private static readonly string SOUND_DEF_PATH = @"Assets/Scripts/AutoGenerate/SoundKey.cs"; //サウンドキー
     private static readonly string SoundListPass = @"Assets/Resources/Data/SoundList.asset";    //サウンドリストのパス
-    private static readonly string SoundFolder = @"Assets/Resources/Sounds";    //サウンドデータの格納フォルダ
+
+    // 使っていないので警告を消すためにコメントアウト. 必要になったら外すこと
+    //private static readonly string SoundFolder = @"Assets/Resources/Sounds";    //サウンドデータの格納フォルダ
 
     [MenuItem("Assets/Custom/Add SoundList")]
     public static void AddSoundList()

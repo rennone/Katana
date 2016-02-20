@@ -15,8 +15,8 @@ namespace FightingUnityChan
     {
 
         private Animator anim; // Animatorへの参照
-        private AnimatorStateInfo currentState; // 現在のステート状態を保存する参照
-        private AnimatorStateInfo previousState; // ひとつ前のステート状態を保存する参照
+        //private AnimatorStateInfo currentState; // 現在のステート状態を保存する参照
+        //private AnimatorStateInfo previousState; // ひとつ前のステート状態を保存する参照
 
 
         // Use this for initialization
@@ -24,8 +24,8 @@ namespace FightingUnityChan
         {
             // 各参照の初期化
             anim = GetComponent<Animator>();
-            currentState = anim.GetCurrentAnimatorStateInfo(0);
-            previousState = currentState;
+            //currentState = anim.GetCurrentAnimatorStateInfo(0);
+            //previousState = currentState;
 
         }
         private void OnGUI()

@@ -28,6 +28,6 @@ public class BossEnemy : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        collision.other.SendMessage("DecreaseHP" , 100);
+        collision.transform.SendMessage("DecreaseHP" , 100);
     }
 }

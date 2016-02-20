@@ -3,10 +3,34 @@ using UnityEngine;
 using System.Collections;
 using Katana.Messages;
 
+// 変数の宣言.
+// 入力の可否など非常にシンプルな関数群はこっちに書く
 namespace Katana
 {
     public partial class  Player
     {
+        private PlayerMotor _motor;
+
+        private CapsuleCollider _capsule { get; set; }
+
+        private SimpleWeapon _kick;
+
+        public PlayerAnimator _animatorAccess;
+
+        // 衝突判定に使う
+        // コライダの頂上の位置
+        public Vector3 Top
+        {
+            get { return transform.TransformPoint(Vector3.up * _capsule.height / 2 + _capsule.center); }
+        }
+
+        // コライダの底の位置
+        public Vector3 Bottom
+        {
+            get { return transform.TransformPoint(-Vector3.up * _capsule.height / 2 + _capsule.center); }
+        }
+
+
         // ゲームを進めていくと, 解放される行動.
         // ゲームパッドの入力と(スティックを除いて)一対一対応する
         // 最大32個
@@ -21,24 +45,15 @@ namespace Katana
         }
 
         // Actionの項目数
-        private readonly int ActionNum = Enum.GetNames(typeof (Action)).Length;
+        //private readonly int ActionNum = Enum.GetNames(typeof (Action)).Length;
 
         //! 解放された行動
         private uint _releasedAction = (int)(Action.Move | Action.Jump | Action.Squat);
-
-        bool hasWeapon = false;
-        
-        public bool CanAttack()
-        {
-            return hasWeapon;
-        }
 
         //! actionを解放する
         public void ReleaseAttack(Action action)
         {
             _releasedAction |= (uint)action;
-            hasWeapon = true;
-            
         }
 
         //! actionが解放されているかどうか
@@ -86,6 +101,20 @@ namespace Katana
         {
             // TODO : 武器を指定できるようにする
             _kick.SetActive(false);
+        }
+
+
+        // private:
+        void InitializeComponent()
+        {
+            _motor = GetComponent<PlayerMotor>();
+            _capsule = GetComponent<CapsuleCollider>();
+            _kick = GetComponentInChildren<SimpleWeapon>();
+            var animator = GetComponent<Animator>();
+
+            _motor.CanChangeDirection = IsNormalState;
+            _animatorAccess = animator.GetBehaviour<PlayerAnimator>();
+            _animatorAccess.SetAnimator(animator);
         }
     }
 

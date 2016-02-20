@@ -72,8 +72,6 @@ namespace Katana
                 motor_.InputMoveDirection = distance;
             }
         }
-        private int _range = 20;
-
     }
 }
 
