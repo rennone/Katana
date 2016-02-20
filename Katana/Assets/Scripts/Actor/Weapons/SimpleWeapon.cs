@@ -12,4 +12,11 @@ public class SimpleWeapon : Katana.WeaponBase
         base.OnCollideGimmick(gimmick, collider);
         Owner.Attack(gimmick, new Damage(0, Vector3.zero, collider, this));
     }
+
+    protected override void OnCollidePlayer(Player player, Collider collider)
+    {
+        base.OnCollidePlayer(player, collider);
+        Debug.Log("On Collide Player");
+        Owner.Attack(player, new Damage(0, Vector3.zero, collider, this));
+    }
 }

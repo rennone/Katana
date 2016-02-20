@@ -16,7 +16,6 @@ using System.Text;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-
 #endregion
 
 public class CreateAnimatorParameterSettings : AssetPostprocessor
@@ -67,7 +66,7 @@ public class CreateAnimatorParameterSettings : AssetPostprocessor
         var directry = Directory.GetParent(path);
         var fileName = Path.GetFileNameWithoutExtension(path);
 
-        return string.Format("{0}/{1}.cs", directry, StripSpace(fileName));
+        return string.Format("{0}/{1}Access.cs", directry, StripSpace(fileName));
     }
 
     static string GetPath(string path)
@@ -95,20 +94,21 @@ public class CreateAnimatorParameterSettings : AssetPostprocessor
     static string GenerateCode(AnimatorController animatorController)
     {
         string intent = "\t\t";
-        string prefix = intent + "protected readonly static int {0}Hash = {1};";
+        string prefix = intent + "protected const int {0}Hash = {1};";
 
         Func<string, string, string> makePropertyTemplate = (typeName, ltype) =>
         {
             string getter = intent + "public " + typeName + " Get{0}(){{ return _animator.Get" + ltype +"({0}Hash); }}";
             string setter = intent + "public " + "void" + " Set{0}(" + typeName + " value){{ _animator.Set" + ltype + "({0}Hash, value);}}";
-            return prefix + "\n" + getter + "\n" + setter;
+            
+            return getter + "\n" + setter;
         };
 
-        string floatPropertyTemplate = makePropertyTemplate("float", "Float");
-        string intPropertyTemplate   = makePropertyTemplate("int", "Integer");
-        string boolPropertyTemplate  = makePropertyTemplate("bool", "Bool");
+        var floatPropertyTemplate = makePropertyTemplate("float", "Float");
+        var intPropertyTemplate   = makePropertyTemplate("int", "Integer");
+        var boolPropertyTemplate  = makePropertyTemplate("bool", "Bool");
         
-        string triggerTemplate = prefix + "\n" + intent + "public void {0}(){{ _animator.SetTrigger ({0}Hash); }} public void Reset{0}() {{ _animator.ResetTrigger ({0}Hash); }}";
+        var triggerTemplate = intent + "public void {0}(){{ _animator.SetTrigger ({0}Hash); }} public void Reset{0}() {{ _animator.ResetTrigger ({0}Hash); }}";
 
         
 
@@ -119,21 +119,36 @@ public class CreateAnimatorParameterSettings : AssetPostprocessor
         StringBuilder fields = new StringBuilder();
 
         fields.AppendLine("// Perameters");
+
+        // ハッシュ値の定義
+        StringBuilder hashBulider = new StringBuilder(intent + "// hash values\n");
+
+
+        StringBuilder getsetBuilder = new StringBuilder(intent + "// parameter setter getter \n");
+        // 
         // パラメータを定数化
         foreach (var param in animatorController.parameters)
         {
             string code = string.Empty;
             string name = StripSpace(param.name);
+
+            // ハッシュ値の定義
+            hashBulider.AppendLine(string.Format(prefix, name, param.nameHash));
+
             if (param.type == AnimatorControllerParameterType.Bool)
-                code = string.Format(boolPropertyTemplate, name, param.nameHash);
-            if (param.type == AnimatorControllerParameterType.Float)
-                code = string.Format(floatPropertyTemplate, name, param.nameHash);
-            if (param.type == AnimatorControllerParameterType.Int)
-                code = string.Format(intPropertyTemplate, name, param.nameHash);
-            if (param.type == AnimatorControllerParameterType.Trigger)
-                code = string.Format(triggerTemplate, name, param.nameHash);
-            fields.AppendLine(code + "\n");
+                code = string.Format(boolPropertyTemplate, name);
+            else if (param.type == AnimatorControllerParameterType.Float)
+                code = string.Format(floatPropertyTemplate, name);
+            else if (param.type == AnimatorControllerParameterType.Int)
+                code = string.Format(intPropertyTemplate, name);
+            else if (param.type == AnimatorControllerParameterType.Trigger)
+                code = string.Format(triggerTemplate, name);
+
+            // getter setter
+            getsetBuilder.AppendLine(code);
         }
+        fields.Append(hashBulider.ToString() + "\n");
+        fields.Append(getsetBuilder.ToString() + "\n");
 
         Dictionary<string, int> hashState = new Dictionary<string, int>();
        
@@ -142,25 +157,68 @@ public class CreateAnimatorParameterSettings : AssetPostprocessor
             StateCheck(layer.stateMachine, layer.stateMachine.name + ".", ref hashState);
         }
 
-        fields.AppendLine("// State");
+        // 状態の取得関数を定義
+        fields.AppendLine(intent + "// State");
 
-        string stateTemplate = intent + "public static readonly int {0} = {1};";
+        string stateTemplate = intent + "public const int {0} = {1};";
         string isStateTemplate = intent +
                                  "public bool Is{0}State(){{ return {1} == _animator.GetCurrentAnimatorStateInfo(0).fullPathHash; }}";
+
+        StringBuilder onStateEnter = new StringBuilder("// case \n");
+        StringBuilder onStateExit = new StringBuilder("// case \n");
+        StringBuilder onStateMove = new StringBuilder("// case \n");
+        StringBuilder onStateUpdate = new StringBuilder("// case \n");
+        StringBuilder onStateIK = new StringBuilder("// case \n");
+
+        hashBulider = new StringBuilder();
+        var getterBuilder = new StringBuilder();
+        var functionBuilder = new StringBuilder();
         foreach (var states in hashState)
         {
             // 先頭のBaseLayerの部分を削除
-            var removed = Regex.Replace(states.Key, "^BaseLayer_", "");
+            var stateName = Regex.Replace(states.Key, "^BaseLayer_", "");
 
-            var stateId = "StateId" + removed;
+            var stateId = "StateId" + stateName;
             // ハッシュ値の宣言の行
-            fields.AppendLine(string.Format(stateTemplate, stateId, states.Value));
+            hashBulider.AppendLine(string.Format(stateTemplate, stateId, states.Value));
 
             // 状態取得関数の行
-            fields.AppendLine(string.Format(isStateTemplate, removed, stateId));
-        }
+            getterBuilder.AppendLine(string.Format(isStateTemplate, stateName, stateId));
 
-        return string.Format(codeTemplate, StripSpace(animatorController.name), fields.ToString());
+            Debug.Log("B");
+            var functionTemplate = intent +  "public virtual void {0}(Animator animator, AnimatorStateInfo stateInfo){{}}";
+            var caseTemplate = intent + intent + "case {0} : {1}; break;";
+            var functionExecTemplate = "{0}(animator, stateInfo)";
+
+            var stateEnter = "OnStateEnterTo" + stateName;//string.Format(functionTemplate, );
+            onStateEnter.AppendLine(string.Format(caseTemplate, stateId, string.Format(functionExecTemplate, stateEnter)));
+
+            var stateExit = "OnStateExitFrom" + stateName;
+            onStateExit.AppendLine(string.Format(caseTemplate, stateId, string.Format(functionExecTemplate, stateExit)));
+
+            var stateMove ="OnStateMove" + stateName;
+            onStateMove.AppendLine(string.Format(caseTemplate, stateId, string.Format(functionExecTemplate, stateMove)));
+
+            var stateUpdate = "OnStateUpdate" + stateName;
+            onStateUpdate.AppendLine(string.Format(caseTemplate, stateId, string.Format(functionExecTemplate, stateUpdate)));
+
+            var stateIk = "OnStateIk" + stateName;
+            onStateIK.AppendLine(string.Format(caseTemplate, stateId, string.Format(functionExecTemplate, stateIk)));
+
+            functionBuilder.AppendLine(string.Format(functionTemplate, stateEnter));
+            functionBuilder.AppendLine(string.Format(functionTemplate, stateExit));
+            functionBuilder.AppendLine(string.Format(functionTemplate, stateMove));
+            functionBuilder.AppendLine(string.Format(functionTemplate, stateUpdate));
+            functionBuilder.AppendLine(string.Format(functionTemplate, stateIk));
+        }
+        Debug.Log("A");
+        //return string.Format(codeTemplate, StripSpace(animatorController.name), fields.ToString(),
+        //    onStateEnter.ToString(), onStateExit.ToString(), string.Empty, string.Empty, onStateMove.ToString(), onStateUpdate.ToString(), onStateIK.ToString());
+        fields.AppendLine(hashBulider.ToString());
+        fields.AppendLine(getterBuilder.ToString());
+        fields.AppendLine(functionBuilder.ToString());
+        return string.Format(codeTemplate, StripSpace(animatorController.name), fields.ToString(), onStateEnter, onStateExit, string.Empty, string.Empty,
+            onStateMove, onStateUpdate, onStateIK);
     }
 
     static void StateCheck(AnimatorStateMachine statemachiene, string stateNameSpace, ref Dictionary<string, int> hashState)

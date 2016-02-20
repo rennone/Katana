@@ -13,7 +13,7 @@ namespace Katana.Hud
     public class HudMessage : HudComponent
     {
         // 1メッセージの描画時間
-        private const float DisplayTime = 5.0f;
+        private const float DisplayTime = 7.0f;
 
         // 表示するテキスト
         private Text _messageText;
@@ -38,6 +38,7 @@ namespace Katana.Hud
         List<Message> _messages = new List<Message>();
         private float _timer = -1;
 
+        // テキストの透明度
         float _alpha
         {
             get { return _messageText.color.a; }
@@ -48,6 +49,7 @@ namespace Katana.Hud
             }
         }
 
+        // テキストの内容
         string _text
         {
             get { return _messageText.text; }

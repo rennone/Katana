@@ -8,20 +8,45 @@ namespace Katana
 {
     public partial class Player : Character
     {
-        public PlayerMotor Motor { get; private set; }
-        public PlayerAnimator Animator { get; private set; }
+        private PlayerMotor _motor;
 
-        protected override void OnInitialize()
+        private CapsuleCollider _capsule;
+
+        private SimpleWeapon _kick;
+        public PlayerAnimator _animatorAccess;
+
+        // TODO : Vector.up ではなくローカルの上方向ベクトル
+        public Vector3 Top
         {
-            AStatus.OnDead = OnDead;
-            Motor = GetComponent<PlayerMotor>();
-            Animator = GetComponent<PlayerAnimator>();
+            get { return transform.TransformPoint(Vector3.up*_capsule.height/2 + _capsule.center); }
+        }
+
+        public Vector3 Bottom
+        {
+            get { return transform.TransformPoint(-Vector3.up*_capsule.height/2 + _capsule.center); }
         }
 
         protected override void OnUpdate()
         {
             base.OnUpdate();
-            InputUpdate();
+            AnimationUpdate();
+        }
+
+        protected override void OnInitialize()
+        {
+            _motor = GetComponent<PlayerMotor>();
+            _capsule = GetComponent<CapsuleCollider>();
+            _kick = GetComponentInChildren<SimpleWeapon>();
+            var animator = GetComponent<Animator>();
+
+            _motor.CanChangeDirection = IsNormalState;
+            _animatorAccess = animator.GetBehaviour<PlayerAnimator>();
+            _animatorAccess.SetAnimator(animator);
+        }
+
+        public void Damage(int val)
+        {
+            base.Damage(new Damage(val));
         }
 
         protected override void OnDead()
@@ -29,9 +54,9 @@ namespace Katana
             GameManager.Instance.GameRestart();
         }
 
-        protected override void OnDamaged(DamageInfo damage)
+        protected override void OnDamaged(DamageResult damage)
         {
-            StartCoroutine("AfterDamaged");
+            //StartCoroutine("AfterDamaged");
         }
 
         // ダメージを受けた時の処理

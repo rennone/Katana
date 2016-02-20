@@ -42,7 +42,7 @@ namespace Katana
 
         public void GameRestart()
         {
-            Application.LoadLevel(nowSceneName);
+            Application.LoadLevel(Application.loadedLevelName);
         }
 
         // Actorを登録する

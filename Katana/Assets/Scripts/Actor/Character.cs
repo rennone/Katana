@@ -1,23 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Katana.Messages;
 
 namespace Katana
 {
 
-    public class Character : Actor
+    public class Character : Actor, IDamage
     {
         [SerializeField]
         private ActorStatus _status;
 
         public ActorStatus AStatus { get { return _status; } }
-
-        protected override void OnInitialize()
-        {
-            base.OnInitialize();
-            AStatus.OnDead = OnDead;
-            AStatus.OnDamaged = OnDamaged;
-        }
-
+        
         // 攻撃する
         public virtual Messages.DamageResult Attack(IDamage target, Messages.Damage damage)
         {
@@ -26,21 +20,47 @@ namespace Katana
             return target.Damage(damage);
         }
 
-        // ダメージ
-        public virtual void Damage(int val)
+        public DamageResult Damage(Damage damage)
         {
-            AStatus.DecreaseHP(val);
-            OnDamaged(null);
+            var result = damage.Strong < 0 ? AStatus.IncreaseHP((uint) -damage.Strong) : AStatus.DecreaseHP((uint)damage.Strong);
+
+            DamageResult ret = new DamageResult(result);
+            switch (result)
+            {
+                case DamageResult.StatusResult.Dead:
+                    OnDead();
+                    break;
+                case DamageResult.StatusResult.Damaged:
+                    OnDamaged(ret);
+                    break;
+                case DamageResult.StatusResult.Recovered:
+                    OnRecover();
+                    break;
+            }
+
+            return ret;
         }
 
-        // 回復
-        public virtual void Recover(int val)
+        public MoveResult Move(Move move)
         {
-            AStatus.IncreaseHP(val);
-            OnRecover();
+            throw new System.NotImplementedException();
         }
 
-        protected virtual void OnDamaged(DamageInfo damage)
+        //// ダメージ
+        //public virtual void Damage(int val)
+        //{
+        //    AStatus.DecreaseHP(val);
+        //    OnDamaged(null);
+        //}
+
+        //// 回復
+        //public virtual void Recover(int val)
+        //{
+        //    AStatus.IncreaseHP(val);
+        //    OnRecover();
+        //}
+
+        protected virtual void OnDamaged(DamageResult damage)
         {
 
         }
@@ -54,5 +74,6 @@ namespace Katana
         {
 
         }
+
     }
 }

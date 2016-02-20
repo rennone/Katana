@@ -51,14 +51,42 @@ namespace Katana
                 Collider = collider;
                 Weapon = weapon;
             }
+
+            public Damage(int strong = 0, Collider collider = null, WeaponBase weapon = null)
+                :this(strong, Vector3.zero, collider, weapon)
+            {
+            }
         }
 
         // ダメージの結果クラス
         public class DamageResult : ResultBase<DamageResult>
         {
-            public DamageResult(bool success_)
+            public enum StatusResult
+            {
+                Damaged,        //ダメージを受けた
+                Dead,           //死んだ
+                Blocked,        //防いだ
+                Recovered,      //回復した (ダメージが負)
+                FullRecovered   //全回復した(ダメージが負)
+            }
+
+            public readonly StatusResult Result;
+
+            public DamageResult(bool success_, StatusResult result)
                 :base(success_)
             {
+                Result = result;
+            }
+
+            public DamageResult(StatusResult result = StatusResult.Damaged)
+                :this(result != StatusResult.Blocked, result)
+            {
+            }
+
+            public DamageResult(bool success)
+                : this(success, success ? StatusResult.Damaged : StatusResult.Blocked)
+            {
+                
             }
         }
     }

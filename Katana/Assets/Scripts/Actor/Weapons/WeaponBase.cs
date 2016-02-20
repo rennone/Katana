@@ -16,24 +16,29 @@ namespace Katana
         // Use this for initialization
         protected override sealed void Awake()
         {
-            _collider.isTrigger = true;
-            //最初は武器を切る
-            SetActive(false);
-
-            OnInitialize();
+            _collider = GetComponent<Collider>();
+            base.Awake();
         }
+
+        protected override sealed void Start()
+        {
+            _collider.isTrigger = true;
+            SetActive(false);
+            base.Start();
+        }
+
 
         // Update is called once per frame
         protected override sealed void Update()
         {
-            OnUpdate();
+            base.Update();
         }
         
 
         public virtual void SetActive(bool enable)
         {
-            _collider.enabled = enable;
             enabled = enable;
+            _collider.enabled = enable;
         }
 
         public virtual void SetVisible(bool enable)
@@ -47,6 +52,15 @@ namespace Katana
                 case TagName.Gimmick:
                     OnCollideGimmick(collider.GetComponent<GimmickBase>(), collider);
                     break;
+                case TagName.Player:
+                    OnCollidePlayer(collider.GetComponent<Player>(), collider);
+                    break;
+                case TagName.Enemy:
+                    OnCollideEnemy(collider);
+                    break;
+                default:
+                    OnCollideOther(collider);
+                    break;
             }
         }
 
@@ -55,7 +69,12 @@ namespace Katana
             
         }
 
-        protected virtual void OnCollideEnemy()
+        protected virtual void OnCollideEnemy(Collider collider)
+        {
+            
+        }
+
+        protected virtual void OnCollidePlayer(Player player, Collider collider)
         {
             
         }

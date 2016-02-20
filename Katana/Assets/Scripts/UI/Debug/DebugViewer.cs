@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Remoting.Messaging;
 using Katana;
+using Katana.Messages;
 using UnityEngine.UI;
 
 // デバッグ機能の表示
@@ -74,10 +75,10 @@ public class DebugViewer : MonoBehaviour
         var page = root_.AddPage("Player");
 
         // HP回復
-        page.AddMenu("recover",() => { GameManager.Instance.Player.Recover(10); });
+        page.AddMenu("recover",() => { GameManager.Instance.Player.Damage(new Damage(-10)); });
 
         // ダメージ
-        page.AddMenu("damaged", () => { GameManager.Instance.Player.Damage(10); });
+        page.AddMenu("damaged", () => { GameManager.Instance.Player.Damage(new Damage(10)); });
 
         for (int i = 0; i < 30; i++)
         {

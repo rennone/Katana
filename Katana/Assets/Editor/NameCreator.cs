@@ -2,7 +2,9 @@
 using System.IO;
 using System.Linq;
 using System.Text;
+using Katana;
 using UnityEditor;
+using UnityEditor.Callbacks;
 using UnityEditorInternal;
 using UnityEngine;
 
@@ -12,17 +14,13 @@ using UnityEngine;
 /// タグ名,レイア名を定数で管理するクラスを作成するスクリプト
 public static class NameCreator
 {
-    // 変数名に使えない文字を管理する配列
-    private static readonly string[] InvaludChars =
+    //[PostProcessScene]
+    public static void OnPostProcessScene()
     {
-        " ", "!", "\"", "#", "$",
-        "%", "&", "\'", "(", ")",
-        "-", "=", "^",  "~", "\\",
-        "|", "[", "{",  "@", "`",
-        "]", "}", ":",  "*", ";",
-        "+", "/", "?",  ".", ">",
-        ",", "<"
-    };
+        Debug.Log("OnPostProcessScene");
+        CreateLayerName();
+        CreateTagName();
+    }
 
     private const string CommandPath = "Tools/Create/";
     private const string TagNameCommand = CommandPath + "Tag Name" + " %#t";
@@ -74,7 +72,7 @@ public static class NameCreator
         var builder = new StringBuilder();
         AddClassHeader(builder, outputFilePath, "タグ名を定数で管理するクラス");
         foreach (var n in InternalEditorUtility.tags.
-            Select(c => new { var = RemoveInvalidChars(c), val = c }))
+            Select(c => new { var = NameUtil.RemoveVariableInvalidChars(c), val = c }))
         {
             builder.Append("\t").AppendFormat(@"public const string {0} = ""{1}"";", n.var, n.val).AppendLine();
         }
@@ -89,7 +87,7 @@ public static class NameCreator
         var builder = new StringBuilder();
         AddClassHeader(builder, outputFilePath, "レイヤ番号を定数で管理するクラス");
         foreach (var n in InternalEditorUtility.layers.
-            Select(c => new { var = RemoveInvalidChars(c), val = c }))
+            Select(c => new { var = NameUtil.RemoveVariableInvalidChars(c), val = c }))
         {
             builder.Append("\t").AppendFormat(@"public static int {0} {{ get{{ return LayerMask.NameToLayer(""{1}""); }} }}", n.var, n.val).AppendLine();
         }
@@ -127,10 +125,4 @@ public static class NameCreator
         return !EditorApplication.isPlaying && !Application.isPlaying && !EditorApplication.isCompiling;
     }
 
-    /// 無効な文字を削除
-    public static string RemoveInvalidChars(string str)
-    {
-        Array.ForEach(InvaludChars, c => str = str.Replace(c, string.Empty));
-        return str;
-    }
 }

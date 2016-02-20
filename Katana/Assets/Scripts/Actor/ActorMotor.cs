@@ -38,13 +38,15 @@ namespace Katana
         private CharacterController _controller;
 
 
+        public Vector3 _destinationFoward = Vector3.right;
 
-
+        public Func<bool> CanChangeDirection { private get;  set; }
+        
         private CollisionFlags Move(Vector3 move)
         {
             // それぞれの軸のConstraint設定
             // http://forum.unity3d.com/threads/restrict-z-movement-on-character-controller-without-breaking-into-colliders.91358/
-            float coef = 0.05f;
+            float coef = 0.5f;
             if (movement.FreezePosition.X && Mathf.Abs(movement.ConstraintPosition.x - transform.position.x) > 0)
             {
                 move.x = (movement.ConstraintPosition.x - transform.position.x)*coef;
@@ -64,37 +66,7 @@ namespace Katana
 
             return collisionFlag;
         }
-
-        private void lockZAxis(CollisionFlags collisionFlags, Vector3 oldPosition, ref Vector3 position)
-        {
-            if (Math.Abs(position.z - oldPosition.z) > 0)
-            {
-                // is there any y-axis displacement during splice ? if yes assume the controlled object can slice on y-axis
-                if (Mathf.Abs(oldPosition.y - position.y) > 0)
-                {
-                    // slice up if collision below
-                    if ((collisionFlags & CollisionFlags.Below) != 0)
-                    {
-                        position.y += Mathf.Abs(position.z - oldPosition.z);
-
-                        // slice down if collision above
-                    }
-                    else if ((collisionFlags & CollisionFlags.Above) != 0)
-                    {
-                        position.y -= Mathf.Abs(position.z - oldPosition.z);
-                    }
-                    // no y-axis slice possible : stuck
-                }
-                else
-                {
-                    position.x = oldPosition.x;
-                }
-
-
-                position.z = oldPosition.z;
-            }
-        }
-
+        
         //最初に絶対呼び出される関数
         private void Awake()
         {
@@ -131,16 +103,18 @@ namespace Katana
         {
             if (Mathf.Abs(InputMoveDirection.x) >= 1.0e-6)
             {
-                var direction = InputMoveDirection.x < 0 ? Vector3.left : Vector3.right;
-                var afterDirection = Vector3.Lerp(transform.forward, direction, 0.5f);
-                transform.forward = afterDirection == Vector3.zero ? direction : afterDirection;
+                _destinationFoward = InputMoveDirection.x < 0 ? Vector3.left : Vector3.right;
             }
+            transform.forward = Vector3.RotateTowards(transform.forward, _destinationFoward, Time.deltaTime * 10, 1.0f);
         }
 
         private void UpdateFunction()
         {
             // 方向の更新
-            UpdateDirection();
+            if (CanChangeDirection == null || CanChangeDirection())
+            {
+                UpdateDirection();
+            }
 
             //速度の更新
             Vector3 velocity = movement.velocity;

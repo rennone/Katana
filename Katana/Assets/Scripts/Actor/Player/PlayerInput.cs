@@ -4,17 +4,46 @@ using System;
 
 namespace Katana
 {
-    public partial class Player
+    public class PlayerInput : MonoBehaviour
     {
+        private Player _player;
+        private PlayerMotor _motor;
+
+        void Awake()
+        {
+            _player = GetComponent<Player>();
+            _motor = GetComponent<PlayerMotor>();
+        }
 
         // Update is called once per frame
-        public void InputUpdate()
+        void Update()
         {
-            Motor.InputMoveDirection = CanMove() ? (Input.GetAxisRaw("Horizontal") * Time.deltaTime) * Vector3.right : Vector3.zero;
+            // 移動
+            if (_player.IsReleased(Player.Action.Move))
+            {
+                _motor.InputMoveDirection = _player.CanInpuMove()
+                    ? (Input.GetAxisRaw("Horizontal")*Time.deltaTime)*Vector3.right
+                    : Vector3.zero;
+            }
 
-            Motor.InputJump = Input.GetButtonDown("Jump");
+            // ジャンプ
+            if (_player.IsReleased(Player.Action.Jump))
+            {
+                _motor.InputJump = _player.CanInputJump() && Input.GetButtonDown("Jump");
+               // _player._animatorAccess.SetIsJump(_player.CanInputJump() && Input.GetButtonDown("Jump"));
+            }
 
-            Animator.SetIsAttack(Input.GetButtonDown("Fire1") && CanAttack());
+            // 攻撃1
+            if (_player.IsReleased(Player.Action.Fire1))
+            {
+                _player._animatorAccess.SetIsAttack(Input.GetButtonDown("Fire1") && _player.CanInputAttack());
+            }
+
+            // 攻撃2
+            if (_player.IsReleased(Player.Action.Fire2))
+            {
+                
+            }
         }
     }
 }
