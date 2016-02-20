@@ -10,16 +10,16 @@ namespace Katana
         PlayerMotor motor_;
         private Player _owner;
 
-        private SeachEye _eye;
+        private SearchEye _eye;
 
         protected virtual void Awake()
         {
             motor_ = GetComponent<PlayerMotor>();
             _owner = GetComponent<Player>();
 
-            _eye = GetComponentInChildren<SeachEye>();
-            _eye.OnFind = () => { Debug.Log("FInd"); };
-            _eye.OnLoseSight = () => { Debug.Log("Loss Find"); };
+            _eye = GetComponentInChildren<SearchEye>();
+            _eye.OnFind = FindPlayer;
+            _eye.OnLoseSight = LostPlayer;
         }
 
         protected override void Update()
@@ -35,7 +35,7 @@ namespace Katana
                     enable = true;
                 }
             }
-            _owner._animatorAccess.SetIsFire2(enable);
+            _owner.AnimatorAccess.SetIsFire2(enable);
         }
 
         void UpdateMove()
@@ -51,7 +51,7 @@ namespace Katana
             {
                 var distance = (GameManager.Instance.Player.transform.position - transform.position);
                 distance.y = 0;
-                motor_.InputMoveDirection = new Vector3(distance.x > 0 ? 1 : -1, 0, 0);
+                motor_.InputMoveDirection = distance.x > 0 ? Vector3.right :  Vector3.left;
             }
             else
             {
@@ -71,6 +71,18 @@ namespace Katana
                 }
                 motor_.InputMoveDirection = distance;
             }
+        }
+
+        void FindPlayer()
+        {
+            Debug.Log("Find Player");
+            motor_.movement.MaxSpeed = 50;
+        }
+
+        void LostPlayer()
+        {
+            Debug.Log("Lost Player");
+            motor_.movement.MaxSpeed = 5;
         }
     }
 }

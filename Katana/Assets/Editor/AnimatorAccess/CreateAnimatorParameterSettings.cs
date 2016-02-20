@@ -185,7 +185,6 @@ public class CreateAnimatorParameterSettings : AssetPostprocessor
             // 状態取得関数の行
             getterBuilder.AppendLine(string.Format(isStateTemplate, stateName, stateId));
 
-            Debug.Log("B");
             var functionTemplate = intent +  "public virtual void {0}(Animator animator, AnimatorStateInfo stateInfo){{}}";
             var caseTemplate = intent + intent + "case {0} : {1}; break;";
             var functionExecTemplate = "{0}(animator, stateInfo)";
@@ -207,13 +206,16 @@ public class CreateAnimatorParameterSettings : AssetPostprocessor
 
             functionBuilder.AppendLine(string.Format(functionTemplate, stateEnter));
             functionBuilder.AppendLine(string.Format(functionTemplate, stateExit));
-            functionBuilder.AppendLine(string.Format(functionTemplate, stateMove));
+
+
+            // http://unitysiki.blogspot.jp/2014/08/onanimatormoveapply-root-motionunity.html
+            // OnStateMoveを定義してしまうとRootMotionが適用されなくなるようなので利用しない
+            functionBuilder.AppendLine("//" + string.Format(functionTemplate, stateMove));
+
             functionBuilder.AppendLine(string.Format(functionTemplate, stateUpdate));
             functionBuilder.AppendLine(string.Format(functionTemplate, stateIk));
         }
-        Debug.Log("A");
-        //return string.Format(codeTemplate, StripSpace(animatorController.name), fields.ToString(),
-        //    onStateEnter.ToString(), onStateExit.ToString(), string.Empty, string.Empty, onStateMove.ToString(), onStateUpdate.ToString(), onStateIK.ToString());
+
         fields.AppendLine(hashBulider.ToString());
         fields.AppendLine(getterBuilder.ToString());
         fields.AppendLine(functionBuilder.ToString());

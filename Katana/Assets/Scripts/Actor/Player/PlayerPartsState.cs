@@ -13,9 +13,9 @@ namespace Katana
 
         private CapsuleCollider _capsule { get; set; }
 
-        private SimpleWeapon _kick;
+        private WeaponBase _kick;
 
-        public PlayerAnimator _animatorAccess;
+        public PlayerAnimator AnimatorAccess { get; private set; }
 
         // 衝突判定に使う
         // コライダの頂上の位置
@@ -65,7 +65,7 @@ namespace Katana
         // アニメーション通常状態
         public bool IsNormalState()
         {
-            return _animatorAccess.IsIdleState() || _animatorAccess.IsJumpState() || _animatorAccess.IsRunState();
+            return AnimatorAccess.IsIdleState() || AnimatorAccess.IsJumpState() || AnimatorAccess.IsRunState();
         }
 
         // 移動の入力が受付中かどうか
@@ -87,8 +87,8 @@ namespace Katana
         // Update is called once per frame
         void AnimationUpdate()
         {
-            _animatorAccess.SetIsJump(_motor.IsJumping());//ジャンプフラグのセット
-            _animatorAccess.SetMoveSpeed(_motor.movement.velocity.magnitude + _motor.InputMoveDirection.magnitude * _motor.movement.MaxForwardSpeed);
+            AnimatorAccess.SetIsJump(_motor.IsJumping());//ジャンプフラグのセット
+            AnimatorAccess.SetMoveSpeed(_motor.movement.velocity.magnitude + _motor.InputMoveDirection.magnitude * _motor.movement.MaxForwardSpeed);
         }
 
         public void AnimationCallbackWeaponActive()
@@ -109,12 +109,13 @@ namespace Katana
         {
             _motor = GetComponent<PlayerMotor>();
             _capsule = GetComponent<CapsuleCollider>();
-            _kick = GetComponentInChildren<SimpleWeapon>();
-            var animator = GetComponent<Animator>();
+            _kick = GetComponentInChildren<WeaponBase>();
 
             _motor.CanChangeDirection = IsNormalState;
-            _animatorAccess = animator.GetBehaviour<PlayerAnimator>();
-            _animatorAccess.SetAnimator(animator);
+
+            var animator = GetComponent<Animator>();
+            AnimatorAccess = animator.GetBehaviour<PlayerAnimator>();
+            AnimatorAccess.SetAnimator(animator);
         }
     }
 

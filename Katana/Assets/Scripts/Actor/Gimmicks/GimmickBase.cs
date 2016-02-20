@@ -2,7 +2,7 @@
 
 namespace Katana
 {
-    public class GimmickBase : AMonoBehaviour, IDamage
+    public class GimmickBase : ACollider, IDamage
     {
         // ギミックを動かす
         public virtual Messages.MoveResult Move(Katana.Messages.Move move)
@@ -10,11 +10,12 @@ namespace Katana
             return Messages.MoveResult.DefaultSuccess;
         }
 
-        // 壊す
+        // ギミックが攻撃される
         public virtual Messages.DamageResult Damage(Katana.Messages.Damage damage)
         {
             return Messages.DamageResult.DefaultSuccess;
         }
+
     }
 
 }

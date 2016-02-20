@@ -4,19 +4,19 @@ using System;
 
 namespace Katana
 {
-    public class PlayerInput : MonoBehaviour
+    public class PlayerInput : AMonoBehaviour
     {
         private Player _player;
         private PlayerMotor _motor;
 
-        void Awake()
+        protected override void OnInitialize()
         {
             _player = GetComponent<Player>();
             _motor = GetComponent<PlayerMotor>();
         }
 
         // Update is called once per frame
-        void Update()
+        protected override void OnUpdate()
         {
             // 移動
             if (_player.IsReleased(Player.Action.Move))
@@ -36,7 +36,7 @@ namespace Katana
             // 攻撃1
             if (_player.IsReleased(Player.Action.Fire1))
             {
-                _player._animatorAccess.SetIsAttack(Input.GetButtonDown("Fire1") && _player.CanInputAttack());
+                _player.AnimatorAccess.SetIsAttack(Input.GetButtonDown("Fire1") && _player.CanInputAttack());
             }
 
             // 攻撃2
@@ -45,5 +45,6 @@ namespace Katana
                 
             }
         }
+
     }
 }

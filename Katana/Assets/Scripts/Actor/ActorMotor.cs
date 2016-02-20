@@ -38,7 +38,7 @@ namespace Katana
         private CharacterController _controller;
 
 
-        public Vector3 _destinationFoward = Vector3.right;
+        private Vector3 _destinationFoward = Vector3.right;
 
         public Func<bool> CanChangeDirection { private get;  set; }
         

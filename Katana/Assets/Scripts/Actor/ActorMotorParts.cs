@@ -25,6 +25,7 @@ namespace Katana
             public float MaxSpeed
             {
                 get { return _maxSpeed; }
+                set { _maxSpeed = value; }
             }
 
             // スピード

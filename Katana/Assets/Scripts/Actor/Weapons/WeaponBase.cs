@@ -1,17 +1,27 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Katana.Messages;
 
 namespace Katana
 {
-    public class WeaponBase : AMonoBehaviour
+    public class WeaponBase : ACollider
     {
-        [SerializeField] private Collider _collider; //あたり判定用コライダ
+        [SerializeField] 
+        private Collider _collider; //あたり判定用コライダ
 
-        [SerializeField] private Character _owner;
+        [SerializeField] 
+        private Character _owner;   //この武器の所有者
 
         protected Character Owner { get { return _owner; } }
 
+        [SerializeField]
+        public WeaponParameter _parameter;
 
+        [System.Serializable]
+        public struct WeaponParameter
+        {
+            public int Strong;
+        }
 
         // Use this for initialization
         protected override sealed void Awake()
@@ -45,43 +55,24 @@ namespace Katana
         {
         }
 
-        protected virtual void OnTriggerEnter(Collider collider)
+        protected override bool CollidableTo(Collider collider)
         {
-            switch (collider.tag)
-            {
-                case TagName.Gimmick:
-                    OnCollideGimmick(collider.GetComponent<GimmickBase>(), collider);
-                    break;
-                case TagName.Player:
-                    OnCollidePlayer(collider.GetComponent<Player>(), collider);
-                    break;
-                case TagName.Enemy:
-                    OnCollideEnemy(collider);
-                    break;
-                default:
-                    OnCollideOther(collider);
-                    break;
-            }
+            return base.CollidableTo(collider) && collider.gameObject != Owner.gameObject;
         }
 
-        protected virtual void OnCollideGimmick(GimmickBase gimmick, Collider collider)
+        protected override void OnTriggerEnterWith(Collider c)
         {
-            
+            base.OnTriggerEnterWith(c);
+            Attack(c);
         }
 
-        protected virtual void OnCollideEnemy(Collider collider)
-        {
-            
-        }
 
-        protected virtual void OnCollidePlayer(Player player, Collider collider)
+        protected virtual void Attack(Collider collider)
         {
-            
-        }
-
-        protected virtual void OnCollideOther(Collider collider)
-        {
-            
+            Debug.Log("Collide");
+            var target = collider.GetComponent<IDamage>();
+            if (target != null)
+                Owner.Attack(target, new Damage(_parameter.Strong, collider, this));
         }
     }
 }

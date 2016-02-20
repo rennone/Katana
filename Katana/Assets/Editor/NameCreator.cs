@@ -89,7 +89,8 @@ public static class NameCreator
         foreach (var n in InternalEditorUtility.layers.
             Select(c => new { var = NameUtil.RemoveVariableInvalidChars(c), val = c }))
         {
-            builder.Append("\t").AppendFormat(@"public static int {0} {{ get{{ return LayerMask.NameToLayer(""{1}""); }} }}", n.var, n.val).AppendLine();
+            //builder.Append("\t").AppendFormat(@"public static int {0} {{ get{{ return LayerMask.NameToLayer(""{1}""); }} }}", n.var, n.val).AppendLine();
+            builder.Append("\t").AppendFormat(@"public const int {0}  = {1};",  n.var, LayerMask.NameToLayer(n.val)).AppendLine();
         }
         builder.AppendLine("}");
         Save(outputFilePath, builder);
