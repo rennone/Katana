@@ -14,7 +14,7 @@ public class UI_FadeAction : MonoBehaviour {
 
     Material thisMat;
     
-    void Start()
+    void Awake()
     {
         thisMat = this.GetComponent<Image>().material;
     }
