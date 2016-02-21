@@ -30,4 +30,9 @@ public class UI_FadeAction : MonoBehaviour {
             thisMat.DOColor(fadeColor, fadeTime);
         }
     }
+
+    void OnDestroy()
+    {
+        thisMat.color = fadeColor;
+    }
 }

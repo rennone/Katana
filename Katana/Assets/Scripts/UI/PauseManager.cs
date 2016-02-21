@@ -6,6 +6,13 @@ namespace Katana
 {
     public class PauseManager : Singleton<PauseManager>
     {
+        public enum PauseMenuState{
+            DefaultMenu,
+            SaveMenu,
+            OptionMenu,
+            TitleMenu
+        }
+
         [HideInInspector]
         public int nowMenuNum = 0;
 
@@ -15,9 +22,13 @@ namespace Katana
         [SerializeField]
         UI_FadeAction background;
 
+        [HideInInspector]
+        public PauseMenuState nowMenuState = PauseMenuState.DefaultMenu;
+
         bool _isPause = false;
         bool _isWaiting = false;
         PauseMenu[] _menuList;
+        PauseMenuOutline[] outlines;
         float _nowWaitTimer = 0;
 
         const float inputWaitTime = 0.2f;
@@ -29,7 +40,8 @@ namespace Katana
 
         void Start()
         {
-            _menuList = GameObject.FindObjectsOfType<PauseMenu>();
+            outlines = GameObject.FindObjectsOfType<PauseMenuOutline>();
+            ChangePauseMenuState(PauseMenuState.DefaultMenu);
             this.gameObject.SetActive(false);
         }
 
@@ -43,15 +55,25 @@ namespace Katana
             }
         }
 
+        //メニューリストの更新
+        public void SetMenuList(Transform menuOutline)
+        {
+            _menuList = menuOutline.GetComponentsInChildren<PauseMenu>();
+            nowMenuNum = 0;
+            UpdateMenuActive();
+        }
+
+        //ポーズボタンが押された時のアクション
         public void PushPauseButton()
         {
             Pausable.PauseState state = _isPause ? Pausable.PauseState.Active : Pausable.PauseState.PauseAll;
             ChangePauseState(state);
         }
 
+        //上下ボタンが押された時のアクション
         public void PushUpDownButton(bool isUp)
         {
-            if (_isWaiting)
+            if (_isWaiting || _menuList.Length <= 0)
                 return;
 
             if (!isUp)
@@ -72,6 +94,18 @@ namespace Katana
             _nowWaitTimer = inputWaitTime;
         }
 
+        //決定ボタンが押された時のアクション
+        public void PushDecideButton()
+        {
+            if (_isWaiting || _menuList.Length <= 0)
+                return;
+
+            _menuList[nowMenuNum].Decision();
+
+            _isWaiting = true;
+            _nowWaitTimer = inputWaitTime;
+        }
+
         void UpdateMenuActive()
         {
             for(int i=0;i < _menuList.Length; i++)
@@ -80,11 +114,15 @@ namespace Katana
             }
         }
 
+        //ポーズ中かどうかを切り替え
         void ChangePauseState(Pausable.PauseState state)
         {
-            UpdateMenuActive();
             _isPause = !_isPause;
             this.gameObject.SetActive(_isPause);
+            //開く時にメニューを初期化
+            if (_isPause)
+                ChangePauseMenuState(PauseMenuState.DefaultMenu);
+            UpdateMenuActive();
             MenuFadeAction(_isPause);
 
             foreach (var pause in GameObject.FindObjectsOfType<Pausable>())
@@ -98,6 +136,16 @@ namespace Katana
         {
 
             background.SetFadeInOut(isFadeIn);
+        }
+
+        //ポーズの中のメニューを切り替え
+        public void ChangePauseMenuState(PauseMenuState state)
+        {
+            nowMenuState = state;
+            foreach(var outline in outlines)
+            {
+                outline.ChangeMenu(state);
+            }
         }
     }
 }
