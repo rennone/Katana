@@ -6,25 +6,38 @@ namespace Katana
 {
     public class SystemInput : MonoBehaviour
     {
-        bool _isPause = false;
-        // Use this for initialization
+
         void Start()
         {
 
         }
 
-        // Update is called once per frame
         void Update()
         {
-            if (Input.GetKeyDown(KeyCode.L))
+            if (PauseManager.Instance != null)
             {
-                Pausable.PauseState state = _isPause ? Pausable.PauseState.Active : Pausable.PauseState.PauseAll;
-                foreach (var pause in GameObject.FindObjectsOfType<Pausable>())
+                if (Input.GetKeyDown(KeyCode.P))
                 {
-                    pause.State = state;
+                    PauseManager.Instance.PushPauseButton();
                 }
 
-                _isPause = !_isPause;
+                if (Input.GetKeyDown(KeyCode.Return))
+                {
+                    PauseManager.Instance.PushDecideButton();
+                }
+
+                if (PauseManager.Instance.IsPause())
+                {
+                    float inputScale = Input.GetAxisRaw("Vertical");
+                    if (inputScale > 0)
+                    {
+                        PauseManager.Instance.PushUpDownButton(true);
+                    }
+                    else if (inputScale < 0)
+                    {
+                        PauseManager.Instance.PushUpDownButton(false);
+                    }
+                }
             }
         }
     }
