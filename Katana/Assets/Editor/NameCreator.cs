@@ -1,10 +1,8 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
 using System.Text;
 using Katana;
 using UnityEditor;
-using UnityEditor.Callbacks;
 using UnityEditorInternal;
 using UnityEngine;
 
@@ -91,6 +89,7 @@ public static class NameCreator
         {
             //builder.Append("\t").AppendFormat(@"public static int {0} {{ get{{ return LayerMask.NameToLayer(""{1}""); }} }}", n.var, n.val).AppendLine();
             builder.Append("\t").AppendFormat(@"public const int {0}  = {1};",  n.var, LayerMask.NameToLayer(n.val)).AppendLine();
+
         }
         builder.AppendLine("}");
         Save(outputFilePath, builder);
@@ -125,5 +124,4 @@ public static class NameCreator
     {
         return !EditorApplication.isPlaying && !Application.isPlaying && !EditorApplication.isCompiling;
     }
-
 }
