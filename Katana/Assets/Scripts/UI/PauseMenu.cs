@@ -24,11 +24,11 @@ public class PauseMenu : MonoBehaviour {
     {
         if (active)
         {
-            image.sprite = Katana.PauseManager.I.menu_Active;
+            image.sprite = Katana.PauseManager.Instance.menu_Active;
         }
         else
         {
-            image.sprite = Katana.PauseManager.I.menu_Normal;
+            image.sprite = Katana.PauseManager.Instance.menu_Normal;
         }
     }
 
@@ -55,22 +55,22 @@ public class PauseMenu : MonoBehaviour {
 //ここから下アクション内容***************************************************
     void ChangeNone()
     {
-        Katana.PauseManager.I.PushPauseButton();    //ポーズメニューを閉じる
+        Katana.PauseManager.Instance.PushPauseButton();    //ポーズメニューを閉じる
     }
 
     void ChangeSaveMenu()
     {
-        Katana.PauseManager.I.ChangePauseMenuState(Katana.PauseManager.PauseMenuState.SaveMenu);
+        Katana.PauseManager.Instance.ChangePauseMenuState(Katana.PauseManager.PauseMenuState.SaveMenu);
     }
 
     void ChangeOptionMenu()
     {
-        Katana.PauseManager.I.ChangePauseMenuState(Katana.PauseManager.PauseMenuState.OptionMenu);
+        Katana.PauseManager.Instance.ChangePauseMenuState(Katana.PauseManager.PauseMenuState.OptionMenu);
     }
 
     void ChangeTitleMenu()
     {
-        Katana.PauseManager.I.ChangePauseMenuState(Katana.PauseManager.PauseMenuState.TitleMenu);
+        Katana.PauseManager.Instance.ChangePauseMenuState(Katana.PauseManager.PauseMenuState.TitleMenu);
     }
 	
 }

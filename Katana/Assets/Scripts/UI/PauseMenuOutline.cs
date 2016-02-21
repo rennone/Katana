@@ -11,7 +11,7 @@ public class PauseMenuOutline : MonoBehaviour {
         if(menuState == state)
         {
             this.gameObject.SetActive(true);
-            Katana.PauseManager.I.SetMenuList(transform);
+            Katana.PauseManager.Instance.SetMenuList(transform);
         }
         else
         {

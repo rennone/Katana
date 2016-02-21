@@ -14,28 +14,28 @@ namespace Katana
 
         void Update()
         {
-            if (PauseManager.I != null)
+            if (PauseManager.Instance != null)
             {
                 if (Input.GetKeyDown(KeyCode.P))
                 {
-                    PauseManager.I.PushPauseButton();
+                    PauseManager.Instance.PushPauseButton();
                 }
 
                 if (Input.GetKeyDown(KeyCode.Return))
                 {
-                    PauseManager.I.PushDecideButton();
+                    PauseManager.Instance.PushDecideButton();
                 }
 
-                if (PauseManager.I.IsPause())
+                if (PauseManager.Instance.IsPause())
                 {
                     float inputScale = Input.GetAxisRaw("Vertical");
                     if (inputScale > 0)
                     {
-                        PauseManager.I.PushUpDownButton(true);
+                        PauseManager.Instance.PushUpDownButton(true);
                     }
                     else if (inputScale < 0)
                     {
-                        PauseManager.I.PushUpDownButton(false);
+                        PauseManager.Instance.PushUpDownButton(false);
                     }
                 }
             }
