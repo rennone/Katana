@@ -3,25 +3,13 @@ using System.Collections;
 
 namespace Katana
 {
-    [RequireComponent(typeof (ActorMotor))]
-    public class PlayerAnimator : MonoBehaviour
+    // アニメーション関係をまとめたPlayerのpartial
+    public class PlayerAnimator : AnimatorAccess.PlayerAnimator
     {
-
-        [SerializeField] private Animator animator_ = null;
-
-        private ActorMotor motor_ = null;
-
-        private void Awake()
+        public override void OnStateEnterToRun(Animator animator, AnimatorStateInfo stateInfo)
         {
-            motor_ = GetComponent<ActorMotor>();
-        }
-
-        // Update is called once per frame
-        private void Update()
-        {
-            animator_.SetBool("IsJump", motor_.IsJumping()); //ジャンプフラグのセット
-            animator_.SetFloat("MoveSpeed",
-                motor_.movement.velocity.magnitude + motor_.InputMoveDirection.magnitude*motor_.movement.MaxForwardSpeed);
+            base.OnStateEnterToRun(animator, stateInfo);
+            Debug.Log("Enter Run");
         }
     }
 }

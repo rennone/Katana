@@ -4,7 +4,7 @@ using System.Collections;
 public class Spike : MonoBehaviour {
 
     [SerializeField]
-    private int damage = 30;
+    private int damage;
 
 	//void OnTriggerEnter(Collider col)
  //   {

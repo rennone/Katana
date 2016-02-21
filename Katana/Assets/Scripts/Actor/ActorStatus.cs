@@ -1,108 +1,65 @@
 ﻿using System;
 using UnityEngine;
 using System.Collections;
+using Katana.Messages;
 
 // CharacterのHPなどのステータスを表す親クラス
 // 
 
 namespace Katana
 {
-    public class ActorStatus : MonoBehaviour
+    // ダメージ情報
+    public class DamageInfo
     {
-        protected virtual void Awake()
-        {
-            Debug.Log("ActorStatus Awake");
-            hp_ = MaxHp;
-        }
+        
+    }
 
-        // Use this for initialization
-        protected virtual void Start()
-        {
-            Debug.Log("Start Actor Status");
-        }
+    [System.Serializable]
+    public class ActorStatus
+    {
+        // 最大HP
+        public int MaxHp = 10000;
 
-        // Update is called once per frame
-        protected virtual void Update()
-        {
-            // 毒でHPを減らす処理や
-            // 時間経過によるステータス異常の回復などを行う
-        }
+        // HP
+        public int Hp = 10000;
 
+        // 攻撃力
+        public int Strong = 10;
+
+        // 防御力
+        public int Defense = 10;
 
         //HP減らす処理
-        public virtual void DecreaseHP(int val)
+        public virtual Messages.DamageResult.StatusResult DecreaseHP(uint val)
         {
-            bool alive = hp_ > 0;
-            hp_ -= val;
+            bool alive = Hp > 0;
+            Hp -= (int)val;
 
             // 死んだとき
-            if (alive && hp_ <= 0)
+            if (alive && Hp <= 0)
             {
-                hp_ = 0;
-
-                if (OnDead != null)
-                    OnDead();
+                Hp = 0;
+                return DamageResult.StatusResult.Dead;
             }
+
+            return DamageResult.StatusResult.Damaged;
         }
 
         //HP増やす処理
-        public virtual void IncreaseHP(int val)
+        public virtual Messages.DamageResult.StatusResult IncreaseHP(uint val)
         {
-            bool full = hp_ == MaxHp;
-            hp_ += val;
+            bool full = Hp == MaxHp;
+            Hp += (int)val;
 
             // 完全回復したとき
-            if (!full && hp_ >= MaxHp)
+            if (!full && Hp >= MaxHp)
             {
-                hp_ = MaxHp;
+                Hp = MaxHp;
 
-                if (OnFullRecovered != null)
-                    OnFullRecovered();
+                return DamageResult.StatusResult.FullRecovered;
             }
+
+            return DamageResult.StatusResult.Recovered;
         }
-
-        //protected virtual void OnDead() { }
-
-        //protected virtual void OnFullRecovered() { }
-
-
-
-
-
-        // 最大HP
-        [SerializeField] private int maxHp_ = 10000;
-
-        public int MaxHp
-        {
-            get { return maxHp_; }
-        }
-
-        // HP
-        private int hp_;
-
-        public int Hp
-        {
-            get { return hp_; }
-        }
-
-        // 攻撃力
-        [SerializeField] private int strong_ = 10;
-
-        public int Strong
-        {
-            get { return strong_; }
-        }
-
-        // 防御力
-        [SerializeField] private int defense_ = 10;
-
-        public int Defense
-        {
-            get { return defense_; }
-        }
-
-        public Action OnDead { private get; set; }
-        public Action OnFullRecovered { private get; set; }
-
     }
 }

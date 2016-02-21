@@ -2,60 +2,41 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using Katana.Messages;
 
 namespace Katana
 {
-    [RequireComponent(typeof (PlayerAnimator))]
-    [RequireComponent(typeof (ActorMotor))]
-    [RequireComponent(typeof (ActorStatus))]
-    [RequireComponent(typeof (PlayerInput))]
-    public class Player : Actor
+    public partial class Player : Character
     {
-        private void Awake()
+       
+        protected override void OnUpdate()
         {
-            GetComponent<ActorStatus>().OnDead = OnDead;
-
-            var characterController = GetComponent<CharacterController>();
-            characterController.center = new Vector3(0, 0.7f, 0);
-            characterController.radius = 0.2f;
-            characterController.height = 1.25f;
-
-            var motor = GetComponent<ActorMotor>();
-            motor.movement.MaxForwardSpeed = 500;
-            motor.movement.MaxSidewaysSpeed = 500;
-            motor.movement.MaxBackwardsSpeed = 500;
-            motor.movement.MaxGroundAcceleration = 1000;
-            motor.movement.MaxAirAcceleration = 500;
-            motor.movement.Gravity = 50;
-            motor.movement.MaxFallSpeed = 500;
-            motor.movement.FreezePosition.Z = true;
-            motor.jumping.baseHeight = 4.5f;
-            motor.jumping.extraHeight = 3.0f;
-
-            var capsuleColider = GetComponent<CapsuleCollider>();
-            capsuleColider.isTrigger = true;
-            capsuleColider.center = new Vector3(0, 0.75f, 0);
-            capsuleColider.radius = 0.2f;
-            capsuleColider.height = 1.6f;
+            base.OnUpdate();
+            AnimationUpdate();
         }
 
-        private void Update()
+        protected override void OnInitialize()
         {
-
+            InitializeComponent();
         }
 
+        public void Damage(int val)
+        {
+            base.Damage(new Damage(null, val));
+        }
 
-        public void OnDead()
+        protected override void OnDead()
         {
             GameManager.Instance.GameRestart();
         }
 
-        public override void Damage(int val)
+        protected override void OnDamaged(DamageResult damage)
         {
-            base.Damage(val);
-            StartCoroutine("AfterDamaged");
+            //StartCoroutine("AfterDamaged");
+            Debug.Log("Remain HP = " + AStatus.Hp);
         }
 
+        // ダメージを受けた時の処理
         private void SetLayerRecursively(GameObject actor, int layer)
         {
             actor.layer = layer;
@@ -67,7 +48,6 @@ namespace Katana
 
         private IEnumerator AfterDamaged()
         {
-            // gameObject.layer = LayerName.PlayerDamaged;
             Dictionary<string, Shader> backups = new Dictionary<string, Shader>();
             var renderers = GetComponentsInChildren<SkinnedMeshRenderer>();
             foreach (SkinnedMeshRenderer renderer in renderers)

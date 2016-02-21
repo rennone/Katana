@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Katana
 {
@@ -16,8 +17,7 @@ namespace Katana
         // アクターのインスタンスリスト
         // key   : tagName
         // value : Actorリスト 
-        private Dictionary<string, HashSet<Actor>> actorList_ =
-            new Dictionary<string, HashSet<Actor>>();
+        private readonly Dictionary<string, HashSet<Actor>> _actorList = new Dictionary<string, HashSet<Actor>>();
 
         private void SetPlayer(Player player)
         {
@@ -29,10 +29,10 @@ namespace Katana
 
         public void RegisterActor(Actor actor)
         {
-            if (!actorList_.ContainsKey(actor.tag))
-                actorList_[actor.tag] = new HashSet<Actor>();
+            if (!_actorList.ContainsKey(actor.tag))
+                _actorList[actor.tag] = new HashSet<Actor>();
 
-            actorList_[actor.tag].Add(actor);
+            _actorList[actor.tag].Add(actor);
 
             // Playerだけは特別に保存しておく(アクセスが多いので)
             if (actor.tag == TagName.Player)
@@ -41,21 +41,33 @@ namespace Katana
 
         public void RemoveActor(Actor actor)
         {
-            if (!actorList_.ContainsKey(actor.tag))
+            if (!_actorList.ContainsKey(actor.tag))
                 return;
 
-            actorList_[actor.tag].Remove(actor);
+            _actorList[actor.tag].Remove(actor);
         }
 
         // Update is called once per frame
         private void Update()
         {
-            foreach (var actorSet in actorList_)
+            foreach (var actorSet in _actorList)
             {
                 foreach (var actor in actorSet.Value)
                 {
                     if (actor.transform.position.y <= borderHeightToDeath)
                         Destroy(actor.gameObject);
+                }
+            }
+        }
+
+        void OnDestroy()
+        {
+            foreach (var actorSet in _actorList)
+            {
+                while (actorSet.Value.Count != 0)
+                {
+                    var actor = actorSet.Value.First();
+                    DestroyImmediate(actor.gameObject);
                 }
             }
         }

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Katana.Messages;
 
 public class Enemy : MonoBehaviour
 {
@@ -26,7 +27,7 @@ public class Enemy : MonoBehaviour
         if (collision.gameObject.tag == TagName.Player)
         {
             var player = collision.gameObject.transform.GetComponent<Katana.Player>();
-            player.Damage(100);
+            player.Damage(new Damage(gameObject, 100));
         }
     }
 }

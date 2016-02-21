@@ -2,6 +2,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace UnityEditor
 {
@@ -39,7 +40,7 @@ namespace UnityEditor
             if(_sceneViewMouse.x < 0 || _sceneViewMouse.y < 0)
                 return;
 
-            var player = (GameObject)FindObjectsOfType(typeof(GameObject)).First(o => o.name == "Player");
+            var player = (GameObject)FindObjectsOfType(typeof(GameObject)).First(o => Regex.IsMatch(o.name ,"^Player"));
             var camera = (GameObject)FindObjectsOfType(typeof(GameObject)).First(o => o.name == "Main Camera");
 
             if (player == null)
@@ -63,12 +64,10 @@ namespace UnityEditor
             position.y = 2*sCamera.transform.position.y - position.y;   //y座標が逆になっているの酒精
 
             // プレイヤーの位置を変更
-            var pPosition = player.transform.position;
             player.transform.position = new Vector3(position.x, position.y, player.transform.position.z);
 
             // カメラの位置を変更
-            var cPosition = camera.transform.position;
-            camera.transform.position = new Vector3(position.x, position.y, cPosition.z);
+            camera.transform.position = new Vector3(position.x, position.y, camera.transform.position.z);
         }
 
         // マウスの位置を保存する

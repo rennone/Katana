@@ -33,6 +33,8 @@ namespace Katana
 
         const float inputWaitTime = 0.2f;
 
+        Transform PlayerTransform { get { return Katana.GameManager.Instance.Player.transform; } }
+
         public bool IsPause()
         {
             return _isPause;
@@ -89,7 +91,7 @@ namespace Katana
                     nowMenuNum = _menuList.Length-1;
             }
 
-            SoundManager.Instance.PlaySound(Katana.PlayerInput.Instance.transform, SoundKey.SE_MENU_MOVE);
+            SoundManager.Instance.PlaySound(PlayerTransform, SoundKey.SE_MENU_MOVE);
 
             UpdateMenuActive();
             _isWaiting = true;
@@ -125,11 +127,11 @@ namespace Katana
             if (_isPause)
             {
                 ChangePauseMenuState(PauseMenuState.DefaultMenu);
-                SoundManager.Instance.PlaySound(Katana.PlayerInput.Instance.transform, SoundKey.SE_PAUSE_OPEN);
+                SoundManager.Instance.PlaySound(PlayerTransform, SoundKey.SE_PAUSE_OPEN);
             }
             else
             {
-                SoundManager.Instance.PlaySound(Katana.PlayerInput.Instance.transform, SoundKey.SE_PAUSE_CLOSE);
+                SoundManager.Instance.PlaySound(PlayerTransform, SoundKey.SE_PAUSE_CLOSE);
             }
             UpdateMenuActive();
             MenuFadeAction(_isPause);

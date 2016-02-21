@@ -4,22 +4,47 @@ using System;
 
 namespace Katana
 {
-
-    [RequireComponent(typeof (ActorMotor))]
-    public class PlayerInput : Katana.Singleton<PlayerInput>
+    public class PlayerInput : AMonoBehaviour
     {
-        private ActorMotor motor_ = null;
-        // Use this for initialization
-        private void Start()
+        private Player _player;
+        private PlayerMotor _motor;
+
+        protected override void OnInitialize()
         {
-            motor_ = GetComponent<ActorMotor>();
+            _player = GetComponent<Player>();
+            _motor = GetComponent<PlayerMotor>();
         }
 
         // Update is called once per frame
-        private void Update()
+        protected override void OnUpdate()
         {
-            motor_.InputMoveDirection = (Input.GetAxisRaw("Horizontal")*Time.deltaTime)*Vector3.right;
-            motor_.InputJump = Input.GetButtonDown("Jump");
+            // 移動
+            if (_player.IsReleased(Player.Action.Move))
+            {
+                _motor.InputMoveDirection = _player.CanInpuMove()
+                    ? (Input.GetAxisRaw("Horizontal")*Time.deltaTime)*Vector3.right
+                    : Vector3.zero;
+            }
+
+            // ジャンプ
+            if (_player.IsReleased(Player.Action.Jump))
+            {
+                _motor.InputJump = _player.CanInputJump() && Input.GetButtonDown("Jump");
+               // _player._animatorAccess.SetIsJump(_player.CanInputJump() && Input.GetButtonDown("Jump"));
+            }
+
+            // 攻撃1
+            if (_player.IsReleased(Player.Action.Fire1))
+            {
+                _player.AnimatorAccess.SetIsAttack(Input.GetButtonDown("Fire1") && _player.CanInputAttack());
+            }
+
+            // 攻撃2
+            if (_player.IsReleased(Player.Action.Fire2))
+            {
+                
+            }
         }
+
     }
 }

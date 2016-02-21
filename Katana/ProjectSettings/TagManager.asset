@@ -7,6 +7,9 @@ TagManager:
   - LoadableScene
   - StageRange
   - Debug
+  - rootOfArea
+  - Gimmick
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -19,8 +22,8 @@ TagManager:
   - Player
   - PlayerDamaged
   - Enemy
-  - 
-  - 
+  - PlayerWeapon
+  - EnemyWeapon
   - 
   - 
   - 

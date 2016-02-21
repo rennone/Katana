@@ -9,34 +9,34 @@ namespace Platforms
     public class Patroller : MonoBehaviour
     {
         // 巡回する頂点群
-        [SerializeField] 
-        private Transform[] _vertices;
+        [SerializeField]
+        protected Transform[] _vertices;
 
         // 上記の配列を順方向に回るか逆方向に回るか
         [SerializeField] 
-        private Boolean _forwardDirection = true;
+        protected Boolean _forwardDirection = true;
 
-        [SerializeField] 
-        private float _speed = 10.0f;
+        [SerializeField]
+        protected float _speed = 10.0f;
 
         // 上記で設定されたTransformがこのオブジェクトの子だったりすると一緒に移動してしまうので最初に初期位置を保存しておく
         
-        List<Vector3> _verticesWorldPosition = new List<Vector3>(); 
+        List<Vector3> _verticesWorldPosition = new List<Vector3>();
 
-        private int _nextIndex = 0;
+        protected int _nextIndex = 0;
 
 
         // 目的地
-        Vector3 Destination { get { return _verticesWorldPosition[_nextIndex]; } }
+        protected Vector3 Destination { get { return _verticesWorldPosition[_nextIndex]; } }
 
         // 次の頂点を目指す
-        void Next()
+        protected void Next()
         {
             _nextIndex = (_forwardDirection ? _nextIndex + 1 : _nextIndex + _vertices.Count() - 1) % _vertices.Count();
         }
 
         // Use this for initialization
-        void Start ()
+        protected virtual void Start ()
         {
             foreach (var tr in _vertices)
             {
@@ -46,7 +46,7 @@ namespace Platforms
         }
 	
         // Update is called once per frame
-        void Update ()
+        protected virtual void Update ()
         {
             var distance = Destination - transform.position;
 

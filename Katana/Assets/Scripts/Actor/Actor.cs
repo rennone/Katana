@@ -3,60 +3,32 @@ using System.Collections;
 
 namespace Katana
 {
-// すべてのキャラクターに共通な機能群を持たせる
-    [RequireComponent(typeof (Pausable))] //ポーズ機能
-    [RequireComponent(typeof (ActorStatus))] //ステータス
-    [RequireComponent(typeof (ActorInitializeFinalize))] //コンストラクタ, デストラクタ
-    public class Actor : MonoBehaviour
+    // GameManagerが管理可能なクラス
+    // 生成時にGameManagerに登録, 破壊時にGameManagerから削除される.
+    public class Actor : AMonoBehaviour
     {
-        private Pausable _pause = null;
-
-        public Pausable APause
+        protected sealed override void Awake()
         {
-            get
-            {
-                if (_pause == null)
-                    _pause = GetComponent<Pausable>();
-
-                return _pause;
-            }
+            // ゲームマネージャーに登録
+            GameManager.Instance.RegisterActor(this);
+            OnInitialize();
         }
 
-        private ActorStatus _status = null;
-
-        public ActorStatus AStatus
+        protected sealed override void Update()
         {
-            get
-            {
-                if (_status == null)
-                    _status = GetComponent<ActorStatus>();
-
-                return _status;
-            }
+            OnUpdate();
         }
 
-        // ダメージ
-        public virtual void Damage(int val)
+        protected override sealed void Start()
         {
-            AStatus.DecreaseHP(val);
+            OnStart();
         }
 
-        // 回復
-        public virtual void Recover(int val)
+        protected override sealed void OnDestroy()
         {
-            AStatus.IncreaseHP(val);
+            OnFilnalize();  //終了処理
+            GameManager.Instance.RemoveActor(this);
         }
 
-        // ポーズ
-        public virtual void Pause()
-        {
-            APause.State = Pausable.PauseState.PauseAll;
-        }
-
-        // ポーズから戻る
-        public virtual void Resume()
-        {
-            APause.State = Pausable.PauseState.Active;
-        }
     }
 }

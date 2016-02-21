@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
 
 namespace Katana
@@ -10,25 +11,81 @@ namespace Katana
         [System.Serializable]
         public class Constraint
         {
-            public bool X, Y, Z;
+            public bool X;
+            public bool Y;
+            public bool Z = true;
         }
 
         [System.Serializable]
         public class CharacterMotorMovement
         {
-            public float MaxForwardSpeed = 10.0f;
-            public float MaxSidewaysSpeed = 10.0f;
-            public float MaxBackwardsSpeed = 10.0f;
+            // スピード
+            [SerializeField] private float _maxSpeed = 10.0f;
+
+            public float MaxSpeed
+            {
+                get { return _maxSpeed; }
+                set { _maxSpeed = value; }
+            }
+
+            // スピード
+            // 念のため, 前進, 後退, 横移動での速度を分けてあるが、現状必要ないので同じ変数を参照している.
+            public float MaxForwardSpeed
+            {
+                get { return _maxSpeed; }
+            }
+
+            public float MaxSidewaysSpeed
+            {
+                get { return _maxSpeed; }
+            }
+
+            public float MaxBackwardsSpeed
+            {
+                get { return _maxSpeed; }
+            }
+
+
+            // 地上加速度
+            [SerializeField] 
+            private float _maxGroundAcceleration = 30.0f;
+            public float MaxGroundAcceleration
+            {
+                get { return _maxGroundAcceleration; }
+            }
+
+
+            // 空中加速度
+            [SerializeField] 
+            private float _maxAirAcceleration = 20.0f;
+
+            public float MaxAirAcceleration
+            {
+                get { return _maxAirAcceleration; }
+            }
+
+            // 重力
+            [SerializeField]
+            private float _gravity = 30.0f;
+
+            public float Gravity
+            {
+                get { return _gravity; }
+            }
+
+
+            // 落下速度
+            private float _maxFallSpeed = 500.0f;
+
+            public float MaxFallSpeed
+            {
+                get { return _maxFallSpeed; }
+            }
+
 
             // 斜面に基づいて速度を乗算する曲線（負=下向き）
             public AnimationCurve SlopeSpeedMultiplier = new AnimationCurve(new Keyframe(-90, 1), new Keyframe(0, 1),
                 new Keyframe(90, 0));
-
-            public float MaxGroundAcceleration = 30.0f;
-            public float MaxAirAcceleration = 20.0f;
-
-            public float Gravity = 30.0f;
-            public float MaxFallSpeed = 500.0f;
 
             // 動きの制限
             public Constraint FreezePosition;
@@ -36,17 +93,25 @@ namespace Katana
             public Vector3 ConstraintPosition = new Vector3();
 
             // 衝突判定フラグ
-            [System.NonSerialized] public CollisionFlags collisionFlags;
+            public CollisionFlags collisionFlags { get; set; }
 
-            // We will keep track of the character's current velocity,
-            [System.NonSerialized] public Vector3 velocity;
+            // 現在速度
+            [NonSerialized]
+            public Vector3 velocity = Vector3.zero;
 
-            // This keeps track of our current velocity while we're not grounded
-            [System.NonSerialized] public Vector3 frameVelocity = Vector3.zero;
+            // 1フレームでの移動量
+            public Vector3 frameVelocity { get; set; }
 
-            [System.NonSerialized] public Vector3 hitPoint = Vector3.zero;
+            // 衝突位置
+            public Vector3 hitPoint { get; set; }
 
-            [System.NonSerialized] public Vector3 lastHitPoint = new Vector3(Mathf.Infinity, 0, 0);
+            // 最後に衝突した位置
+            public Vector3 lastHitPoint { get; set; }
+
+            public CharacterMotorMovement()
+            {
+                lastHitPoint = new Vector3(Mathf.Infinity, 0, 0);
+            }
         }
 
         //ジャンプ時の挙動（選択式）

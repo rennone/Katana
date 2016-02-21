@@ -6,25 +6,22 @@ namespace Katana
 {
 
 // Require a character controller to be attached to the same game object
-    [RequireComponent(typeof (CharacterController))] //Component->phisicsにある.地面とのあたり判定なんかを勝手にやってくれる
     [AddComponentMenu("Character/Character Motor")]
 
     public partial class ActorMotor : MonoBehaviour
     {
+        // : public
+        
+        // 移動方向
+        public Vector3 InputMoveDirection { get; set; }
+
+        // ジャンプ入力
+        public bool InputJump { get; set; }
+
+
         private const float Epsilon = 1.0e-6f;
         // このスクリプトを入力に応答させるかどうかのフラグ
         private bool canControl = true;
-        private bool useFixedUpdate = false; //fixedUpdateでinput入力を受け取るのはよくないので切る
-
-        // For the next variables, [System.NonSerialized] tells Unity to not serialize the variable or show it in the inspector view.
-        // Very handy for organization!
-
-        // The current global direction we want the character to move in.
-        public Vector3 InputMoveDirection { get; set; }
-
-        // Is the jump button held down? We use this interface instead of checking
-        // for the jump button directly so this script can also be used by AIs.
-        public bool InputJump { get; set; }
 
         public CharacterMotorMovement movement = new CharacterMotorMovement();
         public CharacterMotorJumping jumping = new CharacterMotorJumping();
@@ -38,16 +35,18 @@ namespace Katana
         private Vector3 lastGroundNormal = Vector3.zero;
 
         //  private Transform tr;
-        private CharacterController controller;
+        private CharacterController _controller;
 
 
+        private Vector3 _destinationFoward = Vector3.right;
 
-
+        public Func<bool> CanChangeDirection { private get;  set; }
+        
         private CollisionFlags Move(Vector3 move)
         {
             // それぞれの軸のConstraint設定
             // http://forum.unity3d.com/threads/restrict-z-movement-on-character-controller-without-breaking-into-colliders.91358/
-            float coef = 0.05f;
+            float coef = 0.5f;
             if (movement.FreezePosition.X && Mathf.Abs(movement.ConstraintPosition.x - transform.position.x) > 0)
             {
                 move.x = (movement.ConstraintPosition.x - transform.position.x)*coef;
@@ -63,45 +62,15 @@ namespace Katana
                 move.z = (movement.ConstraintPosition.z - transform.position.z)*coef;
             }
 
-            var collisionFlag = controller.Move(move);
+            var collisionFlag = _controller.Move(move);
 
             return collisionFlag;
         }
-
-        private void lockZAxis(CollisionFlags collisionFlags, Vector3 oldPosition, ref Vector3 position)
-        {
-            if (Math.Abs(position.z - oldPosition.z) > 0)
-            {
-                // is there any y-axis displacement during splice ? if yes assume the controlled object can slice on y-axis
-                if (Mathf.Abs(oldPosition.y - position.y) > 0)
-                {
-                    // slice up if collision below
-                    if ((collisionFlags & CollisionFlags.Below) != 0)
-                    {
-                        position.y += Mathf.Abs(position.z - oldPosition.z);
-
-                        // slice down if collision above
-                    }
-                    else if ((collisionFlags & CollisionFlags.Above) != 0)
-                    {
-                        position.y -= Mathf.Abs(position.z - oldPosition.z);
-                    }
-                    // no y-axis slice possible : stuck
-                }
-                else
-                {
-                    position.x = oldPosition.x;
-                }
-
-
-                position.z = oldPosition.z;
-            }
-        }
-
+        
         //最初に絶対呼び出される関数
         private void Awake()
         {
-            controller = GetComponent<CharacterController>();
+            _controller = GetComponent<CharacterController>();
         }
 
         //----------------------------------------------------------------------------
@@ -134,16 +103,18 @@ namespace Katana
         {
             if (Mathf.Abs(InputMoveDirection.x) >= 1.0e-6)
             {
-                var direction = InputMoveDirection.x < 0 ? Vector3.left : Vector3.right;
-                var afterDirection = Vector3.Lerp(transform.forward, direction, 0.5f);
-                transform.forward = afterDirection == Vector3.zero ? direction : afterDirection;
+                _destinationFoward = InputMoveDirection.x < 0 ? Vector3.left : Vector3.right;
             }
+            transform.forward = Vector3.RotateTowards(transform.forward, _destinationFoward, Time.deltaTime * 10, 1.0f);
         }
 
         private void UpdateFunction()
         {
             // 方向の更新
-            UpdateDirection();
+            if (CanChangeDirection == null || CanChangeDirection())
+            {
+                UpdateDirection();
+            }
 
             //速度の更新
             Vector3 velocity = movement.velocity;
@@ -159,7 +130,7 @@ namespace Katana
             Vector3 currentMovementOffset = velocity*Time.deltaTime;
 
             // ステップを歩いたりスロープの急激な変化を介したとき、地面の喪失を避けるために地面からどれくらい上げる必要があるか調べる
-            float pushDownOffset = Mathf.Max(controller.stepOffset,
+            float pushDownOffset = Mathf.Max(_controller.stepOffset,
                 new Vector3(currentMovementOffset.x, 0, currentMovementOffset.z).magnitude);
             if (_grounded)
                 currentMovementOffset -= pushDownOffset*Vector3.up;
@@ -238,7 +209,7 @@ namespace Katana
                     movement.velocity += movingPlatform.platformVelocity;
                 }
 
-                SendMessage("OnFall", SendMessageOptions.DontRequireReceiver);
+                //SendMessage("OnFall", SendMessageOptions.DontRequireReceiver);
                 // We pushed the character down to ensure it would stay on the ground ifthere was any.
                 // But there wasn't so now we cancel the downwards offset to make the fall smoother.
                 transform.position += pushDownOffset*Vector3.up;
@@ -250,8 +221,8 @@ namespace Katana
                 jumping.isJumping = false;
                 SubtractNewPlatformVelocity();
 
-                Debug.Log("OnLand in Charactor Motor");
-                SendMessage("OnLand", SendMessageOptions.DontRequireReceiver);
+                //Debug.Log("OnLand in Charactor Motor");
+                //SendMessage("OnLand", SendMessageOptions.DontRequireReceiver);
             }
 
             // Moving platforms support
@@ -261,7 +232,7 @@ namespace Katana
                 // This works best when the character is standing on moving tilting platforms. 
                 movingPlatform.activeGlobalPoint = transform.position +
                                                    Vector3.up*
-                                                   (controller.center.y - controller.height*0.5f + controller.radius);
+                                                   (_controller.center.y - _controller.height*0.5f + _controller.radius);
                 movingPlatform.activeLocalPoint =
                     movingPlatform.activePlatform.InverseTransformPoint(movingPlatform.activeGlobalPoint);
 
@@ -274,6 +245,7 @@ namespace Katana
 
         //----------------------------------------------------------------------------
 
+        // 物理演算処理は固定時間毎に行われる.
         private void FixedUpdate()
         {
             if (movingPlatform.enabled)
@@ -296,16 +268,12 @@ namespace Katana
                     movingPlatform.platformVelocity = Vector3.zero;
                 }
             }
-
-            if (useFixedUpdate)
-                UpdateFunction();
         }
 
         //----------------------------------------------------------------------------
         private void Update()
         {
-            if (!useFixedUpdate)
-                UpdateFunction();
+            UpdateFunction();
         }
 
         //----------------------------------------------------------------------------
@@ -387,11 +355,6 @@ namespace Katana
                 jumping.lastButtonDownTime = Time.time;
             }
 
-            if (InputJump)
-            {
-                Debug.Log("Jump on " + (_grounded ? "ground" : "not ground"));
-            }
-
             if (_grounded)
             {
                 velocity.y = Mathf.Min(0, velocity.y) - movement.Gravity*Time.deltaTime;
@@ -424,7 +387,7 @@ namespace Katana
                         velocity += movingPlatform.platformVelocity;
                     }
 
-                    SendMessage("OnJump", SendMessageOptions.DontRequireReceiver);
+                    //SendMessage("OnJump", SendMessageOptions.DontRequireReceiver);
                 }
                 else
                 {
@@ -590,7 +553,7 @@ namespace Katana
         //傾斜が急かどうか
         private bool TooSteep()
         {
-            return (groundNormal.y <= Mathf.Cos(controller.slopeLimit*Mathf.Deg2Rad));
+            return (groundNormal.y <= Mathf.Cos(_controller.slopeLimit*Mathf.Deg2Rad));
         }
 
         //----------------------------------------------------------------------------
