@@ -9,9 +9,9 @@ namespace Katana
 {
     public partial class  Player
     {
-        private PlayerMotor _motor;
+        protected PlayerMotor _motor;
 
-        private CapsuleCollider _capsule { get; set; }
+        protected CapsuleCollider _capsule { get; set; }
 
         private WeaponBase _kick;
 

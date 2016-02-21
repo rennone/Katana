@@ -22,7 +22,7 @@ namespace Katana
 
         public void Damage(int val)
         {
-            base.Damage(new Damage(val));
+            base.Damage(new Damage(null, val));
         }
 
         protected override void OnDead()
@@ -33,6 +33,7 @@ namespace Katana
         protected override void OnDamaged(DamageResult damage)
         {
             //StartCoroutine("AfterDamaged");
+            Debug.Log("Remain HP = " + AStatus.Hp);
         }
 
         // ダメージを受けた時の処理

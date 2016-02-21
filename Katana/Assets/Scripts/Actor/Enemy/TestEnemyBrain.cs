@@ -5,7 +5,7 @@ using AnimatorAccess;
 
 namespace Katana
 {
-    public class EnemyTest : Platforms.Patroller
+    public class TestEnemyBrain : Platforms.Patroller
     {
         PlayerMotor motor_;
         private Player _owner;

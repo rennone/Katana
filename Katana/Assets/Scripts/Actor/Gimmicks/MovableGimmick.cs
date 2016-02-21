@@ -12,7 +12,9 @@ namespace Katana
 
         // 衝突したときに, threasold以上の速度ならば
         // 衝突相手にダメージを与える。
-        public float threasoldSpeed = 5;
+        public float ThreasoldSpeed = 5;
+
+        public int Strong = 100;
 
         protected override void OnInitialize()
         {
@@ -33,14 +35,30 @@ namespace Katana
             return base.Damage(damage);
         }
 
+        // 衝突したとき
         protected override void OnTriggerEnterWith(Collider c)
         {
             Debug.Log("Collider Gimmick " + c.name);
 
-            if (_rigidbody.velocity.sqrMagnitude < threasoldSpeed * threasoldSpeed)
+            // 速度が十分あるか
+            if (_rigidbody.velocity.sqrMagnitude < ThreasoldSpeed*ThreasoldSpeed)
+            {
+                Debug.Log("Less Speed " + _rigidbody.velocity.magnitude);
+                return;
+            }
+            // 移動方向の後ろからぶつかった場合(衝突された場合)、攻撃しない
+            var direction = c.transform.position - transform.position;
+            if (Vector3.Dot(direction, _rigidbody.velocity) < 0)
+            {
+                Debug.Log("Direction " + Vector3.Angle(direction, _rigidbody.velocity));
+                return;
+            }
+
+            var target = c.GetComponent<IDamage>();
+            if (target == null)
                 return;
 
-            Debug.Log("Collider Hit" + _rigidbody.velocity);
+            target.Damage(new Damage(gameObject, Strong, c));
         }
 
     }

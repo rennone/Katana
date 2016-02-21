@@ -1821,6 +1821,7 @@ GameObject:
   - 4: {fileID: 456596}
   - 136: {fileID: 13640502}
   - 114: {fileID: 11412238}
+  - 114: {fileID: 11455890}
   m_Layer: 11
   m_Name: LegWeapon
   m_TagString: Untagged
@@ -3986,7 +3987,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 163964}
   m_LocalRotation: {x: 0, y: .707106829, z: 0, w: .707106709}
-  m_LocalPosition: {x: 83.0381546, y: 2.24730968, z: 0}
+  m_LocalPosition: {x: 89.8326492, y: 2.55506229, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 469196}
@@ -4928,6 +4929,22 @@ MonoBehaviour:
     slidingSpeed: 15
     sidewaysControl: 1
     speedControl: .400000006
+--- !u!114 &11455890
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 167598}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be99382f91c79c245835d7fdf19f48d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ignores: 
+  _collider: {fileID: 13640502}
+  _owner: {fileID: 11496440}
+  _parameter:
+    Strong: 0
 --- !u!114 &11486654
 MonoBehaviour:
   m_ObjectHideFlags: 1

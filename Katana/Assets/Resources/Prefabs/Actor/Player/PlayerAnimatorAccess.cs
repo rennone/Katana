@@ -16,7 +16,7 @@ namespace AnimatorAccess
 		protected const int IsJumpHash = 19011116;
 		protected const int IsAttackHash = 2145273271;
 		protected const int IsFire2Hash = -671287417;
-		protected const int TestTriggerHash = 1033918907;
+		protected const int IsDeadHash = 1270110494;
 
 		// parameter setter getter 
 		public float GetMoveSpeed(){ return _animator.GetFloat(MoveSpeedHash); }
@@ -27,7 +27,7 @@ namespace AnimatorAccess
 		public void SetIsAttack(bool value){ _animator.SetBool(IsAttackHash, value);}
 		public bool GetIsFire2(){ return _animator.GetBool(IsFire2Hash); }
 		public void SetIsFire2(bool value){ _animator.SetBool(IsFire2Hash, value);}
-		public void TestTrigger(){ _animator.SetTrigger (TestTriggerHash); } public void ResetTestTrigger() { _animator.ResetTrigger (TestTriggerHash); }
+		public void TriggerIsDead(){ _animator.SetTrigger (IsDeadHash); } public void ResetIsDead() { _animator.ResetTrigger (IsDeadHash); }
 
 		// State
 		public const int StateIdAttack_Fire1 = -375459552;
@@ -36,6 +36,7 @@ namespace AnimatorAccess
 		public const int StateIdJump = 788460410;
 		public const int StateIdKick = -1751635351;
 		public const int StateIdScrewKick = -106577475;
+		public const int StateIdDown = -1783470761;
 
 		public bool IsAttack_Fire1State(){ return StateIdAttack_Fire1 == _animator.GetCurrentAnimatorStateInfo(0).fullPathHash; }
 		public bool IsIdleState(){ return StateIdIdle == _animator.GetCurrentAnimatorStateInfo(0).fullPathHash; }
@@ -43,6 +44,7 @@ namespace AnimatorAccess
 		public bool IsJumpState(){ return StateIdJump == _animator.GetCurrentAnimatorStateInfo(0).fullPathHash; }
 		public bool IsKickState(){ return StateIdKick == _animator.GetCurrentAnimatorStateInfo(0).fullPathHash; }
 		public bool IsScrewKickState(){ return StateIdScrewKick == _animator.GetCurrentAnimatorStateInfo(0).fullPathHash; }
+		public bool IsDownState(){ return StateIdDown == _animator.GetCurrentAnimatorStateInfo(0).fullPathHash; }
 
 		public virtual void OnStateEnterToAttack_Fire1(Animator animator, AnimatorStateInfo stateInfo){}
 		public virtual void OnStateExitFromAttack_Fire1(Animator animator, AnimatorStateInfo stateInfo){}
@@ -74,6 +76,11 @@ namespace AnimatorAccess
 //		public virtual void OnStateMoveScrewKick(Animator animator, AnimatorStateInfo stateInfo){}
 		public virtual void OnStateUpdateScrewKick(Animator animator, AnimatorStateInfo stateInfo){}
 		public virtual void OnStateIkScrewKick(Animator animator, AnimatorStateInfo stateInfo){}
+		public virtual void OnStateEnterToDown(Animator animator, AnimatorStateInfo stateInfo){}
+		public virtual void OnStateExitFromDown(Animator animator, AnimatorStateInfo stateInfo){}
+//		public virtual void OnStateMoveDown(Animator animator, AnimatorStateInfo stateInfo){}
+		public virtual void OnStateUpdateDown(Animator animator, AnimatorStateInfo stateInfo){}
+		public virtual void OnStateIkDown(Animator animator, AnimatorStateInfo stateInfo){}
 
 
 
@@ -89,6 +96,7 @@ namespace AnimatorAccess
 				case StateIdJump : OnStateEnterToJump(animator, stateInfo); break;
 				case StateIdKick : OnStateEnterToKick(animator, stateInfo); break;
 				case StateIdScrewKick : OnStateEnterToScrewKick(animator, stateInfo); break;
+				case StateIdDown : OnStateEnterToDown(animator, stateInfo); break;
 
 			}
 		}
@@ -105,6 +113,7 @@ namespace AnimatorAccess
 				case StateIdJump : OnStateExitFromJump(animator, stateInfo); break;
 				case StateIdKick : OnStateExitFromKick(animator, stateInfo); break;
 				case StateIdScrewKick : OnStateExitFromScrewKick(animator, stateInfo); break;
+				case StateIdDown : OnStateExitFromDown(animator, stateInfo); break;
 
 			}
 		}
@@ -133,6 +142,7 @@ namespace AnimatorAccess
 				case StateIdJump : OnStateMoveJump(animator, stateInfo); break;
 				case StateIdKick : OnStateMoveKick(animator, stateInfo); break;
 				case StateIdScrewKick : OnStateMoveScrewKick(animator, stateInfo); break;
+				case StateIdDown : OnStateMoveDown(animator, stateInfo); break;
 
 			}
 		}
@@ -149,6 +159,7 @@ namespace AnimatorAccess
 				case StateIdJump : OnStateUpdateJump(animator, stateInfo); break;
 				case StateIdKick : OnStateUpdateKick(animator, stateInfo); break;
 				case StateIdScrewKick : OnStateUpdateScrewKick(animator, stateInfo); break;
+				case StateIdDown : OnStateUpdateDown(animator, stateInfo); break;
 
 			}
 		}
@@ -165,6 +176,7 @@ namespace AnimatorAccess
 				case StateIdJump : OnStateIkJump(animator, stateInfo); break;
 				case StateIdKick : OnStateIkKick(animator, stateInfo); break;
 				case StateIdScrewKick : OnStateIkScrewKick(animator, stateInfo); break;
+				case StateIdDown : OnStateIkDown(animator, stateInfo); break;
 
 			}
 		}

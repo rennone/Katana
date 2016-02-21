@@ -108,7 +108,7 @@ public class CreateAnimatorParameterSettings : AssetPostprocessor
         var intPropertyTemplate   = makePropertyTemplate("int", "Integer");
         var boolPropertyTemplate  = makePropertyTemplate("bool", "Bool");
         
-        var triggerTemplate = intent + "public void {0}(){{ _animator.SetTrigger ({0}Hash); }} public void Reset{0}() {{ _animator.ResetTrigger ({0}Hash); }}";
+        var triggerTemplate = intent + "public void Trigger{0}(){{ _animator.SetTrigger ({0}Hash); }} public void Reset{0}() {{ _animator.ResetTrigger ({0}Hash); }}";
 
         
 

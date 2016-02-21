@@ -72,7 +72,7 @@ namespace Katana
             Debug.Log("Collide");
             var target = collider.GetComponent<IDamage>();
             if (target != null)
-                Owner.Attack(target, new Damage(_parameter.Strong, collider, this));
+                Owner.Attack(target, new Damage(gameObject,_parameter.Strong, collider, this));
         }
     }
 }

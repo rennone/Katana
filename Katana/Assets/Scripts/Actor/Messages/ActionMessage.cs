@@ -43,17 +43,19 @@ namespace Katana
             public Vector3 Direction;
             public Collider Collider;
             public WeaponBase Weapon;
+            public readonly GameObject Attacker; //攻撃者
 
-            public Damage(int strong, Vector3 direction, Collider collider = null, WeaponBase weapon = null)
+            public Damage(GameObject attacker,int strong, Vector3 direction, Collider collider = null, WeaponBase weapon = null)
             {
+                Attacker = attacker;
                 Strong = strong;
                 Direction = direction;
                 Collider = collider;
                 Weapon = weapon;
             }
 
-            public Damage(int strong = 0, Collider collider = null, WeaponBase weapon = null)
-                :this(strong, Vector3.zero, collider, weapon)
+            public Damage(GameObject attacker, int strong = 0, Collider collider = null, WeaponBase weapon = null)
+                :this(attacker, strong, Vector3.zero, collider, weapon)
             {
             }
         }
