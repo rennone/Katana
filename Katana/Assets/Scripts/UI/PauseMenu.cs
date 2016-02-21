@@ -61,16 +61,19 @@ public class PauseMenu : MonoBehaviour {
     void ChangeSaveMenu()
     {
         Katana.PauseManager.Instance.ChangePauseMenuState(Katana.PauseManager.PauseMenuState.SaveMenu);
+        SoundManager.Instance.PlaySound(Katana.PlayerInput.Instance.transform, SoundKey.SE_MENU_DECIDE);
     }
 
     void ChangeOptionMenu()
     {
         Katana.PauseManager.Instance.ChangePauseMenuState(Katana.PauseManager.PauseMenuState.OptionMenu);
+        SoundManager.Instance.PlaySound(Katana.PlayerInput.Instance.transform, SoundKey.SE_MENU_DECIDE);
     }
 
     void ChangeTitleMenu()
     {
         Katana.PauseManager.Instance.ChangePauseMenuState(Katana.PauseManager.PauseMenuState.TitleMenu);
+        SoundManager.Instance.PlaySound(Katana.PlayerInput.Instance.transform, SoundKey.SE_MENU_DECIDE);
     }
 	
 }

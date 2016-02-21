@@ -89,6 +89,8 @@ namespace Katana
                     nowMenuNum = _menuList.Length-1;
             }
 
+            SoundManager.Instance.PlaySound(Katana.PlayerInput.Instance.transform, SoundKey.SE_MENU_MOVE);
+
             UpdateMenuActive();
             _isWaiting = true;
             _nowWaitTimer = inputWaitTime;
@@ -121,7 +123,14 @@ namespace Katana
             this.gameObject.SetActive(_isPause);
             //開く時にメニューを初期化
             if (_isPause)
+            {
                 ChangePauseMenuState(PauseMenuState.DefaultMenu);
+                SoundManager.Instance.PlaySound(Katana.PlayerInput.Instance.transform, SoundKey.SE_PAUSE_OPEN);
+            }
+            else
+            {
+                SoundManager.Instance.PlaySound(Katana.PlayerInput.Instance.transform, SoundKey.SE_PAUSE_CLOSE);
+            }
             UpdateMenuActive();
             MenuFadeAction(_isPause);
 
