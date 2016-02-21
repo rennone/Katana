@@ -30,3 +30,39 @@ MonoBehaviour:
     RollOff: 1
     DopplerLevel: 0
     pitch: 1
+  - SoundDataKey: SE_PAUSE_OPEN
+    Sound: {fileID: 8300000, guid: e51d5623ff7feef4ea07a7698c238b53, type: 3}
+    Type: 1
+    SyncCount: 4
+    Volume: 1
+    Distance: 1000
+    RollOff: 1
+    DopplerLevel: 0
+    pitch: 1
+  - SoundDataKey: SE_PAUSE_CLOSE
+    Sound: {fileID: 8300000, guid: c528f54753dd60e4c883857c410d865a, type: 3}
+    Type: 1
+    SyncCount: 4
+    Volume: 1
+    Distance: 1000
+    RollOff: 1
+    DopplerLevel: 0
+    pitch: 1
+  - SoundDataKey: SE_MENU_DECIDE
+    Sound: {fileID: 8300000, guid: bc22873df4cf4c34da56253ae48eb3d3, type: 3}
+    Type: 1
+    SyncCount: 4
+    Volume: 1
+    Distance: 1000
+    RollOff: 1
+    DopplerLevel: 0
+    pitch: 1
+  - SoundDataKey: SE_MENU_MOVE
+    Sound: {fileID: 8300000, guid: 8464d9670278e504bb2065b71484cd0e, type: 3}
+    Type: 1
+    SyncCount: 4
+    Volume: 1
+    Distance: 1000
+    RollOff: 1
+    DopplerLevel: 0
+    pitch: 1
