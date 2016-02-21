@@ -24,17 +24,17 @@ namespace AnimatorAccess
 		protected const int SAMKHash = 763179511;
 
 		// parameter setter getter 
-		public void Jab(){ _animator.SetTrigger (JabHash); } public void ResetJab() { _animator.ResetTrigger (JabHash); }
-		public void Hikick(){ _animator.SetTrigger (HikickHash); } public void ResetHikick() { _animator.ResetTrigger (HikickHash); }
-		public void Spinkick(){ _animator.SetTrigger (SpinkickHash); } public void ResetSpinkick() { _animator.ResetTrigger (SpinkickHash); }
-		public void Rising_P(){ _animator.SetTrigger (Rising_PHash); } public void ResetRising_P() { _animator.ResetTrigger (Rising_PHash); }
-		public void Headspring(){ _animator.SetTrigger (HeadspringHash); } public void ResetHeadspring() { _animator.ResetTrigger (HeadspringHash); }
-		public void Land(){ _animator.SetTrigger (LandHash); } public void ResetLand() { _animator.ResetTrigger (LandHash); }
+		public void TriggerJab(){ _animator.SetTrigger (JabHash); } public void ResetJab() { _animator.ResetTrigger (JabHash); }
+		public void TriggerHikick(){ _animator.SetTrigger (HikickHash); } public void ResetHikick() { _animator.ResetTrigger (HikickHash); }
+		public void TriggerSpinkick(){ _animator.SetTrigger (SpinkickHash); } public void ResetSpinkick() { _animator.ResetTrigger (SpinkickHash); }
+		public void TriggerRising_P(){ _animator.SetTrigger (Rising_PHash); } public void ResetRising_P() { _animator.ResetTrigger (Rising_PHash); }
+		public void TriggerHeadspring(){ _animator.SetTrigger (HeadspringHash); } public void ResetHeadspring() { _animator.ResetTrigger (HeadspringHash); }
+		public void TriggerLand(){ _animator.SetTrigger (LandHash); } public void ResetLand() { _animator.ResetTrigger (LandHash); }
 		public bool GetRun(){ return _animator.GetBool(RunHash); }
 		public void SetRun(bool value){ _animator.SetBool(RunHash, value);}
-		public void ScrewK(){ _animator.SetTrigger (ScrewKHash); } public void ResetScrewK() { _animator.ResetTrigger (ScrewKHash); }
-		public void DamageDown(){ _animator.SetTrigger (DamageDownHash); } public void ResetDamageDown() { _animator.ResetTrigger (DamageDownHash); }
-		public void SAMK(){ _animator.SetTrigger (SAMKHash); } public void ResetSAMK() { _animator.ResetTrigger (SAMKHash); }
+		public void TriggerScrewK(){ _animator.SetTrigger (ScrewKHash); } public void ResetScrewK() { _animator.ResetTrigger (ScrewKHash); }
+		public void TriggerDamageDown(){ _animator.SetTrigger (DamageDownHash); } public void ResetDamageDown() { _animator.ResetTrigger (DamageDownHash); }
+		public void TriggerSAMK(){ _animator.SetTrigger (SAMKHash); } public void ResetSAMK() { _animator.ResetTrigger (SAMKHash); }
 
 		// State
 		public const int StateIdIdle = 1432961145;
@@ -63,57 +63,57 @@ namespace AnimatorAccess
 
 		public virtual void OnStateEnterToIdle(Animator animator, AnimatorStateInfo stateInfo){}
 		public virtual void OnStateExitFromIdle(Animator animator, AnimatorStateInfo stateInfo){}
-		public virtual void OnStateMoveIdle(Animator animator, AnimatorStateInfo stateInfo){}
+//		public virtual void OnStateMoveIdle(Animator animator, AnimatorStateInfo stateInfo){}
 		public virtual void OnStateUpdateIdle(Animator animator, AnimatorStateInfo stateInfo){}
 		public virtual void OnStateIkIdle(Animator animator, AnimatorStateInfo stateInfo){}
 		public virtual void OnStateEnterToRun(Animator animator, AnimatorStateInfo stateInfo){}
 		public virtual void OnStateExitFromRun(Animator animator, AnimatorStateInfo stateInfo){}
-		public virtual void OnStateMoveRun(Animator animator, AnimatorStateInfo stateInfo){}
+//		public virtual void OnStateMoveRun(Animator animator, AnimatorStateInfo stateInfo){}
 		public virtual void OnStateUpdateRun(Animator animator, AnimatorStateInfo stateInfo){}
 		public virtual void OnStateIkRun(Animator animator, AnimatorStateInfo stateInfo){}
 		public virtual void OnStateEnterToHikick(Animator animator, AnimatorStateInfo stateInfo){}
 		public virtual void OnStateExitFromHikick(Animator animator, AnimatorStateInfo stateInfo){}
-		public virtual void OnStateMoveHikick(Animator animator, AnimatorStateInfo stateInfo){}
+//		public virtual void OnStateMoveHikick(Animator animator, AnimatorStateInfo stateInfo){}
 		public virtual void OnStateUpdateHikick(Animator animator, AnimatorStateInfo stateInfo){}
 		public virtual void OnStateIkHikick(Animator animator, AnimatorStateInfo stateInfo){}
 		public virtual void OnStateEnterToRISING_P(Animator animator, AnimatorStateInfo stateInfo){}
 		public virtual void OnStateExitFromRISING_P(Animator animator, AnimatorStateInfo stateInfo){}
-		public virtual void OnStateMoveRISING_P(Animator animator, AnimatorStateInfo stateInfo){}
+//		public virtual void OnStateMoveRISING_P(Animator animator, AnimatorStateInfo stateInfo){}
 		public virtual void OnStateUpdateRISING_P(Animator animator, AnimatorStateInfo stateInfo){}
 		public virtual void OnStateIkRISING_P(Animator animator, AnimatorStateInfo stateInfo){}
 		public virtual void OnStateEnterToJab(Animator animator, AnimatorStateInfo stateInfo){}
 		public virtual void OnStateExitFromJab(Animator animator, AnimatorStateInfo stateInfo){}
-		public virtual void OnStateMoveJab(Animator animator, AnimatorStateInfo stateInfo){}
+//		public virtual void OnStateMoveJab(Animator animator, AnimatorStateInfo stateInfo){}
 		public virtual void OnStateUpdateJab(Animator animator, AnimatorStateInfo stateInfo){}
 		public virtual void OnStateIkJab(Animator animator, AnimatorStateInfo stateInfo){}
 		public virtual void OnStateEnterToHeadspring(Animator animator, AnimatorStateInfo stateInfo){}
 		public virtual void OnStateExitFromHeadspring(Animator animator, AnimatorStateInfo stateInfo){}
-		public virtual void OnStateMoveHeadspring(Animator animator, AnimatorStateInfo stateInfo){}
+//		public virtual void OnStateMoveHeadspring(Animator animator, AnimatorStateInfo stateInfo){}
 		public virtual void OnStateUpdateHeadspring(Animator animator, AnimatorStateInfo stateInfo){}
 		public virtual void OnStateIkHeadspring(Animator animator, AnimatorStateInfo stateInfo){}
 		public virtual void OnStateEnterToLand(Animator animator, AnimatorStateInfo stateInfo){}
 		public virtual void OnStateExitFromLand(Animator animator, AnimatorStateInfo stateInfo){}
-		public virtual void OnStateMoveLand(Animator animator, AnimatorStateInfo stateInfo){}
+//		public virtual void OnStateMoveLand(Animator animator, AnimatorStateInfo stateInfo){}
 		public virtual void OnStateUpdateLand(Animator animator, AnimatorStateInfo stateInfo){}
 		public virtual void OnStateIkLand(Animator animator, AnimatorStateInfo stateInfo){}
 		public virtual void OnStateEnterToSpinkick(Animator animator, AnimatorStateInfo stateInfo){}
 		public virtual void OnStateExitFromSpinkick(Animator animator, AnimatorStateInfo stateInfo){}
-		public virtual void OnStateMoveSpinkick(Animator animator, AnimatorStateInfo stateInfo){}
+//		public virtual void OnStateMoveSpinkick(Animator animator, AnimatorStateInfo stateInfo){}
 		public virtual void OnStateUpdateSpinkick(Animator animator, AnimatorStateInfo stateInfo){}
 		public virtual void OnStateIkSpinkick(Animator animator, AnimatorStateInfo stateInfo){}
 		public virtual void OnStateEnterToDamageDown(Animator animator, AnimatorStateInfo stateInfo){}
 		public virtual void OnStateExitFromDamageDown(Animator animator, AnimatorStateInfo stateInfo){}
-		public virtual void OnStateMoveDamageDown(Animator animator, AnimatorStateInfo stateInfo){}
+//		public virtual void OnStateMoveDamageDown(Animator animator, AnimatorStateInfo stateInfo){}
 		public virtual void OnStateUpdateDamageDown(Animator animator, AnimatorStateInfo stateInfo){}
 		public virtual void OnStateIkDamageDown(Animator animator, AnimatorStateInfo stateInfo){}
 		public virtual void OnStateEnterToScrewKick(Animator animator, AnimatorStateInfo stateInfo){}
 		public virtual void OnStateExitFromScrewKick(Animator animator, AnimatorStateInfo stateInfo){}
-		public virtual void OnStateMoveScrewKick(Animator animator, AnimatorStateInfo stateInfo){}
+//		public virtual void OnStateMoveScrewKick(Animator animator, AnimatorStateInfo stateInfo){}
 		public virtual void OnStateUpdateScrewKick(Animator animator, AnimatorStateInfo stateInfo){}
 		public virtual void OnStateIkScrewKick(Animator animator, AnimatorStateInfo stateInfo){}
 		public virtual void OnStateEnterToSAMK(Animator animator, AnimatorStateInfo stateInfo){}
 		public virtual void OnStateExitFromSAMK(Animator animator, AnimatorStateInfo stateInfo){}
-		public virtual void OnStateMoveSAMK(Animator animator, AnimatorStateInfo stateInfo){}
+//		public virtual void OnStateMoveSAMK(Animator animator, AnimatorStateInfo stateInfo){}
 		public virtual void OnStateUpdateSAMK(Animator animator, AnimatorStateInfo stateInfo){}
 		public virtual void OnStateIkSAMK(Animator animator, AnimatorStateInfo stateInfo){}
 
@@ -179,17 +179,17 @@ namespace AnimatorAccess
 			switch(layerIndex)
 			{
 				// case 
-//				case StateIdIdle : OnStateMoveIdle(animator, stateInfo); break;
-//				case StateIdRun : OnStateMoveRun(animator, stateInfo); break;
-//				case StateIdHikick : OnStateMoveHikick(animator, stateInfo); break;
-//				case StateIdRISING_P : OnStateMoveRISING_P(animator, stateInfo); break;
-//				case StateIdJab : OnStateMoveJab(animator, stateInfo); break;
-//				case StateIdHeadspring : OnStateMoveHeadspring(animator, stateInfo); break;
-//				case StateIdLand : OnStateMoveLand(animator, stateInfo); break;
-//				case StateIdSpinkick : OnStateMoveSpinkick(animator, stateInfo); break;
-//				case StateIdDamageDown : OnStateMoveDamageDown(animator, stateInfo); break;
-//				case StateIdScrewKick : OnStateMoveScrewKick(animator, stateInfo); break;
-//				case StateIdSAMK : OnStateMoveSAMK(animator, stateInfo); break;
+				case StateIdIdle : OnStateMoveIdle(animator, stateInfo); break;
+				case StateIdRun : OnStateMoveRun(animator, stateInfo); break;
+				case StateIdHikick : OnStateMoveHikick(animator, stateInfo); break;
+				case StateIdRISING_P : OnStateMoveRISING_P(animator, stateInfo); break;
+				case StateIdJab : OnStateMoveJab(animator, stateInfo); break;
+				case StateIdHeadspring : OnStateMoveHeadspring(animator, stateInfo); break;
+				case StateIdLand : OnStateMoveLand(animator, stateInfo); break;
+				case StateIdSpinkick : OnStateMoveSpinkick(animator, stateInfo); break;
+				case StateIdDamageDown : OnStateMoveDamageDown(animator, stateInfo); break;
+				case StateIdScrewKick : OnStateMoveScrewKick(animator, stateInfo); break;
+				case StateIdSAMK : OnStateMoveSAMK(animator, stateInfo); break;
 
 			}
 		}
