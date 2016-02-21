@@ -7723,7 +7723,7 @@ AnimationClip:
         value: 0
         inSlope: 0
         outSlope: 0
-        tangentMode: 0
+        tangentMode: 3237230
       m_PreInfinity: 2
       m_PostInfinity: 2
     attribute: blendShape.blendShape1.MTH_CONF
@@ -7799,7 +7799,7 @@ AnimationClip:
         value: 0
         inSlope: 0
         outSlope: 0
-        tangentMode: 0
+        tangentMode: 1701734768
       m_PreInfinity: 2
       m_PostInfinity: 2
     attribute: blendShape.blendShape2.EYE_SMILE2
@@ -7856,7 +7856,7 @@ AnimationClip:
         value: 0
         inSlope: 0
         outSlope: 0
-        tangentMode: 0
+        tangentMode: 8
       m_PreInfinity: 2
       m_PostInfinity: 2
     attribute: blendShape.blendShape2.EYE_ANG1
@@ -7875,7 +7875,7 @@ AnimationClip:
         value: 0
         inSlope: 0
         outSlope: 0
-        tangentMode: 0
+        tangentMode: 1079574528
       m_PreInfinity: 2
       m_PostInfinity: 2
     attribute: blendShape.blendShape2.EYE_ANG2
@@ -7932,7 +7932,7 @@ AnimationClip:
         value: 0
         inSlope: 0
         outSlope: 0
-        tangentMode: 0
+        tangentMode: 8
       m_PreInfinity: 2
       m_PostInfinity: 2
     attribute: blendShape.blendShape2.EYE_SMILE2
@@ -7951,7 +7951,7 @@ AnimationClip:
         value: 0
         inSlope: 0
         outSlope: 0
-        tangentMode: 8
+        tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
     attribute: blendShape.blendShape2.EYE_SAP
@@ -8046,7 +8046,7 @@ AnimationClip:
         value: 0
         inSlope: 0
         outSlope: 0
-        tangentMode: 8
+        tangentMode: 12
       m_PreInfinity: 2
       m_PostInfinity: 2
     attribute: blendShape.blendShape4.BLW_SMILE1
@@ -8103,7 +8103,7 @@ AnimationClip:
         value: 0
         inSlope: 0
         outSlope: 0
-        tangentMode: 0
+        tangentMode: 8
       m_PreInfinity: 2
       m_PostInfinity: 2
     attribute: blendShape.blendShape4.BLW_CONF
@@ -26337,7 +26337,7 @@ AnimationClip:
     m_LoopTime: 1
     m_LoopBlend: 0
     m_LoopBlendOrientation: 0
-    m_LoopBlendPositionY: 0
+    m_LoopBlendPositionY: 1
     m_LoopBlendPositionXZ: 0
     m_KeepOriginalOrientation: 0
     m_KeepOriginalPositionY: 1
@@ -26414,7 +26414,7 @@ AnimationClip:
         value: 0
         inSlope: 0
         outSlope: 0
-        tangentMode: 0
+        tangentMode: 3237230
       m_PreInfinity: 2
       m_PostInfinity: 2
     attribute: blendShape.blendShape1.MTH_CONF
@@ -26490,7 +26490,7 @@ AnimationClip:
         value: 0
         inSlope: 0
         outSlope: 0
-        tangentMode: 0
+        tangentMode: 1701734768
       m_PreInfinity: 2
       m_PostInfinity: 2
     attribute: blendShape.blendShape2.EYE_SMILE2
@@ -26547,7 +26547,7 @@ AnimationClip:
         value: 0
         inSlope: 0
         outSlope: 0
-        tangentMode: 0
+        tangentMode: 8
       m_PreInfinity: 2
       m_PostInfinity: 2
     attribute: blendShape.blendShape2.EYE_ANG1
@@ -26566,7 +26566,7 @@ AnimationClip:
         value: 0
         inSlope: 0
         outSlope: 0
-        tangentMode: 0
+        tangentMode: 1079574528
       m_PreInfinity: 2
       m_PostInfinity: 2
     attribute: blendShape.blendShape2.EYE_ANG2
@@ -26623,7 +26623,7 @@ AnimationClip:
         value: 0
         inSlope: 0
         outSlope: 0
-        tangentMode: 0
+        tangentMode: 8
       m_PreInfinity: 2
       m_PostInfinity: 2
     attribute: blendShape.blendShape2.EYE_SMILE2
@@ -26642,7 +26642,7 @@ AnimationClip:
         value: 0
         inSlope: 0
         outSlope: 0
-        tangentMode: 8
+        tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
     attribute: blendShape.blendShape2.EYE_SAP
@@ -26737,7 +26737,7 @@ AnimationClip:
         value: 0
         inSlope: 0
         outSlope: 0
-        tangentMode: 8
+        tangentMode: 12
       m_PreInfinity: 2
       m_PostInfinity: 2
     attribute: blendShape.blendShape4.BLW_SMILE1
@@ -26794,7 +26794,7 @@ AnimationClip:
         value: 0
         inSlope: 0
         outSlope: 0
-        tangentMode: 0
+        tangentMode: 8
       m_PreInfinity: 2
       m_PostInfinity: 2
     attribute: blendShape.blendShape4.BLW_CONF

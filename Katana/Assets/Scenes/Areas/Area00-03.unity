@@ -416,7 +416,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 338308780}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 89.8326492, y: 2.55506229, z: -1.61000001}
+  m_LocalPosition: {x: 88.2170029, y: 2.55506229, z: -1.61000001}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -2350,7 +2350,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 468134, guid: 87df328ba6a0baf4c8a1dd3787867f96, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 2.55506229
+      value: .48300001
       objectReference: {fileID: 0}
     - target: {fileID: 468134, guid: 87df328ba6a0baf4c8a1dd3787867f96, type: 2}
       propertyPath: m_LocalPosition.z
@@ -3202,7 +3202,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 432832, guid: 87df328ba6a0baf4c8a1dd3787867f96, type: 2}
       propertyPath: m_LocalPosition.y
-      value: .864305496
+      value: .864305258
       objectReference: {fileID: 0}
     - target: {fileID: 432832, guid: 87df328ba6a0baf4c8a1dd3787867f96, type: 2}
       propertyPath: m_LocalPosition.z
@@ -3218,7 +3218,24 @@ Prefab:
         'J_R_HairSide_00'\n\tFrom animation clip 'WAIT01_edit'\n\tFrom animation clip
         'RUN00_F_edit'\n\tFrom animation clip 'JUMP00_edit'"
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 13605790, guid: 87df328ba6a0baf4c8a1dd3787867f96, type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 469196, guid: 87df328ba6a0baf4c8a1dd3787867f96, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 13640502, guid: 87df328ba6a0baf4c8a1dd3787867f96, type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 14344716, guid: 87df328ba6a0baf4c8a1dd3787867f96, type: 2}
+      propertyPath: m_Center.y
+      value: .800000012
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 11455890, guid: 87df328ba6a0baf4c8a1dd3787867f96, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 87df328ba6a0baf4c8a1dd3787867f96, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &1839097869
