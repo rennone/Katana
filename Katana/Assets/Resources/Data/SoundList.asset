@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6da676d6698e8d34e910eaf9ae3520cb, type: 3}
+  m_Name: SoundList
+  m_EditorClassIdentifier: 
+  SoundDatas:
+  - SoundDataKey: BGM_COMBAT
+    Sound: {fileID: 8300000, guid: 1d9a3cf27058f02409b9254c6436eb40, type: 3}
+    Type: 2
+    SyncCount: 1
+    Volume: 1
+    Distance: 1000
+    RollOff: 1
+    DopplerLevel: 0
+    pitch: 1
+  - SoundDataKey: SE_JUMP01
+    Sound: {fileID: 8300000, guid: 69bcc652a7659cb43b85ed7207fcd849, type: 3}
+    Type: 1
+    SyncCount: 1
+    Volume: 1
+    Distance: 1000
+    RollOff: 1
+    DopplerLevel: 0
+    pitch: 1

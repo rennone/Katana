@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public class HPManager : Singleton<HPManager> {
+public class HPManager : Katana.Singleton<HPManager> {
 
     [SerializeField]
     Text hpText;
