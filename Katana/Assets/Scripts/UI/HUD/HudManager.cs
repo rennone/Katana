@@ -14,6 +14,12 @@ namespace Katana.Hud
 
         void Awake()
         {
+            if (Instance != null)
+            {
+                DestroyImmediate(this.gameObject);
+                return;
+            }
+
             Instance = this;
         }
 
