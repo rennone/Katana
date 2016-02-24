@@ -15,7 +15,7 @@ namespace AnimatorAccess
 		protected const int MoveSpeedHash = 526065662;
 		protected const int IsJumpHash = 19011116;
 		protected const int IsAttackHash = 2145273271;
-		protected const int IsFire2Hash = -671287417;
+		protected const int IsJumpAttackHash = -732200224;
 		protected const int IsDeadHash = 1270110494;
 
 		// parameter setter getter 
@@ -25,8 +25,8 @@ namespace AnimatorAccess
 		public void SetIsJump(bool value){ _animator.SetBool(IsJumpHash, value);}
 		public bool GetIsAttack(){ return _animator.GetBool(IsAttackHash); }
 		public void SetIsAttack(bool value){ _animator.SetBool(IsAttackHash, value);}
-		public bool GetIsFire2(){ return _animator.GetBool(IsFire2Hash); }
-		public void SetIsFire2(bool value){ _animator.SetBool(IsFire2Hash, value);}
+		public bool GetIsJumpAttack(){ return _animator.GetBool(IsJumpAttackHash); }
+		public void SetIsJumpAttack(bool value){ _animator.SetBool(IsJumpAttackHash, value);}
 		public void TriggerIsDead(){ _animator.SetTrigger (IsDeadHash); } public void ResetIsDead() { _animator.ResetTrigger (IsDeadHash); }
 
 		// State

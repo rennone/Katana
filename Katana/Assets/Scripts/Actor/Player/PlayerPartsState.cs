@@ -48,7 +48,7 @@ namespace Katana
         //private readonly int ActionNum = Enum.GetNames(typeof (Action)).Length;
 
         //! 解放された行動
-        private uint _releasedAction = (int)(Action.Move | Action.Jump | Action.Squat);
+        private uint _releasedAction = (int)(Action.Move | Action.Jump | Action.Squat | Action.Fire2);
 
         //! actionを解放する
         public void ReleaseAttack(Action action)

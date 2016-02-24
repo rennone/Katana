@@ -35,7 +35,7 @@ namespace Katana
                     enable = true;
                 }
             }
-            _owner.AnimatorAccess.SetIsFire2(enable);
+            _owner.AnimatorAccess.SetIsJumpAttack(enable);
         }
 
         void UpdateMove()
