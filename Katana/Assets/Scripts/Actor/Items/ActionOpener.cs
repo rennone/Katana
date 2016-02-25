@@ -29,7 +29,7 @@ namespace Katana
             var player = collider.GetComponent<Player>();
 
             // 行動を解放
-            player.ReleaseAttack(Player.Action.Fire1); //武器開放
+            player.ReleaseAttack(_openedAction); //武器開放
 
             // メッセージを表示
             Hud.HudManager.AddMessage(_messages, HudMessage.MessageKind.Hint);

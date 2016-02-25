@@ -42,7 +42,7 @@ namespace Katana
             // 攻撃2
             if (_player.IsReleased(Player.Action.Fire2))
             {
-                _player.AnimatorAccess.SetIsJumpAttack(Input.GetButtonDown("Fire2"));
+                _player.AnimatorAccess.SetIsJumpAttack(Input.GetButtonDown("Fire2") && _player.CanInputJumpAttack());
             }
         }
 

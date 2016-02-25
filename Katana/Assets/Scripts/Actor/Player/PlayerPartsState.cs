@@ -48,7 +48,7 @@ namespace Katana
         //private readonly int ActionNum = Enum.GetNames(typeof (Action)).Length;
 
         //! 解放された行動
-        private uint _releasedAction = (int)(Action.Move | Action.Jump | Action.Squat | Action.Fire2);
+        private uint _releasedAction = (int)(Action.Move | Action.Jump | Action.Squat);
 
         //! actionを解放する
         public void ReleaseAttack(Action action)
@@ -82,6 +82,11 @@ namespace Katana
         public bool CanInputAttack()
         {
             return IsNormalState();
+        }
+
+        public bool CanInputJumpAttack()
+        {
+            return AnimatorAccess.IsJumpState();
         }
 
         // Update is called once per frame
