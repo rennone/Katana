@@ -4,21 +4,6 @@ using System.Collections;
 namespace Katana {
     public class SaveManager :Singleton<SaveManager>
     {
-        //void Start()
-        //{
-        //    if (SaveData.Load())
-        //    {
-        //        Debug.Log(SaveData.GameSaveData.SaveVersion);
-        //    }
-        //    GameSaveField saveFile = new GameSaveField();
-        //    S_Character chara = new S_Character();
-        //    chara.position = Vector3.one;
-        //    saveFile.MainChara = chara;
-        //    SaveData.GameSaveData = saveFile;
-        //    SaveData.Save();
-        //    Debug.Log(SaveData.GameSaveData.MainChara.position);
-        //}
-
         public GameSaveField GameSaveData
         {
             get { return SaveData.GameSaveData; }
