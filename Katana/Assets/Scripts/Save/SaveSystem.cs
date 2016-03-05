@@ -16,18 +16,18 @@ using System.Runtime.Serialization.Formatters.Binary;
 [System.Serializable]
 public class GameSaveField
 {
+    //セーブデータのバージョン（このCSファイルの最終更新日時）
     public string SaveVersion = "Null";
 
-    public Vector3[] vec = new Vector3[] { Vector3.one, Vector3.up };
-
-    public Character MainChara = new Character(); 
+    //メインキャラクターに関する情報
+    public S_Character MainChara = new S_Character(); 
 }
 
 [System.Serializable]
-public class Character
+public class S_Character
 {
-    public string name = "Null";
     public Vector3 position = Vector3.zero;
+    public Quaternion rotation = Quaternion.identity;
 }
 
 public static class SaveData

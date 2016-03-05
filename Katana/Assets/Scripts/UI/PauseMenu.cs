@@ -10,7 +10,9 @@ public class PauseMenu : MonoBehaviour {
         None,
         ChangeSaveMenu,
         ChangeOptionMenu,
-        ChangeTitleMenu
+        ChangeTitleMenu,
+        Save,
+        Load
     }
 
     [SerializeField]
@@ -49,6 +51,12 @@ public class PauseMenu : MonoBehaviour {
             case MenuAction.ChangeTitleMenu:
                 ChangeTitleMenu();
                 break;
+            case MenuAction.Save:
+                Save();
+                break;
+            case MenuAction.Load:
+                Load();
+                break;
         }
     }
 
@@ -76,4 +84,16 @@ public class PauseMenu : MonoBehaviour {
         SoundManager.Instance.PlaySound(Katana.GameManager.Instance.Player.transform, SoundKey.SE_MENU_DECIDE);
     }
 	
+    void Save()
+    {
+        Katana.SaveManager.Instance.SaveAll();
+        Katana.PauseManager.Instance.PushPauseButton();    //ポーズメニューを閉じる
+    }
+
+    void Load()
+    {
+        Katana.SaveManager.Instance.LoadAll();
+        SoundManager.Instance.PlaySound(Katana.GameManager.Instance.Player.transform, SoundKey.SE_MENU_DECIDE);
+        Katana.GameManager.Instance.GameRestart();
+    }
 }
