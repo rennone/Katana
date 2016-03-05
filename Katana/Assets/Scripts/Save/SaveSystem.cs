@@ -20,11 +20,11 @@ public class GameSaveField
     public string SaveVersion = "Null";
 
     //メインキャラクターに関する情報
-    public S_Character MainChara = new S_Character(); 
+    public SaveDataCharacter MainChara = new SaveDataCharacter(); 
 }
 
 [System.Serializable]
-public class S_Character
+public class SaveDataCharacter
 {
     public Vector3 position = Vector3.zero;
     public Quaternion rotation = Quaternion.identity;

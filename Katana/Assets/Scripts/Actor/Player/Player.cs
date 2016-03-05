@@ -84,7 +84,7 @@ namespace Katana
             //セーブデータをロード
             if (SaveManager.Instance.GameSaveData.SaveVersion != "Null")
             {
-                S_Character chara = SaveManager.Instance.GameSaveData.MainChara;
+                SaveDataCharacter chara = SaveManager.Instance.GameSaveData.MainChara;
                 this.transform.position = chara.position;
                 this.transform.rotation = chara.rotation;
             }
