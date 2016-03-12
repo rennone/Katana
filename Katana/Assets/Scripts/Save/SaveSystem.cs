@@ -34,7 +34,7 @@ public static class SaveData
 {
     private static readonly string ThisFilePath = "Assets/Scripts/Save/SaveSystem.cs";
 
-    private static readonly string SavePath = "Save";
+    public static readonly string SavePath = "Save";
 
     private static GameSaveField m_SaveData = new GameSaveField();
     public static GameSaveField GameSaveData
@@ -66,7 +66,7 @@ public static class SaveData
             if (dtUpdate.ToString() != save.SaveVersion)
             {
                 Debug.Log("セーブバージョンに相違があるので、セーブデータを削除しました。");
-                SerializeHelper.DeletFile(SavePath);
+                SerializeHelper.DeleteFile(SavePath);
                 return false;
             }
 #endif
@@ -100,7 +100,7 @@ public static class SerializeHelper
     }
 
     //セーブデータを削除
-    public static void DeletFile(string fileName)
+    public static void DeleteFile(string fileName)
     {
         string directoryPath = Application.persistentDataPath;
 
