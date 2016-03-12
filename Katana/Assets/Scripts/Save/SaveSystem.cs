@@ -113,8 +113,10 @@ public static class SerializeHelper
     {
         string json = JsonUtility.ToJson(serializableObject);   //シリアライズ化
         byte[] jsonArray = Encoding.UTF8.GetBytes(json);
+#if EncryptSaveData
         AesCryptography aesCryptography = new AesCryptography();
         jsonArray = aesCryptography.Encrypt(jsonArray); //暗号化
+#endif
         File.WriteAllBytes(GetFilePath(prefKey), jsonArray);
     }
 
@@ -128,9 +130,11 @@ public static class SerializeHelper
         }
 
         byte[] serializedArray = File.ReadAllBytes(filePath);
+#if EncryptSaveData
         AesCryptography aesCryptography = new AesCryptography();
-        byte[] decryptData = aesCryptography.Decrypt(serializedArray);  //複合化
-        string data = Encoding.UTF8.GetString(decryptData);
+        serializedArray = aesCryptography.Decrypt(serializedArray);  //複合化
+#endif
+        string data = Encoding.UTF8.GetString(serializedArray);
 
         T deserializedObject = JsonUtility.FromJson<T>(data);   //デシリアライズ化
         return deserializedObject;
