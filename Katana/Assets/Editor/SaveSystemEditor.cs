@@ -37,7 +37,7 @@ public static class SaveSystemEditor
                 EditorUserBuildSettings.selectedBuildTargetGroup,
                 string.Join(";", defineSymbols.ToArray())
             );
-            Debug.Log("<color=green>" + "EncryptOn"+"</color>");
+            Debug.Log("<color=green>" + "Encrypt Off"+"</color>");
         }
         else
         {
@@ -47,7 +47,7 @@ public static class SaveSystemEditor
                 EditorUserBuildSettings.selectedBuildTargetGroup,
                 string.Join(";", defineSymbols.ToArray())
             );
-            Debug.Log("<color=green>" + "EncryptOff" + "</color>");
+            Debug.Log("<color=green>" + "Encrypt On" + "</color>");
         }
     }
 }
