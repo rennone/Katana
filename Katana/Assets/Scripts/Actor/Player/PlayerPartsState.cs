@@ -84,6 +84,11 @@ namespace Katana
             return IsNormalState();
         }
 
+        public bool CanInputJumpAttack()
+        {
+            return AnimatorAccess.IsJumpState();
+        }
+
         // Update is called once per frame
         void AnimationUpdate()
         {
