@@ -4,6 +4,10 @@ using System.Collections;
 namespace Katana {
     public class SaveManager :Singleton<SaveManager>
     {
+        //デリゲートでセーブイベントを作成（何かセーブを行いたいものは、このSaveEventに+=で追加を行ってね）
+        public delegate void Save();
+        public static event Save SaveEvent;
+
         public GameSaveField GameSaveData
         {
             get { return SaveData.GameSaveData; }
@@ -23,16 +27,7 @@ namespace Katana {
 
         public void SaveAll()
         {
-            SaveMainChara();
-        }
-
-        public void SaveMainChara()
-        {
-            SaveDataCharacter chara = new SaveDataCharacter();
-            Player player = GameManager.Instance.Player;
-            chara.position = player.transform.position;
-            chara.rotation = player.transform.rotation;
-            SaveData.GameSaveData.MainChara = chara;
+            SaveEvent();    //セーブイベントを発火
             SaveData.Save();
         }
     }

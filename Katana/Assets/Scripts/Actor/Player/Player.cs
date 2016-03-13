@@ -78,6 +78,25 @@ namespace Katana
             SetLayerRecursively(gameObject, LayerName.Player);
         }
 
+        void OnEnable()
+        {
+            SaveManager.SaveEvent += SaveCharacter;
+        }
+
+        void OnDisable()
+        {
+            SaveManager.SaveEvent -= SaveCharacter;
+        }
+
+        void SaveCharacter()
+        {
+            SaveDataCharacter chara = new SaveDataCharacter();
+            Player player = GameManager.Instance.Player;
+            chara.position = player.transform.position;
+            chara.rotation = player.transform.rotation;
+            SaveData.GameSaveData.MainChara = chara;
+        }
+
         //セーブデータのロードと反映
         void LoadSaveData()
         {
