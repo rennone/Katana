@@ -80,12 +80,12 @@ namespace Katana
 
         void OnEnable()
         {
-            SaveManager.SaveEvent += SaveCharacter;
+            SaveData.SaveEvent += SaveCharacter;
         }
 
         void OnDisable()
         {
-            SaveManager.SaveEvent -= SaveCharacter;
+            SaveData.SaveEvent -= SaveCharacter;
         }
 
         void SaveCharacter()
@@ -101,9 +101,9 @@ namespace Katana
         void LoadSaveData()
         {
             //セーブデータをロード
-            if (SaveManager.Instance.GameSaveData.SaveVersion != "Null")
+            if (SaveData.GameSaveData.SaveVersion != "Null")
             {
-                SaveDataCharacter chara = SaveManager.Instance.GameSaveData.MainChara;
+                SaveDataCharacter chara = SaveData.GameSaveData.MainChara;
                 this.transform.position = chara.position;
                 this.transform.rotation = chara.rotation;
             }

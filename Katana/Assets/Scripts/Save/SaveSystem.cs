@@ -36,6 +36,10 @@ public static class SaveData
 
     public static readonly string SavePath = "Save";
 
+    //デリゲートでセーブイベントを作成（何かセーブを行いたいものは、このSaveEventに+=で追加を行ってね）
+    public delegate void SaveDelegate();
+    public static event SaveDelegate SaveEvent;
+
     private static GameSaveField m_SaveData = new GameSaveField();
     public static GameSaveField GameSaveData
     {
@@ -77,6 +81,26 @@ public static class SaveData
         {
             return false;
         }
+    }
+    
+    //全セーブデータの呼び出し
+    public static bool LoadAll()
+    {
+        if (SaveData.Load())
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    //全セーブ
+    public static void SaveAll()
+    {
+        SaveEvent();    //セーブイベントを発火
+        SaveData.Save();
     }
 }
 

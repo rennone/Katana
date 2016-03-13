@@ -86,13 +86,13 @@ public class PauseMenu : MonoBehaviour {
 	
     void Save()
     {
-        Katana.SaveManager.Instance.SaveAll();
+        SaveData.SaveAll();
         Katana.PauseManager.Instance.PushPauseButton();    //ポーズメニューを閉じる
     }
 
     void Load()
     {
-        Katana.SaveManager.Instance.LoadAll();
+        SaveData.LoadAll();
         SoundManager.Instance.PlaySound(Katana.GameManager.Instance.Player.transform, SoundKey.SE_MENU_DECIDE);
         Katana.GameManager.Instance.GameRestart();
     }
