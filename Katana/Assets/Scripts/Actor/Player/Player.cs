@@ -91,9 +91,8 @@ namespace Katana
         void SaveCharacter()
         {
             SaveDataCharacter chara = new SaveDataCharacter();
-            Player player = GameManager.Instance.Player;
-            chara.position = player.transform.position;
-            chara.rotation = player.transform.rotation;
+            chara.position = transform.position;
+            chara.rotation = transform.rotation;
             SaveData.GameSaveData.MainChara = chara;
         }
 
