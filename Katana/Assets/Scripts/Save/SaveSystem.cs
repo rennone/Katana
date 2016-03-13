@@ -99,6 +99,7 @@ public static class SaveData
     //全セーブ
     public static void SaveAll()
     {
+        SaveData.GameSaveData = new GameSaveField();
         SaveEvent();    //セーブイベントを発火
         SaveData.Save();
     }
