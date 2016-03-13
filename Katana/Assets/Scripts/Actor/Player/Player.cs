@@ -18,6 +18,7 @@ namespace Katana
         protected override void OnInitialize()
         {
             InitializeComponent();
+            LoadSaveData();
         }
 
         public void Damage(int val)
@@ -75,6 +76,36 @@ namespace Katana
                 renderer.materials[0].shader = backups[renderer.gameObject.name];
             }
             SetLayerRecursively(gameObject, LayerName.Player);
+        }
+
+        void OnEnable()
+        {
+            SaveData.SaveEvent += SaveCharacter;
+        }
+
+        void OnDisable()
+        {
+            SaveData.SaveEvent -= SaveCharacter;
+        }
+
+        void SaveCharacter()
+        {
+            SaveDataCharacter chara = new SaveDataCharacter();
+            chara.position = transform.position;
+            chara.rotation = transform.rotation;
+            SaveData.GameSaveData.MainChara = chara;
+        }
+
+        //セーブデータのロードと反映
+        void LoadSaveData()
+        {
+            //セーブデータをロード
+            if (SaveData.GameSaveData.SaveVersion != "Null")
+            {
+                SaveDataCharacter chara = SaveData.GameSaveData.MainChara;
+                this.transform.position = chara.position;
+                this.transform.rotation = chara.rotation;
+            }
         }
     }
 }
