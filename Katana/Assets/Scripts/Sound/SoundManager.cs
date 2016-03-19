@@ -400,6 +400,20 @@ public class SoundManager : Katana.Singleton<SoundManager>
         _bgmPoints[oldBgmSourceIndex].DOFade(0.0f, fadeTime).OnComplete(() => { _bgmPoints[oldBgmSourceIndex].Stop(); });
     }
 
+    
+
+    public float BGMVoume
+    {
+        get
+        {
+            return _bgmPoints[_bgmSourceIndex].volume;
+        }
+        set
+        {
+            _bgmPoints[_bgmSourceIndex].volume = value;
+        }
+    }
+
     // 現状使っていないのでコメントアウト. 使うときになったら外すこと by mizutani
     //private bool _isStopping;
 	public void StopBgm(float fadeTime = 1.0f)

@@ -98,6 +98,18 @@ namespace Katana
             _nowWaitTimer = inputWaitTime;
         }
 
+        //左右ボタンが押された時のアクション
+        public void PushRightLeftButton(bool isRight)
+        {
+            if (_isWaiting || _menuList.Length <= 0)
+                return;
+
+            _menuList[nowMenuNum].PushRightLeft(isRight);
+            
+            _isWaiting = true;
+            _nowWaitTimer = inputWaitTime;
+        }
+
         //決定ボタンが押された時のアクション
         public void PushDecideButton()
         {

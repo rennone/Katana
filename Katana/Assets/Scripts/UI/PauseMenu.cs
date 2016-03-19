@@ -12,7 +12,8 @@ public class PauseMenu : MonoBehaviour {
         ChangeOptionMenu,
         ChangeTitleMenu,
         Save,
-        Load
+        Load,
+        VolumeBGM
     }
 
     [SerializeField]
@@ -20,7 +21,19 @@ public class PauseMenu : MonoBehaviour {
 
     public int pauseNumber = 0;
     [SerializeField]
-    Image image;
+    Image image;    //各項目の背景イメージ
+    [SerializeField]
+    Slider slider;  //スライダーがある項目用（音量調整とか）
+
+    void OnEnable()
+    {
+        switch (action)
+        {
+            case MenuAction.VolumeBGM:
+                slider.value = SoundManager.Instance.BGMVoume;
+                break;
+        }
+    }
 
 	public void ChangeActive(bool active)
     {
@@ -60,6 +73,17 @@ public class PauseMenu : MonoBehaviour {
         }
     }
 
+    //左右キーが押された時のアクション
+    public void PushRightLeft(bool isRight)
+    {
+        switch (action)
+        {
+            case MenuAction.VolumeBGM:
+                VolumeBGM(isRight);
+                break;
+        }
+    }
+
 //ここから下アクション内容***************************************************
     void ChangeNone()
     {
@@ -95,5 +119,14 @@ public class PauseMenu : MonoBehaviour {
         SaveData.LoadAll();
         SoundManager.Instance.PlaySound(Katana.GameManager.Instance.Player.transform, SoundKey.SE_MENU_DECIDE);
         Katana.GameManager.Instance.GameRestart();
+    }
+
+    void VolumeBGM(bool isRight)
+    {
+        var newValue = slider.value;
+        newValue += (isRight == true) ? 0.1f : -0.1f;
+        newValue = Mathf.Clamp01(newValue);
+        slider.value = newValue;
+        SoundManager.Instance.BGMVoume = newValue;
     }
 }

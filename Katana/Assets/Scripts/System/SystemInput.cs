@@ -28,15 +28,25 @@ namespace Katana
 
                 if (PauseManager.Instance.IsPause())
                 {
-                    float inputScale = Input.GetAxisRaw("Vertical");
-                    if (inputScale > 0)
+                    float inputVertical = Input.GetAxisRaw("Vertical");
+                    float inputHorizontal = Input.GetAxisRaw("Horizontal");
+                    if (inputVertical > 0)
                     {
                         PauseManager.Instance.PushUpDownButton(true);
                     }
-                    else if (inputScale < 0)
+                    else if (inputVertical < 0)
                     {
                         PauseManager.Instance.PushUpDownButton(false);
                     }
+
+                    if(inputHorizontal > 0)
+                    {
+                        PauseManager.Instance.PushRightLeftButton(true);
+                    }else if(inputHorizontal < 0)
+                    {
+                        PauseManager.Instance.PushRightLeftButton(false);
+                    }
+
                 }
             }
         }
