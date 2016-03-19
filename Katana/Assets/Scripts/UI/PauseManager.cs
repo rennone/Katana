@@ -57,6 +57,23 @@ namespace Katana
             }
         }
 
+        void OnEnable()
+        {
+            SaveData.SystemSaveEvent += SaveAction;
+        }
+
+        void OnDisable()
+        {
+            SaveData.SystemSaveEvent -= SaveAction;
+        }
+
+        //セーブが呼ばれた時のアクション
+        void SaveAction()
+        {
+            SaveData.SystemSaveData.BGMVolume = SoundManager.Instance.BGMVoume;
+            SaveData.SystemSaveData.SEVolume = SoundManager.Instance.SEVolume;
+        }
+
         //メニューリストの更新
         public void SetMenuList(Transform menuOutline)
         {
@@ -134,7 +151,6 @@ namespace Katana
         void ChangePauseState(Pausable.PauseState state)
         {
             _isPause = !_isPause;
-            this.gameObject.SetActive(_isPause);
             //開く時にメニューを初期化
             if (_isPause)
             {
@@ -143,8 +159,11 @@ namespace Katana
             }
             else
             {
+                //閉じる時にセーブ
+                SaveData.SaveSystem();
                 SoundManager.Instance.PlaySound(PlayerTransform, SoundKey.SE_PAUSE_CLOSE);
             }
+            this.gameObject.SetActive(_isPause);
             UpdateMenuActive();
             MenuFadeAction(_isPause);
 

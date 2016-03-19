@@ -33,6 +33,12 @@ namespace Katana
         {
             nowSceneName = Application.loadedLevelName;
 
+            if (SaveData.LoadSystem())
+            {
+                SoundManager.Instance.BGMVoume = SaveData.SystemSaveData.BGMVolume;
+                SoundManager.Instance.SEVolume = SaveData.SystemSaveData.SEVolume;
+            }
+
             // デバッグ機能の初期化
 #if _DEBUG
         InitDebugViewer();

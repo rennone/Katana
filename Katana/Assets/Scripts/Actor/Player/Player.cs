@@ -80,12 +80,12 @@ namespace Katana
 
         void OnEnable()
         {
-            SaveData.SaveEvent += SaveCharacter;
+            SaveData.GameSaveEvent += SaveCharacter;
         }
 
         void OnDisable()
         {
-            SaveData.SaveEvent -= SaveCharacter;
+            SaveData.GameSaveEvent -= SaveCharacter;
         }
 
         void SaveCharacter()

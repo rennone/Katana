@@ -24,6 +24,16 @@ public class GameSaveField
 }
 
 [System.Serializable]
+public class SystemSaveField
+{
+    //セーブデータのバージョン（このCSファイルの最終更新日時）
+    public string SaveVersion = "Null";
+
+    public float BGMVolume = -1;
+    public float SEVolume = -1;
+}
+
+[System.Serializable]
 public class SaveDataCharacter
 {
     public Vector3 position = Vector3.zero;
@@ -34,32 +44,46 @@ public static class SaveData
 {
     private static readonly string ThisFilePath = "Assets/Scripts/Save/SaveSystem.cs";
 
-    public static readonly string SavePath = "Save";
+    public static readonly string GameSavePath = "GameSave";
+    public static readonly string SystemSavePath = "SystemSave";
 
-    //デリゲートでセーブイベントを作成（何かセーブを行いたいものは、このSaveEventに+=で追加を行ってね）
-    public delegate void SaveDelegate();
-    public static event SaveDelegate SaveEvent;
+    //デリゲートでセーブイベントを作成（何かゲームに関するセーブを行いたいものは、このSaveEventに+=で追加を行ってね）
+    public delegate void GameSaveDelegate();
+    public static event GameSaveDelegate GameSaveEvent;
 
-    private static GameSaveField m_SaveData = new GameSaveField();
+    //デリゲートでセーブイベントを作成（何かシステムに関するセーブを行いたいものは、このSaveEventに+=で追加を行ってね）
+    public delegate void SystemSaveDelegate();
+    public static event SystemSaveDelegate SystemSaveEvent;
+
+    private static GameSaveField m_GameSaveData = new GameSaveField();
     public static GameSaveField GameSaveData
     {
-        get { return m_SaveData; }
-        set { m_SaveData = value; }
+        get { return m_GameSaveData; }
+        set { m_GameSaveData = value; }
     }
 
-    static public void Save()
+    private static SystemSaveField m_SystemSaveData = new SystemSaveField();
+    public static SystemSaveField SystemSaveData
+    {
+        get { return m_SystemSaveData; }
+        set { m_SystemSaveData = value; }
+    }
+
+    //ゲームに関するセーブ
+    static void SaveGameData()
     {
 #if UNITY_EDITOR
         //このスクリプトの最終更新日時を記録
         DateTime dtUpdate = System.IO.File.GetLastWriteTime(ThisFilePath);
-        m_SaveData.SaveVersion = dtUpdate.ToString();
+        m_GameSaveData.SaveVersion = dtUpdate.ToString();
 #endif
-        SerializeHelper.Serialize<GameSaveField>(SavePath, m_SaveData);
+        SerializeHelper.Serialize<GameSaveField>(GameSavePath, m_GameSaveData);
     }
 
-    static public bool Load()
+    //ゲームに関するロード
+    static bool LoadGameData()
     {
-        GameSaveField save = SerializeHelper.Deserialize<GameSaveField>(SavePath);
+        GameSaveField save = SerializeHelper.Deserialize<GameSaveField>(GameSavePath);
         if (save != null)
         {
 #if UNITY_EDITOR
@@ -70,24 +94,11 @@ public static class SaveData
             if (dtUpdate.ToString() != save.SaveVersion)
             {
                 Debug.Log("セーブバージョンに相違があるので、セーブデータを削除しました。");
-                SerializeHelper.DeleteFile(SavePath);
+                SerializeHelper.DeleteFile(GameSavePath);
                 return false;
             }
 #endif
-            m_SaveData = save;
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-    
-    //全セーブデータの呼び出し
-    public static bool LoadAll()
-    {
-        if (SaveData.Load())
-        {
+            m_GameSaveData = save;
             return true;
         }
         else
@@ -96,12 +107,70 @@ public static class SaveData
         }
     }
 
-    //全セーブ
-    public static void SaveAll()
+    //システムに関するセーブ
+    static void SaveSystemData()
     {
-        SaveData.GameSaveData = new GameSaveField();
-        SaveEvent();    //セーブイベントを発火
-        SaveData.Save();
+#if UNITY_EDITOR
+        //このスクリプトの最終更新日時を記録
+        DateTime dtUpdate = System.IO.File.GetLastWriteTime(ThisFilePath);
+        m_SystemSaveData.SaveVersion = dtUpdate.ToString();
+#endif
+        SerializeHelper.Serialize<SystemSaveField>(SystemSavePath, m_SystemSaveData);
+    }
+
+    //システムに関するロード
+    static bool LoadSystemData()
+    {
+        SystemSaveField save = SerializeHelper.Deserialize<SystemSaveField>(SystemSavePath);
+        if (save != null)
+        {
+#if UNITY_EDITOR
+            //このファイルの最終更新日時をセーブ時のものと比較
+            //違いがあれば、それはおそらく情報の追加や削除が行われてるということなので、
+            //セーブデータを一旦削除
+            DateTime dtUpdate = System.IO.File.GetLastWriteTime(ThisFilePath);
+            if (dtUpdate.ToString() != save.SaveVersion)
+            {
+                Debug.Log("セーブバージョンに相違があるので、セーブデータを削除しました。");
+                SerializeHelper.DeleteFile(GameSavePath);
+                return false;
+            }
+#endif
+            m_SystemSaveData = save;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    //ゲームに関するセーブデータの呼び出し
+    public static bool LoadGame()
+    {
+        return LoadGameData();
+    }
+
+    //ゲームに関するセーブを実行
+    public static void SaveGame()
+    {
+        GameSaveData = new GameSaveField();
+        GameSaveEvent();    //セーブイベントを発火
+        SaveGameData();
+    }
+
+    //システムに関するセーブデータの呼び出し
+    public static bool LoadSystem()
+    {
+        return LoadSystemData();
+    }
+
+    //ゲームに関するセーブを実行
+    public static void SaveSystem()
+    {
+        SystemSaveData = new SystemSaveField();
+        SystemSaveEvent();    //セーブイベントを発火
+        SaveSystemData();
     }
 }
 
