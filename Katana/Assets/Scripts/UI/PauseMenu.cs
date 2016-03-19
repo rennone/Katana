@@ -13,7 +13,8 @@ public class PauseMenu : MonoBehaviour {
         ChangeTitleMenu,
         Save,
         Load,
-        VolumeBGM
+        VolumeBGM,
+        VolumeSE,
     }
 
     [SerializeField]
@@ -31,6 +32,9 @@ public class PauseMenu : MonoBehaviour {
         {
             case MenuAction.VolumeBGM:
                 slider.value = SoundManager.Instance.BGMVoume;
+                break;
+            case MenuAction.VolumeSE:
+                slider.value = SoundManager.Instance.SEVolume;
                 break;
         }
     }
@@ -81,6 +85,9 @@ public class PauseMenu : MonoBehaviour {
             case MenuAction.VolumeBGM:
                 VolumeBGM(isRight);
                 break;
+            case MenuAction.VolumeSE:
+                VolumeSE(isRight);
+                break;
         }
     }
 
@@ -128,5 +135,18 @@ public class PauseMenu : MonoBehaviour {
         newValue = Mathf.Clamp01(newValue);
         slider.value = newValue;
         SoundManager.Instance.BGMVoume = newValue;
+
+        SoundManager.Instance.PlaySound(Katana.GameManager.Instance.Player.transform, SoundKey.SE_MENU_MOVE);
+    }
+
+    void VolumeSE(bool isRight)
+    {
+        var newValue = slider.value;
+        newValue += (isRight == true) ? 0.1f : -0.1f;
+        newValue = Mathf.Clamp01(newValue);
+        slider.value = newValue;
+        SoundManager.Instance.SEVolume = newValue;
+
+        SoundManager.Instance.PlaySound(Katana.GameManager.Instance.Player.transform, SoundKey.SE_MENU_MOVE);
     }
 }

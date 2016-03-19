@@ -400,17 +400,41 @@ public class SoundManager : Katana.Singleton<SoundManager>
         _bgmPoints[oldBgmSourceIndex].DOFade(0.0f, fadeTime).OnComplete(() => { _bgmPoints[oldBgmSourceIndex].Stop(); });
     }
 
-    
+    //AudioMixirの音量設定が-80db～20dbのため
+    const float maxMixerDB = 20f;
+    const float minMixerDB = -80f;
 
     public float BGMVoume
     {
         get
         {
-            return _bgmPoints[_bgmSourceIndex].volume;
+            float volume = 0;
+            _audioMixer.GetFloat("BGMVolume",out volume);
+            volume = Mathf.InverseLerp(minMixerDB, maxMixerDB, volume);
+            return volume;
         }
         set
         {
-            _bgmPoints[_bgmSourceIndex].volume = value;
+            float volume = value;
+            volume = Mathf.Lerp(minMixerDB, maxMixerDB, volume);
+            _audioMixer.SetFloat("BGMVolume",volume);
+        }
+    }
+
+    public float SEVolume
+    {
+        get
+        {
+            float volume = 0;
+            _audioMixer.GetFloat("SEVolume", out volume);
+            volume = Mathf.InverseLerp(minMixerDB, maxMixerDB, volume);
+            return volume;
+        }
+        set
+        {
+            float volume = value;
+            volume = Mathf.Lerp(minMixerDB, maxMixerDB, volume);
+            _audioMixer.SetFloat("SEVolume", volume);
         }
     }
 
