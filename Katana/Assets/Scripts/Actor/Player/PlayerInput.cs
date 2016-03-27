@@ -34,15 +34,24 @@ namespace Katana
             }
 
             // 攻撃1
-            if (_player.IsReleased(Player.Action.Fire1))
+            if (_player.IsReleased(Player.Action.Attack))
             {
                 _player.AnimatorAccess.SetIsAttack(Input.GetButtonDown("Fire1") && _player.CanInputAttack());
             }
 
             // 攻撃2
-            if (_player.IsReleased(Player.Action.Fire2))
+            if (_player.IsReleased(Player.Action.JumpAttack))
             {
                 _player.AnimatorAccess.SetIsJumpAttack(Input.GetButtonDown("Fire2") && _player.CanInputJumpAttack());
+            }
+
+            // しゃがむ
+            if (_player.IsReleased(Player.Action.Squat))
+            {
+                if (Input.GetAxisRaw("Vertical") < 0)
+                {
+                    _player.AnimatorAccess.SetIsSquad(Input.GetButtonDown("Vertical"));
+                }
             }
         }
 

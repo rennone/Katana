@@ -40,8 +40,8 @@ namespace Katana
             Move  = 1,          // 移動
             Jump  = 1 << 1,     // ジャンプ
             Squat = 1 << 2,     // しゃがむ
-            Fire1 = 1 << 3,     // 攻撃1 TODO : 名前要修正
-            Fire2 = 1 << 4,     // 攻撃2
+            Attack = 1 << 3,     // 攻撃1 TODO : 名前要修正
+            JumpAttack = 1 << 4,     // 攻撃2
         }
 
         // Actionの項目数
