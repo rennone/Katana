@@ -18,7 +18,7 @@ public static class SaveSystemEditor
     [MenuItem(DeleteCommand)]
     public static void DeleteSaveData()
     {
-        SerializeHelper.DeleteFile(SaveData.SavePath);
+        SerializeHelper.DeleteFile(SaveData.GameSavePath);
     }
 
     /// セーブデータの暗号化処理のOn/Off切り替え

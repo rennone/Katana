@@ -400,6 +400,44 @@ public class SoundManager : Katana.Singleton<SoundManager>
         _bgmPoints[oldBgmSourceIndex].DOFade(0.0f, fadeTime).OnComplete(() => { _bgmPoints[oldBgmSourceIndex].Stop(); });
     }
 
+    //AudioMixirの音量設定が-80db～20dbのため
+    const float maxMixerDB = 20f;
+    const float minMixerDB = -80f;
+
+    public float BGMVoume
+    {
+        get
+        {
+            float volume = 0;
+            _audioMixer.GetFloat("BGMVolume",out volume);
+            volume = Mathf.InverseLerp(minMixerDB, maxMixerDB, volume);
+            return volume;
+        }
+        set
+        {
+            float volume = value;
+            volume = Mathf.Lerp(minMixerDB, maxMixerDB, volume);
+            _audioMixer.SetFloat("BGMVolume",volume);
+        }
+    }
+
+    public float SEVolume
+    {
+        get
+        {
+            float volume = 0;
+            _audioMixer.GetFloat("SEVolume", out volume);
+            volume = Mathf.InverseLerp(minMixerDB, maxMixerDB, volume);
+            return volume;
+        }
+        set
+        {
+            float volume = value;
+            volume = Mathf.Lerp(minMixerDB, maxMixerDB, volume);
+            _audioMixer.SetFloat("SEVolume", volume);
+        }
+    }
+
     // 現状使っていないのでコメントアウト. 使うときになったら外すこと by mizutani
     //private bool _isStopping;
 	public void StopBgm(float fadeTime = 1.0f)
