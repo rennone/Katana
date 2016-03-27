@@ -185,9 +185,14 @@ public class CreateAnimatorParameterSettings : AssetPostprocessor
             // 状態取得関数の行
             getterBuilder.AppendLine(string.Format(isStateTemplate, stateName, stateId));
 
-            var functionTemplate = intent +  "public virtual void {0}(Animator animator, AnimatorStateInfo stateInfo){{}}";
+            // 関数宣言文
+            var functionTemplate = intent +  "public virtual void {0}(Animator animator, AnimatorStateInfo stateInfo, int layerIndex){{}}";
+            
+            // case振り分け文
             var caseTemplate = intent + intent + "case {0} : {1}; break;";
-            var functionExecTemplate = "{0}(animator, stateInfo)";
+
+            // 実行文
+            var functionExecTemplate = "{0}(animator, stateInfo, layerIndex)";
 
             var stateEnter = "OnStateEnterTo" + stateName;//string.Format(functionTemplate, );
             onStateEnter.AppendLine(string.Format(caseTemplate, stateId, string.Format(functionExecTemplate, stateEnter)));

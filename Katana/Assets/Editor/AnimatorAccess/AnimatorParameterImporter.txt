@@ -15,7 +15,7 @@ namespace AnimatorAccess
 		public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
 		{{
 			//新しいステートに移り変わった時に実行
-			switch(layerIndex)
+			switch(stateInfo.fullPathHash)
 			{{
 				{2}
 			}}
@@ -24,7 +24,7 @@ namespace AnimatorAccess
 		public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
 		{{
 			//ステートが次のステートに移り変わる直前に実行
-			switch(layerIndex)
+			switch(stateInfo.fullPathHash)
 			{{
 				{3}
 			}}
@@ -45,7 +45,7 @@ namespace AnimatorAccess
 		public override void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
 		{{
 			//MonoBehaviour.OnAnimatorMoveの直後に実行される
-			switch(layerIndex)
+			switch(stateInfo.fullPathHash)
 			{{
 				{6}
 			}}
@@ -54,7 +54,7 @@ namespace AnimatorAccess
 		public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
 		{{
 			//最初と最後のフレームを除く、各フレーム単位で実行
-			switch(layerIndex)
+			switch(stateInfo.fullPathHash)
 			{{
 				{7}
 			}}
@@ -63,7 +63,7 @@ namespace AnimatorAccess
 		public override void OnStateIK(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
 		{{
 			//MonoBehaviour.OnAnimatorIKの直後に実行される
-			switch(layerIndex)
+			switch(stateInfo.fullPathHash)
 			{{
 				{8}
 			}}

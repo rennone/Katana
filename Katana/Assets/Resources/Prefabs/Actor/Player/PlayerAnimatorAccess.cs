@@ -46,57 +46,57 @@ namespace AnimatorAccess
 		public bool IsScrewKickState(){ return StateIdScrewKick == _animator.GetCurrentAnimatorStateInfo(0).fullPathHash; }
 		public bool IsDownState(){ return StateIdDown == _animator.GetCurrentAnimatorStateInfo(0).fullPathHash; }
 
-		public virtual void OnStateEnterToAttack_Fire1(Animator animator, AnimatorStateInfo stateInfo){}
-		public virtual void OnStateExitFromAttack_Fire1(Animator animator, AnimatorStateInfo stateInfo){}
-//		public virtual void OnStateMoveAttack_Fire1(Animator animator, AnimatorStateInfo stateInfo){}
-		public virtual void OnStateUpdateAttack_Fire1(Animator animator, AnimatorStateInfo stateInfo){}
-		public virtual void OnStateIkAttack_Fire1(Animator animator, AnimatorStateInfo stateInfo){}
-		public virtual void OnStateEnterToIdle(Animator animator, AnimatorStateInfo stateInfo){}
-		public virtual void OnStateExitFromIdle(Animator animator, AnimatorStateInfo stateInfo){}
-//		public virtual void OnStateMoveIdle(Animator animator, AnimatorStateInfo stateInfo){}
-		public virtual void OnStateUpdateIdle(Animator animator, AnimatorStateInfo stateInfo){}
-		public virtual void OnStateIkIdle(Animator animator, AnimatorStateInfo stateInfo){}
-		public virtual void OnStateEnterToRun(Animator animator, AnimatorStateInfo stateInfo){}
-		public virtual void OnStateExitFromRun(Animator animator, AnimatorStateInfo stateInfo){}
-//		public virtual void OnStateMoveRun(Animator animator, AnimatorStateInfo stateInfo){}
-		public virtual void OnStateUpdateRun(Animator animator, AnimatorStateInfo stateInfo){}
-		public virtual void OnStateIkRun(Animator animator, AnimatorStateInfo stateInfo){}
-		public virtual void OnStateEnterToJump(Animator animator, AnimatorStateInfo stateInfo){}
-		public virtual void OnStateExitFromJump(Animator animator, AnimatorStateInfo stateInfo){}
-//		public virtual void OnStateMoveJump(Animator animator, AnimatorStateInfo stateInfo){}
-		public virtual void OnStateUpdateJump(Animator animator, AnimatorStateInfo stateInfo){}
-		public virtual void OnStateIkJump(Animator animator, AnimatorStateInfo stateInfo){}
-		public virtual void OnStateEnterToKick(Animator animator, AnimatorStateInfo stateInfo){}
-		public virtual void OnStateExitFromKick(Animator animator, AnimatorStateInfo stateInfo){}
-//		public virtual void OnStateMoveKick(Animator animator, AnimatorStateInfo stateInfo){}
-		public virtual void OnStateUpdateKick(Animator animator, AnimatorStateInfo stateInfo){}
-		public virtual void OnStateIkKick(Animator animator, AnimatorStateInfo stateInfo){}
-		public virtual void OnStateEnterToScrewKick(Animator animator, AnimatorStateInfo stateInfo){}
-		public virtual void OnStateExitFromScrewKick(Animator animator, AnimatorStateInfo stateInfo){}
-//		public virtual void OnStateMoveScrewKick(Animator animator, AnimatorStateInfo stateInfo){}
-		public virtual void OnStateUpdateScrewKick(Animator animator, AnimatorStateInfo stateInfo){}
-		public virtual void OnStateIkScrewKick(Animator animator, AnimatorStateInfo stateInfo){}
-		public virtual void OnStateEnterToDown(Animator animator, AnimatorStateInfo stateInfo){}
-		public virtual void OnStateExitFromDown(Animator animator, AnimatorStateInfo stateInfo){}
-//		public virtual void OnStateMoveDown(Animator animator, AnimatorStateInfo stateInfo){}
-		public virtual void OnStateUpdateDown(Animator animator, AnimatorStateInfo stateInfo){}
-		public virtual void OnStateIkDown(Animator animator, AnimatorStateInfo stateInfo){}
+		public virtual void OnStateEnterToAttack_Fire1(Animator animator, AnimatorStateInfo stateInfo, int layerIndex){}
+		public virtual void OnStateExitFromAttack_Fire1(Animator animator, AnimatorStateInfo stateInfo, int layerIndex){}
+//		public virtual void OnStateMoveAttack_Fire1(Animator animator, AnimatorStateInfo stateInfo, int layerIndex){}
+		public virtual void OnStateUpdateAttack_Fire1(Animator animator, AnimatorStateInfo stateInfo, int layerIndex){}
+		public virtual void OnStateIkAttack_Fire1(Animator animator, AnimatorStateInfo stateInfo, int layerIndex){}
+		public virtual void OnStateEnterToIdle(Animator animator, AnimatorStateInfo stateInfo, int layerIndex){}
+		public virtual void OnStateExitFromIdle(Animator animator, AnimatorStateInfo stateInfo, int layerIndex){}
+//		public virtual void OnStateMoveIdle(Animator animator, AnimatorStateInfo stateInfo, int layerIndex){}
+		public virtual void OnStateUpdateIdle(Animator animator, AnimatorStateInfo stateInfo, int layerIndex){}
+		public virtual void OnStateIkIdle(Animator animator, AnimatorStateInfo stateInfo, int layerIndex){}
+		public virtual void OnStateEnterToRun(Animator animator, AnimatorStateInfo stateInfo, int layerIndex){}
+		public virtual void OnStateExitFromRun(Animator animator, AnimatorStateInfo stateInfo, int layerIndex){}
+//		public virtual void OnStateMoveRun(Animator animator, AnimatorStateInfo stateInfo, int layerIndex){}
+		public virtual void OnStateUpdateRun(Animator animator, AnimatorStateInfo stateInfo, int layerIndex){}
+		public virtual void OnStateIkRun(Animator animator, AnimatorStateInfo stateInfo, int layerIndex){}
+		public virtual void OnStateEnterToJump(Animator animator, AnimatorStateInfo stateInfo, int layerIndex){}
+		public virtual void OnStateExitFromJump(Animator animator, AnimatorStateInfo stateInfo, int layerIndex){}
+//		public virtual void OnStateMoveJump(Animator animator, AnimatorStateInfo stateInfo, int layerIndex){}
+		public virtual void OnStateUpdateJump(Animator animator, AnimatorStateInfo stateInfo, int layerIndex){}
+		public virtual void OnStateIkJump(Animator animator, AnimatorStateInfo stateInfo, int layerIndex){}
+		public virtual void OnStateEnterToKick(Animator animator, AnimatorStateInfo stateInfo, int layerIndex){}
+		public virtual void OnStateExitFromKick(Animator animator, AnimatorStateInfo stateInfo, int layerIndex){}
+//		public virtual void OnStateMoveKick(Animator animator, AnimatorStateInfo stateInfo, int layerIndex){}
+		public virtual void OnStateUpdateKick(Animator animator, AnimatorStateInfo stateInfo, int layerIndex){}
+		public virtual void OnStateIkKick(Animator animator, AnimatorStateInfo stateInfo, int layerIndex){}
+		public virtual void OnStateEnterToScrewKick(Animator animator, AnimatorStateInfo stateInfo, int layerIndex){}
+		public virtual void OnStateExitFromScrewKick(Animator animator, AnimatorStateInfo stateInfo, int layerIndex){}
+//		public virtual void OnStateMoveScrewKick(Animator animator, AnimatorStateInfo stateInfo, int layerIndex){}
+		public virtual void OnStateUpdateScrewKick(Animator animator, AnimatorStateInfo stateInfo, int layerIndex){}
+		public virtual void OnStateIkScrewKick(Animator animator, AnimatorStateInfo stateInfo, int layerIndex){}
+		public virtual void OnStateEnterToDown(Animator animator, AnimatorStateInfo stateInfo, int layerIndex){}
+		public virtual void OnStateExitFromDown(Animator animator, AnimatorStateInfo stateInfo, int layerIndex){}
+//		public virtual void OnStateMoveDown(Animator animator, AnimatorStateInfo stateInfo, int layerIndex){}
+		public virtual void OnStateUpdateDown(Animator animator, AnimatorStateInfo stateInfo, int layerIndex){}
+		public virtual void OnStateIkDown(Animator animator, AnimatorStateInfo stateInfo, int layerIndex){}
 
 
 
 		public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
 		{
 			//新しいステートに移り変わった時に実行
-			switch(layerIndex)
+			switch(stateInfo.fullPathHash)
 			{
 				// case 
-				case StateIdAttack_Fire1 : OnStateEnterToAttack_Fire1(animator, stateInfo); break;
-				case StateIdIdle : OnStateEnterToIdle(animator, stateInfo); break;
-				case StateIdRun : OnStateEnterToRun(animator, stateInfo); break;
-				case StateIdJump : OnStateEnterToJump(animator, stateInfo); break;
-				case StateIdKick : OnStateEnterToKick(animator, stateInfo); break;
-				case StateIdScrewKick : OnStateEnterToScrewKick(animator, stateInfo); break;
-				case StateIdDown : OnStateEnterToDown(animator, stateInfo); break;
+				case StateIdAttack_Fire1 : OnStateEnterToAttack_Fire1(animator, stateInfo, layerIndex); break;
+				case StateIdIdle : OnStateEnterToIdle(animator, stateInfo, layerIndex); break;
+				case StateIdRun : OnStateEnterToRun(animator, stateInfo, layerIndex); break;
+				case StateIdJump : OnStateEnterToJump(animator, stateInfo, layerIndex); break;
+				case StateIdKick : OnStateEnterToKick(animator, stateInfo, layerIndex); break;
+				case StateIdScrewKick : OnStateEnterToScrewKick(animator, stateInfo, layerIndex); break;
+				case StateIdDown : OnStateEnterToDown(animator, stateInfo, layerIndex); break;
 
 			}
 		}
@@ -104,16 +104,16 @@ namespace AnimatorAccess
 		public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
 		{
 			//ステートが次のステートに移り変わる直前に実行
-			switch(layerIndex)
+			switch(stateInfo.fullPathHash)
 			{
 				// case 
-				case StateIdAttack_Fire1 : OnStateExitFromAttack_Fire1(animator, stateInfo); break;
-				case StateIdIdle : OnStateExitFromIdle(animator, stateInfo); break;
-				case StateIdRun : OnStateExitFromRun(animator, stateInfo); break;
-				case StateIdJump : OnStateExitFromJump(animator, stateInfo); break;
-				case StateIdKick : OnStateExitFromKick(animator, stateInfo); break;
-				case StateIdScrewKick : OnStateExitFromScrewKick(animator, stateInfo); break;
-				case StateIdDown : OnStateExitFromDown(animator, stateInfo); break;
+				case StateIdAttack_Fire1 : OnStateExitFromAttack_Fire1(animator, stateInfo, layerIndex); break;
+				case StateIdIdle : OnStateExitFromIdle(animator, stateInfo, layerIndex); break;
+				case StateIdRun : OnStateExitFromRun(animator, stateInfo, layerIndex); break;
+				case StateIdJump : OnStateExitFromJump(animator, stateInfo, layerIndex); break;
+				case StateIdKick : OnStateExitFromKick(animator, stateInfo, layerIndex); break;
+				case StateIdScrewKick : OnStateExitFromScrewKick(animator, stateInfo, layerIndex); break;
+				case StateIdDown : OnStateExitFromDown(animator, stateInfo, layerIndex); break;
 
 			}
 		}
@@ -133,16 +133,16 @@ namespace AnimatorAccess
 		public override void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
 		{
 			//MonoBehaviour.OnAnimatorMoveの直後に実行される
-			switch(layerIndex)
+			switch(stateInfo.fullPathHash)
 			{
 				// case 
-				case StateIdAttack_Fire1 : OnStateMoveAttack_Fire1(animator, stateInfo); break;
-				case StateIdIdle : OnStateMoveIdle(animator, stateInfo); break;
-				case StateIdRun : OnStateMoveRun(animator, stateInfo); break;
-				case StateIdJump : OnStateMoveJump(animator, stateInfo); break;
-				case StateIdKick : OnStateMoveKick(animator, stateInfo); break;
-				case StateIdScrewKick : OnStateMoveScrewKick(animator, stateInfo); break;
-				case StateIdDown : OnStateMoveDown(animator, stateInfo); break;
+				case StateIdAttack_Fire1 : OnStateMoveAttack_Fire1(animator, stateInfo, layerIndex); break;
+				case StateIdIdle : OnStateMoveIdle(animator, stateInfo, layerIndex); break;
+				case StateIdRun : OnStateMoveRun(animator, stateInfo, layerIndex); break;
+				case StateIdJump : OnStateMoveJump(animator, stateInfo, layerIndex); break;
+				case StateIdKick : OnStateMoveKick(animator, stateInfo, layerIndex); break;
+				case StateIdScrewKick : OnStateMoveScrewKick(animator, stateInfo, layerIndex); break;
+				case StateIdDown : OnStateMoveDown(animator, stateInfo, layerIndex); break;
 
 			}
 		}
@@ -150,16 +150,16 @@ namespace AnimatorAccess
 		public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
 		{
 			//最初と最後のフレームを除く、各フレーム単位で実行
-			switch(layerIndex)
+			switch(stateInfo.fullPathHash)
 			{
 				// case 
-				case StateIdAttack_Fire1 : OnStateUpdateAttack_Fire1(animator, stateInfo); break;
-				case StateIdIdle : OnStateUpdateIdle(animator, stateInfo); break;
-				case StateIdRun : OnStateUpdateRun(animator, stateInfo); break;
-				case StateIdJump : OnStateUpdateJump(animator, stateInfo); break;
-				case StateIdKick : OnStateUpdateKick(animator, stateInfo); break;
-				case StateIdScrewKick : OnStateUpdateScrewKick(animator, stateInfo); break;
-				case StateIdDown : OnStateUpdateDown(animator, stateInfo); break;
+				case StateIdAttack_Fire1 : OnStateUpdateAttack_Fire1(animator, stateInfo, layerIndex); break;
+				case StateIdIdle : OnStateUpdateIdle(animator, stateInfo, layerIndex); break;
+				case StateIdRun : OnStateUpdateRun(animator, stateInfo, layerIndex); break;
+				case StateIdJump : OnStateUpdateJump(animator, stateInfo, layerIndex); break;
+				case StateIdKick : OnStateUpdateKick(animator, stateInfo, layerIndex); break;
+				case StateIdScrewKick : OnStateUpdateScrewKick(animator, stateInfo, layerIndex); break;
+				case StateIdDown : OnStateUpdateDown(animator, stateInfo, layerIndex); break;
 
 			}
 		}
@@ -167,16 +167,16 @@ namespace AnimatorAccess
 		public override void OnStateIK(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
 		{
 			//MonoBehaviour.OnAnimatorIKの直後に実行される
-			switch(layerIndex)
+			switch(stateInfo.fullPathHash)
 			{
 				// case 
-				case StateIdAttack_Fire1 : OnStateIkAttack_Fire1(animator, stateInfo); break;
-				case StateIdIdle : OnStateIkIdle(animator, stateInfo); break;
-				case StateIdRun : OnStateIkRun(animator, stateInfo); break;
-				case StateIdJump : OnStateIkJump(animator, stateInfo); break;
-				case StateIdKick : OnStateIkKick(animator, stateInfo); break;
-				case StateIdScrewKick : OnStateIkScrewKick(animator, stateInfo); break;
-				case StateIdDown : OnStateIkDown(animator, stateInfo); break;
+				case StateIdAttack_Fire1 : OnStateIkAttack_Fire1(animator, stateInfo, layerIndex); break;
+				case StateIdIdle : OnStateIkIdle(animator, stateInfo, layerIndex); break;
+				case StateIdRun : OnStateIkRun(animator, stateInfo, layerIndex); break;
+				case StateIdJump : OnStateIkJump(animator, stateInfo, layerIndex); break;
+				case StateIdKick : OnStateIkKick(animator, stateInfo, layerIndex); break;
+				case StateIdScrewKick : OnStateIkScrewKick(animator, stateInfo, layerIndex); break;
+				case StateIdDown : OnStateIkDown(animator, stateInfo, layerIndex); break;
 
 			}
 		}
