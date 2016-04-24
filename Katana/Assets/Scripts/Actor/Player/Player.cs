@@ -78,12 +78,12 @@ namespace Katana
             SetLayerRecursively(gameObject, LayerName.Player);
         }
 
-        void OnEnable()
+        protected override void OnStart()
         {
             SaveData.GameSaveEvent += SaveCharacter;
         }
 
-        void OnDisable()
+        protected override void OnFilnalize()
         {
             SaveData.GameSaveEvent -= SaveCharacter;
         }

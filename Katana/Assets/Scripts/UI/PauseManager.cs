@@ -25,7 +25,7 @@ namespace Katana
         [HideInInspector]
         public PauseMenuState nowMenuState = PauseMenuState.DefaultMenu;
 
-        bool _isPause = false;
+        bool _isPausing = false;
         bool _isWaiting = false;
         PauseMenu[] _menuList;
         PauseMenuOutline[] outlines;
@@ -37,7 +37,7 @@ namespace Katana
 
         public bool IsPause()
         {
-            return _isPause;
+            return _isPausing;
         }
 
         void Start()
@@ -85,8 +85,26 @@ namespace Katana
         //ポーズボタンが押された時のアクション
         public void PushPauseButton()
         {
-            Pausable.PauseState state = _isPause ? Pausable.PauseState.Active : Pausable.PauseState.PauseAll;
-            ChangePauseState(state);
+            Pausable.PauseState setState = _isPausing ? Pausable.PauseState.Active : Pausable.PauseState.PauseAll;
+            ChangePauseState(setState);
+
+            _isPausing = !_isPausing;
+            //開く時にメニューを初期化
+            if (_isPausing)
+            {
+                ChangePauseMenuState(PauseMenuState.DefaultMenu);
+                SoundManager.Instance.PlaySound(PlayerTransform, SoundKey.SE_PAUSE_OPEN);
+            }
+            else
+            {
+                //閉じる時にセーブ
+                SaveData.SaveSystem();
+                SoundManager.Instance.PlaySound(PlayerTransform, SoundKey.SE_PAUSE_CLOSE);
+            }
+            this.gameObject.SetActive(_isPausing);
+            UpdateMenuActive();
+            MenuFadeAction(_isPausing);
+            nowMenuNum = 0;
         }
 
         //上下ボタンが押された時のアクション
@@ -150,28 +168,10 @@ namespace Katana
         //ポーズ中かどうかを切り替え
         void ChangePauseState(Pausable.PauseState state)
         {
-            _isPause = !_isPause;
-            //開く時にメニューを初期化
-            if (_isPause)
-            {
-                ChangePauseMenuState(PauseMenuState.DefaultMenu);
-                SoundManager.Instance.PlaySound(PlayerTransform, SoundKey.SE_PAUSE_OPEN);
-            }
-            else
-            {
-                //閉じる時にセーブ
-                SaveData.SaveSystem();
-                SoundManager.Instance.PlaySound(PlayerTransform, SoundKey.SE_PAUSE_CLOSE);
-            }
-            this.gameObject.SetActive(_isPause);
-            UpdateMenuActive();
-            MenuFadeAction(_isPause);
-
             foreach (var pause in GameObject.FindObjectsOfType<Pausable>())
             {
                 pause.State = state;
             }
-            nowMenuNum = 0;
         }
 
         void MenuFadeAction(bool isFadeIn)
