@@ -4,7 +4,7 @@ using System.Collections;
 namespace Katana
 {
     // アニメーション関係をまとめたPlayerのpartial
-    public class PlayerAnimator : AnimatorAccess.PlayerAnimator
+    public class PlayerAnimator : AnimatorAccess.PlayerAnimatorController
     {
         public override void OnStateEnterToRun(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {

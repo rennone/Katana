@@ -117,10 +117,8 @@ namespace Katana
             _kick = GetComponentInChildren<WeaponBase>();
 
             _motor.CanChangeDirection = IsNormalState;
-
-            var animator = GetComponent<Animator>();
-            AnimatorAccess = animator.GetBehaviour<PlayerAnimator>();
-            AnimatorAccess.SetAnimator(animator);
+            
+            AnimatorAccess = GetComponent<PlayerAnimator>();
         }
     }
 

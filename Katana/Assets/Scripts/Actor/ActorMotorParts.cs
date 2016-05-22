@@ -75,7 +75,8 @@ namespace Katana
 
 
             // 落下速度
-            private float _maxFallSpeed = 500.0f;
+            [SerializeField]
+            private float _maxFallSpeed = 50.0f;
 
             public float MaxFallSpeed
             {
