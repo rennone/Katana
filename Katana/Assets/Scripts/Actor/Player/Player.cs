@@ -9,6 +9,11 @@ namespace Katana
     public partial class Player : Character
     {
        
+        public Vector3 CenterPosition
+        {
+            get { return this.transform.position + Vector3.up * 0.8f; }
+        }
+
         protected override void OnUpdate()
         {
             base.OnUpdate();

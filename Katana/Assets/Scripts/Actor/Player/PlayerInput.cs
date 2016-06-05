@@ -8,6 +8,7 @@ namespace Katana
     {
         private Player _player;
         private PlayerMotor _motor;
+        private float inputVertical_Buffer;
 
         protected override void OnInitialize()
         {
@@ -22,7 +23,7 @@ namespace Katana
             if (_player.IsReleased(Player.Action.Move))
             {
                 _motor.InputMoveDirection = _player.CanInpuMove()
-                    ? (Input.GetAxisRaw("Horizontal")*Time.deltaTime)*Vector3.right
+                    ? (Input.GetAxisRaw("Horizontal") * Time.deltaTime) * Vector3.right
                     : Vector3.zero;
             }
 
@@ -30,7 +31,7 @@ namespace Katana
             if (_player.IsReleased(Player.Action.Jump))
             {
                 _motor.InputJump = _player.CanInputJump() && Input.GetButtonDown("Jump");
-               // _player._animatorAccess.SetIsJump(_player.CanInputJump() && Input.GetButtonDown("Jump"));
+                // _player._animatorAccess.SetIsJump(_player.CanInputJump() && Input.GetButtonDown("Jump"));
             }
 
             // 攻撃1
@@ -44,7 +45,39 @@ namespace Katana
             {
                 _player.AnimatorAccess.SetIsJumpAttack(Input.GetButtonDown("Fire2") && _player.CanInputJumpAttack());
             }
+
+            //上下キーでのアクション
+            {
+                float inputVertical = Input.GetAxisRaw("Vertical");
+
+                //連続押し判定の回避
+                if (inputVertical != inputVertical_Buffer)
+                {
+                    //上キーでのアクション
+                    if (inputVertical > 0.5f && inputVertical != inputVertical_Buffer)
+                    {
+                        DoorCheck();
+                    }
+                }
+                inputVertical_Buffer = inputVertical;
+            }
         }
 
+        void DoorCheck()
+        {
+            RaycastHit hit;
+            int layerMask = 1 << LayerMask.NameToLayer("Gimmick");
+            if (Physics.Raycast(_player.CenterPosition, Vector3.forward, out hit, 5f, layerMask))
+            {
+                var door = hit.collider.GetComponent<Door>();
+                if(door != null)
+                {
+                    door.Open();
+                }
+            }
+        }
+
+
+        
     }
 }
