@@ -8,12 +8,64 @@ namespace Katana
     {
         private Player _player;
         private PlayerMotor _motor;
-        private float inputVertical_Buffer;
+
+        bool isKeeping_Up = true;
+        bool isKeeping_Down = true;
+
+        void OnEnable()
+        {
+            InputManager.onButtonDownEvent += OnButtonDown;
+
+            InputManager.onAxisDownEvent += OnAxisDown;
+        }
+
+        void OnDisable()
+        {
+            InputManager.onButtonDownEvent -= OnButtonDown;
+
+            InputManager.onAxisDownEvent -= OnAxisDown;
+        }
 
         protected override void OnInitialize()
         {
             _player = GetComponent<Player>();
             _motor = GetComponent<PlayerMotor>();
+        }
+
+        protected override void OnStart()
+        {
+            InputManager.Instance.CanInput = true;
+        }
+
+        void OnButtonDown(InputManager.Button button)
+        {
+            switch (button)
+            {
+                case InputManager.Button.A:
+                    //print("AAA");
+                    break;
+                case InputManager.Button.B:
+                    //print("BBB");
+                    break;
+            }
+        }
+
+        void OnAxisDown(InputManager.Axis axis,float value)
+        {
+            switch (axis)
+            {
+                //上下キー
+                case InputManager.Axis.Vertical:
+                    if(value > 0)
+                    {
+                        DoorCheck();
+                    }
+                    else
+                    {
+                        
+                    }
+                    break;
+            }
         }
 
         // Update is called once per frame
@@ -47,20 +99,39 @@ namespace Katana
             }
 
             //上下キーでのアクション
-            {
-                float inputVertical = Input.GetAxisRaw("Vertical");
+            //{
+            //    float inputVertical = Input.GetAxisRaw("Vertical");
 
-                //連続押し判定の回避
-                if (inputVertical != inputVertical_Buffer)
-                {
-                    //上キーでのアクション
-                    if (inputVertical > 0.5f && inputVertical != inputVertical_Buffer)
-                    {
-                        DoorCheck();
-                    }
-                }
-                inputVertical_Buffer = inputVertical;
-            }
+            //    //上キーでのアクション
+            //    if(inputVertical > 0)
+            //    {
+            //        //連続押し判定の回避
+            //        if (!isKeeping_Up)
+            //        {
+            //            DoorCheck();
+            //        }
+            //        isKeeping_Up = true;
+            //    }
+            //    else
+            //    {
+            //        isKeeping_Up = false;
+            //    }
+
+            //    //下キーでのアクション
+            //    if(inputVertical < 0)
+            //    {
+            //        //連続押し判定の回避
+            //        if (!isKeeping_Down)
+            //        {
+                        
+            //        }
+            //        isKeeping_Down = true;
+            //    }
+            //    else
+            //    {
+            //        isKeeping_Down = false;
+            //    }
+            //}
         }
 
         void DoorCheck()

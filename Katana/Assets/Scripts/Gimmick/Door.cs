@@ -40,6 +40,13 @@ public class Door : GimmickBase {
         loadDoorID = nextDoorID;
         //10未満の場合は0を前に付ける
         string number = (nextAreaNumber - 10) >= 0 ? nextAreaNumber.ToString() : "0" + nextAreaNumber.ToString();
-        SceneManager.LoadScene("Area00-" + number);
+        InputManager.Instance.CanInput = false;
+        StartCoroutine(ChangeScene(number));
+    }
+
+    IEnumerator ChangeScene(string number)
+    {
+        yield return null;
+        SceneManager.LoadScene("Area00-" + number, LoadSceneMode.Single);
     }
 }
