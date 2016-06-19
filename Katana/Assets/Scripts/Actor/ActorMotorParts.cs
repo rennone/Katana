@@ -71,6 +71,7 @@ namespace Katana
             public float Gravity
             {
                 get { return _gravity; }
+                set { _gravity = value; }
             }
 
 
