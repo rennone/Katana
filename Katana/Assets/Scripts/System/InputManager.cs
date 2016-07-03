@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class InputManager : Katana.Singleton<InputManager> {
 
@@ -44,6 +45,14 @@ public class InputManager : Katana.Singleton<InputManager> {
     bool isKeepingHorizontal = true;
     bool isKeepingVertical = true;
     bool inputWaiting = true;
+    Dictionary<string, Button> buttonDictionary = new Dictionary<string, Button>();
+
+    void Awake()
+    {
+        buttonDictionary.Add("Fire1", Button.A);
+        buttonDictionary.Add("Jump", Button.B);
+        buttonDictionary.Add("Start", Button.Start);
+    }
 
     IEnumerator Start()
     {
@@ -106,56 +115,25 @@ public class InputManager : Katana.Singleton<InputManager> {
             }
         }
 
-        //Aボタン----------------------------------------------------------------------------------
-        string inputKey = "Fire1";
-        if (Input.GetButtonDown(inputKey))
+
+        //ボタン群---------------------------------------------------------------------------------
+        foreach(var button in buttonDictionary)
         {
-            if (onButtonDownEvent != null)
-                onButtonDownEvent(Button.A);
-        }
-        if (Input.GetButton(inputKey))
-        {
-            if (onButtonEvent != null)
-                onButtonEvent(Button.A);
-        }
-        if (Input.GetButtonUp(inputKey))
-        {
-            if (onButtonUpEvent != null)
-                onButtonUpEvent(Button.A);
-        }
-        //Bボタン----------------------------------------------------------------------------------
-        inputKey = "Jump";
-        if (Input.GetButtonDown(inputKey))
-        {
-            if (onButtonDownEvent != null)
-                onButtonDownEvent(Button.B);
-        }
-        if (Input.GetButton(inputKey))
-        {
-            if (onButtonEvent != null)
-                onButtonEvent(Button.B);
-        }
-        if (Input.GetButtonUp(inputKey))
-        {
-            if (onButtonUpEvent != null)
-                onButtonUpEvent(Button.B);
-        }
-        //Startボタン----------------------------------------------------------------------------------
-        inputKey = "Start";
-        if (Input.GetButtonDown(inputKey))
-        {
-            if (onButtonDownEvent != null)
-                onButtonDownEvent(Button.Start);
-        }
-        if (Input.GetButton(inputKey))
-        {
-            if (onButtonEvent != null)
-                onButtonEvent(Button.Start);
-        }
-        if (Input.GetButtonUp(inputKey))
-        {
-            if (onButtonUpEvent != null)
-                onButtonUpEvent(Button.Start);
+            if (Input.GetButtonDown(button.Key))
+            {
+                if (onButtonDownEvent != null)
+                    onButtonDownEvent(button.Value);
+            }
+            if (Input.GetButton(button.Key))
+            {
+                if (onButtonEvent != null)
+                    onButtonEvent(button.Value);
+            }
+            if (Input.GetButtonUp(button.Key))
+            {
+                if (onButtonUpEvent != null)
+                    onButtonUpEvent(button.Value);
+            }
         }
     }
 }
