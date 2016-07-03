@@ -120,6 +120,11 @@ namespace Katana
             
             AnimatorAccess = GetComponent<PlayerAnimator>();
         }
+
+        public void SetPlayerPosition(Vector3 position)
+        {
+            this.transform.position = position;
+        }
     }
 
 }

@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class Door : GimmickBase {
 
-    static int loadDoorID = -1;
+    public static int loadDoorID = -1;
 
     [SerializeField]
     int thisDoorID = 0;
@@ -22,7 +22,7 @@ public class Door : GimmickBase {
 
         if(loadDoorID == thisDoorID)
         {
-            Katana.GameManager.Instance.Player.transform.position = this.transform.position;
+            Katana.GameManager.Instance.Player.SetPlayerPosition(this.transform.position);
         }
 
         loadDoorID = -1;
