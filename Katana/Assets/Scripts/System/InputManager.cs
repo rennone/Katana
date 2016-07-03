@@ -41,22 +41,24 @@ public class InputManager : Katana.Singleton<InputManager> {
     [HideInInspector]
     public bool CanInput = true;
 
-    bool isKeeping_Horizontal = false;
-    bool isKeeping_Vertical = false;
+    bool isKeeping_Horizontal = true;
+    bool isKeeping_Vertical = true;
+    bool inputWaiting = true;
 
-    void Start()
+    IEnumerator Start()
     {
-        GameObject.DontDestroyOnLoad(this.gameObject);
+        //シーン遷移時の入力の待機
+        yield return new WaitForSeconds(0.5f);
+        inputWaiting = false;
     }
 
-    protected override bool IsPersistent()
-    {
-        return true;
-    }
+    //protected override bool IsPersistent()
+    //{
+    //    return true;
+    //}
 
     void Update () {
-
-        if (!CanInput) return;
+        if (!CanInput || inputWaiting) return;
 
         //左右の入力判定-----------------------------------------------------------------------------
         var inputHorizontal = Input.GetAxisRaw("Horizontal");
@@ -83,8 +85,7 @@ public class InputManager : Katana.Singleton<InputManager> {
 
         //上下の入力判定-----------------------------------------------------------------------------
         var inputVertical = Input.GetAxisRaw("Vertical");
-        print(inputVertical);
-        if (inputVertical >= 0.01f || inputVertical <= -0.01f)
+        if (inputVertical != 0)
         {
             if (!isKeeping_Vertical)
             {
