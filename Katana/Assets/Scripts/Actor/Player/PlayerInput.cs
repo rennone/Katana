@@ -98,40 +98,6 @@ namespace Katana
                 _player.AnimatorAccess.SetIsJumpAttack(Input.GetButtonDown("Fire2") && _player.CanInputJumpAttack());
             }
 
-            //上下キーでのアクション
-            //{
-            //    float inputVertical = Input.GetAxisRaw("Vertical");
-
-            //    //上キーでのアクション
-            //    if(inputVertical > 0)
-            //    {
-            //        //連続押し判定の回避
-            //        if (!isKeeping_Up)
-            //        {
-            //            DoorCheck();
-            //        }
-            //        isKeeping_Up = true;
-            //    }
-            //    else
-            //    {
-            //        isKeeping_Up = false;
-            //    }
-
-            //    //下キーでのアクション
-            //    if(inputVertical < 0)
-            //    {
-            //        //連続押し判定の回避
-            //        if (!isKeeping_Down)
-            //        {
-                        
-            //        }
-            //        isKeeping_Down = true;
-            //    }
-            //    else
-            //    {
-            //        isKeeping_Down = false;
-            //    }
-            //}
         }
 
         void DoorCheck()
