@@ -41,8 +41,8 @@ public class InputManager : Katana.Singleton<InputManager> {
     [HideInInspector]
     public bool CanInput = true;
 
-    bool isKeeping_Horizontal = true;
-    bool isKeeping_Vertical = true;
+    bool isKeepingHorizontal = true;
+    bool isKeepingVertical = true;
     bool inputWaiting = true;
 
     IEnumerator Start()
@@ -64,9 +64,9 @@ public class InputManager : Katana.Singleton<InputManager> {
         var inputHorizontal = Input.GetAxisRaw("Horizontal");
         if(inputHorizontal != 0)
         {
-            if(!isKeeping_Horizontal)
+            if(!isKeepingHorizontal)
             {
-                isKeeping_Horizontal = true;
+                isKeepingHorizontal = true;
                 if (onAxisDownEvent != null)
                     onAxisDownEvent(Axis.Horizontal, inputHorizontal);
             }
@@ -75,9 +75,9 @@ public class InputManager : Katana.Singleton<InputManager> {
         }
         else
         {
-            if (isKeeping_Horizontal)
+            if (isKeepingHorizontal)
             {
-                isKeeping_Horizontal = false;
+                isKeepingHorizontal = false;
                 if (onAxisUpEvent != null)
                     onAxisUpEvent(Axis.Horizontal, inputHorizontal);
             }
@@ -87,9 +87,9 @@ public class InputManager : Katana.Singleton<InputManager> {
         var inputVertical = Input.GetAxisRaw("Vertical");
         if (inputVertical != 0)
         {
-            if (!isKeeping_Vertical)
+            if (!isKeepingVertical)
             {
-                isKeeping_Vertical = true;
+                isKeepingVertical = true;
                 if (onAxisDownEvent != null)
                     onAxisDownEvent(Axis.Vertical, inputVertical);
             }
@@ -98,9 +98,9 @@ public class InputManager : Katana.Singleton<InputManager> {
         }
         else
         {
-            if (isKeeping_Vertical)
+            if (isKeepingVertical)
             {
-                isKeeping_Vertical = false;
+                isKeepingVertical = false;
                 if (onAxisUpEvent != null)
                     onAxisUpEvent(Axis.Vertical, inputVertical);
             }
