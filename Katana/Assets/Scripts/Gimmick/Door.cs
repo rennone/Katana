@@ -25,7 +25,7 @@ public class Door : GimmickBase {
             Katana.GameManager.Instance.Player.SetPlayerPosition(this.transform.position);
         }
 
-        loadDoorID = -1;
+        //loadDoorID = -1;
 	}
 	
 	public override void Update () {
