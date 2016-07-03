@@ -12,6 +12,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Title.unity
   - enabled: 1
+    path: Assets/Scenes/InGameCommon.unity
+  - enabled: 1
     path: Assets/Scenes/TestPlayerScene.unity
   - enabled: 1
     path: Assets/Developers/Ren/Scenes/Stage03.unity
+  - enabled: 1
+    path: Assets/Scenes/Areas/Area00-03.unity
+  - enabled: 1
+    path: Assets/Scenes/Areas/Area00-04.unity
