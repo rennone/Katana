@@ -68,21 +68,34 @@ namespace Katana
             [SerializeField]
             private static float DEFAULT_GRAVITY = 30.0f;
             private float _gravity = DEFAULT_GRAVITY;
+            private float _lastGravity = -1.0f;
+            private bool _enableGravity = true;
 
             public float Gravity
             {
                 get { return _gravity; }
                 set { _gravity = value; }
             }
-            public void EnableGravity()
-            {
-                this._gravity = DEFAULT_GRAVITY;
-            }
-            public void DisenableGravity()
-            {
-                this._gravity = 0.0f;
-            }
 
+            public bool EnableGravity
+            {
+                get { return _enableGravity; }
+                set
+                {
+                    if (value)
+                    {
+                        if (_enableGravity) return;
+                        this._enableGravity = true;
+                        this._gravity = _lastGravity;
+                    }
+                    else
+                    {
+                        this._enableGravity = false;
+                        this._lastGravity = _gravity;
+                        this._gravity = 0.0f;
+                    }
+                }
+            }
 
             // 落下速度
             [SerializeField]
