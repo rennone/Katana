@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class SceneMerge : MonoBehaviour {
 
-    public const string StageHeader = "Area00-";
+    public const string StageHeader = "Area";
     public static Scene ActiveStage { get; private set; }
 
 	void Awake()
