@@ -28,3 +28,9 @@ Katana/Assets/Lib/Demigiant/DOTween/*.addon
 
 # Developper
 Katana/Assets/Developers/Ren
+/Design/Player/katana_player.sai
+/Design/Player/katana_player2.mqo
+/Design/Player/katana_player2.png
+/Design/Player/katana_player_hurt.png
+/Design/Player/player.mtl
+/Design/Player/player.obj
