@@ -66,12 +66,21 @@ namespace Katana
 
             // 重力
             [SerializeField]
-            private float _gravity = 30.0f;
+            private static float DEFAULT_GRAVITY = 30.0f;
+            private float _gravity = DEFAULT_GRAVITY;
 
             public float Gravity
             {
                 get { return _gravity; }
                 set { _gravity = value; }
+            }
+            public void EnableGravity()
+            {
+                this._gravity = DEFAULT_GRAVITY;
+            }
+            public void DisenableGravity()
+            {
+                this._gravity = 0.0f;
             }
 
 

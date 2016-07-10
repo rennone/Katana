@@ -17,7 +17,7 @@ namespace Katana
         {
             Debug.Log("Enter Screw Kick");
             PlayerMotor motor = GetComponent<PlayerMotor>();
-            motor.movement.Gravity = 0.0f;
+            motor.movement.DisenableGravity();
             base.OnStateEnterToScrewKick(animator, stateInfo, layerIndex);
         }
 
@@ -26,7 +26,7 @@ namespace Katana
         {
             Debug.Log("Exit Screw Kick");
             PlayerMotor motor = GetComponent<PlayerMotor>();
-            motor.movement.Gravity = 30.0f;
+            motor.movement.EnableGravity();
             base.OnStateExitFromScrewKick(animator, stateInfo, layerIndex);
         }
     }
