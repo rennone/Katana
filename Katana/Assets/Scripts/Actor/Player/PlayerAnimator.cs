@@ -12,10 +12,22 @@ namespace Katana
             Debug.Log("Enter Run");
         }
 
+        // スクリューキック中に重力を0にする
         public override void OnStateEnterToScrewKick(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
+            Debug.Log("Enter Screw Kick");
+            PlayerMotor motor = GetComponent<PlayerMotor>();
+            motor.movement.EnableGravity = false;
             base.OnStateEnterToScrewKick(animator, stateInfo, layerIndex);
-            Debug.Log("Screw Kick");
+        }
+
+        // スクリューキックが終わると重力をデフォルトにもどす
+        public override void OnStateExitFromScrewKick(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+        {
+            Debug.Log("Exit Screw Kick");
+            PlayerMotor motor = GetComponent<PlayerMotor>();
+            motor.movement.EnableGravity = true;
+            base.OnStateExitFromScrewKick(animator, stateInfo, layerIndex);
         }
     }
 }
