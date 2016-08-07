@@ -28,7 +28,7 @@ namespace Katana
             switch (result)
             {
                 case DamageResult.StatusResult.Dead:
-                    OnDead();
+					OnDead(damage);
                     break;
                 case DamageResult.StatusResult.Damaged:
                     OnDamaged(ret);
@@ -70,7 +70,7 @@ namespace Katana
 
         }
 
-        protected virtual void OnDead()
+		protected virtual void OnDead(Damage damage)
         {
 
         }
