@@ -38,19 +38,16 @@ namespace Katana
         // 衝突したとき
         protected override void OnTriggerEnterWith(Collider c)
         {
-            Debug.Log("Collider Gimmick " + c.name);
 
             // 速度が十分あるか
             if (_rigidbody.velocity.sqrMagnitude < ThreasoldSpeed*ThreasoldSpeed)
             {
-                Debug.Log("Less Speed " + _rigidbody.velocity.magnitude);
                 return;
             }
             // 移動方向の後ろからぶつかった場合(衝突された場合)、攻撃しない
             var direction = c.transform.position - transform.position;
             if (Vector3.Dot(direction, _rigidbody.velocity) < 0)
             {
-                Debug.Log("Direction " + Vector3.Angle(direction, _rigidbody.velocity));
                 return;
             }
 

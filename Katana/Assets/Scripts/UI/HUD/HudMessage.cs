@@ -93,7 +93,7 @@ namespace Katana.Hud
         {
             if(_messages.Count == 0 || _timer >= 0)
                 return;
-            Debug.Log("Message Start");
+
             _text  = _messages[0].text;
             _alpha = Mathf.Sin((_timer / DisplayTime * 3 - 1) * Mathf.PI / 2);
             _messageText.enabled = true;
@@ -105,7 +105,7 @@ namespace Katana.Hud
             if(_messages.Count == 0)
                 return;
 
-            Debug.Log("Message End");
+
             _messages.RemoveAt(0);
             _messageText.enabled = false;
             _timer = -1;

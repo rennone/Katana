@@ -31,7 +31,7 @@ namespace Katana
             base.Damage(new Damage(null, val));
         }
 
-        protected override void OnDead()
+		protected override void OnDead(Damage damage)
         {
             GameManager.Instance.GameRestart();
         }
