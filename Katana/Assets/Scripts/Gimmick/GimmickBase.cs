@@ -1,13 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class GimmickBase : MonoBehaviour {
+public class GimmickBase : MonoBehaviour
+{
 
-	public virtual void Start () {
-	
-	}
-	
-	public virtual void Update () {
-	
-	}
+    public virtual void Start()
+    {
+
+    }
+
+    public virtual void Update()
+    {
+
+    }
 }

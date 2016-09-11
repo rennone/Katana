@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using Katana.Messages;
 
 // 変数の宣言.
@@ -14,6 +15,7 @@ namespace Katana
         protected CapsuleCollider _capsule { get; set; }
 
         private WeaponBase _kick;
+        private List<ItemKind> catchingItems = new List<ItemKind>();
 
         public PlayerAnimator AnimatorAccess { get; private set; }
 
@@ -108,6 +110,22 @@ namespace Katana
             _kick.SetActive(false);
         }
 
+        //プレイヤーにアイテムを付与
+        public void CatchItem(ItemKind itemKind)
+        {
+            catchingItems.Add(itemKind);
+        }
+
+        //プレイヤーからアイテムを削除
+        public bool RemoveItem(ItemKind itemKind)
+        {
+            if (catchingItems.Contains(itemKind))
+            {
+                catchingItems.Remove(itemKind);
+                return true;
+            }
+            return false;
+        }
 
         // private:
         void InitializeComponent()
