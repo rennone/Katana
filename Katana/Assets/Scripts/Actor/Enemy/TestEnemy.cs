@@ -20,6 +20,7 @@ namespace Katana{
 
 		protected override void OnDead(Damage damage)
     	{
+            SoundManager.Instance.PlaySound(this.transform.position, SoundKey.VOICE_ROBOTIC_MALE_OFF);
 			this.thisCollider.enabled = false;
 			thisRigid.useGravity = false;
 			thisRigid.AddForce(damage.Direction * 1000f);

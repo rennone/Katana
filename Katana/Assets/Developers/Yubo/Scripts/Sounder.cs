@@ -5,7 +5,7 @@ public class Sounder : MonoBehaviour {
 
     void Start()
     {
-        SoundManager.Instance.PlayBgm(SoundKey.BGM_COMBAT);
+        SoundManager.Instance.PlayBgm(SoundKey.ESPIONAGE_MOVING);
     }
 
 	void Update () {

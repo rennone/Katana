@@ -43,7 +43,7 @@ namespace Katana
 #if _DEBUG
         InitDebugViewer();
 #endif
-            SoundManager.Instance.PlayBgm(SoundKey.BGM_COMBAT);
+            SoundManager.Instance.PlayBgm(SoundKey.ESPIONAGE_MOVING);
         }
 
         public void GameRestart()

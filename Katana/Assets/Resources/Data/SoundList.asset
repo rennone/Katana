@@ -66,3 +66,30 @@ MonoBehaviour:
     RollOff: 1
     DopplerLevel: 0
     pitch: 1
+  - SoundDataKey: VOICE_RADIO_MALE_OH_NO_2
+    Sound: {fileID: 8300000, guid: 5cc2605952e2dd047bf9ccd47c21fbd4, type: 3}
+    Type: 1
+    SyncCount: 1
+    Volume: 1
+    Distance: 1000
+    RollOff: 1
+    DopplerLevel: 0
+    pitch: 1
+  - SoundDataKey: ESPIONAGE_MOVING
+    Sound: {fileID: 8300000, guid: 22c24e1d7cbe8de47a2988df485999a9, type: 3}
+    Type: 2
+    SyncCount: 1
+    Volume: 1
+    Distance: 1000
+    RollOff: 1
+    DopplerLevel: 0
+    pitch: 1
+  - SoundDataKey: VOICE_ROBOTIC_MALE_OFF
+    Sound: {fileID: 8300000, guid: 80ed21433e168c540b8a69b8a9775277, type: 3}
+    Type: 1
+    SyncCount: 1
+    Volume: 1
+    Distance: 1000
+    RollOff: 1
+    DopplerLevel: 0
+    pitch: 1
